@@ -1,0 +1,35 @@
+.breadcrumbs-container {
+  background-color: $breadcrumbs-background-color;
+  padding: 14px 20px 15px;
+  font-size: 13px;
+
+  .page-title {
+    color: $page-title-color;
+    display: inline-block;
+  }
+
+  .breadcrumbs {
+    float: right;
+  }
+
+  a.breadcrumbs-link {
+    color: $breadcrumbs-link-color;
+  }
+
+  .current-page {
+    color: $breadcrumbs-link-current-page-color;
+  }
+
+  .separator {
+    color: $breadcrumbs-link-color;
+    display: inline-block;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .breadcrumbs-container .breadcrumbs {
+    float: none;
+    padding-top: 5px;
+  }
+}
