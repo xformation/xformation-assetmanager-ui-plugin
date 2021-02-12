@@ -1,4 +1,4 @@
 export const config = {
   basePath: "/plugins/xformation-assetmanager-ui-plugin/page",
-  octantURL: "http://127.0.0.1:7777/#/",
+  octantURL: "https://100.64.108.25:7777/#/",
 };
