@@ -4,7 +4,7 @@ import { Breadcrumbs } from '../Breadcrumbs';
 import { config } from '../../config';
 import { images } from '../../img';
 
-export class Service extends React.Component<any, any> {
+export class AmazonServices extends React.Component<any, any> {
     breadCrumbs: any;
     constructor(props: any) {
         super(props);
@@ -48,7 +48,7 @@ export class Service extends React.Component<any, any> {
                     <div className="common-container border-bottom-0 p-b-0">
                         <div className="service-full-container">
                             <div className="heading"><span><img src={images.awsLogo} alt="" /></span><h2>Amazon Web Services</h2>
-                                <div className="icon float-right"><i className="fa fa-plus" aria-hidden="true"></i></div>
+                                <div className="icon float-right"><i className="fa fa-minus" aria-hidden="true"></i></div>
                             </div>
                             <div className="service-content">
                                 <div className="row">
@@ -147,18 +147,18 @@ export class Service extends React.Component<any, any> {
                                         <div className="showing-heading">
                                             Showing results 81 of 81
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div className="export-files">
                                             <span><i className="fa fa-sign-out"></i></span>
                                             <p>Expport</p>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                         <div className="search-box form-group">
                                             <input type="text" className="control-form" placeholder="Search" value="" /><button><i className="fa fa-search"></i></button>
                                         </div>
-                                    </div>           
+                                    </div>
                                 </div>
                             </div>
                             <div className="organisational-details">
@@ -190,7 +190,7 @@ export class Service extends React.Component<any, any> {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="collapse" style={{'display' : 'block'}}>
+                                            <div className="collapse" style={{ 'display': 'block' }}>
                                                 <div className="tbody">
                                                     <div className="tbody-td first">
                                                         <div className="caret-down"></div>
@@ -211,7 +211,7 @@ export class Service extends React.Component<any, any> {
                                                     <div className="load-balancer">
                                                         <div className="tbody">
                                                             <div className="tbody-td first">
-                                                            <div className="caret-right"></div>
+                                                                <div className="caret-right"></div>
                                                                 Node 1</div>
                                                             <div className="tbody-td"></div>
                                                             <div className="tbody-td">N/A</div>
@@ -247,7 +247,7 @@ export class Service extends React.Component<any, any> {
                                                         </div>
                                                         <div className="tbody">
                                                             <div className="tbody-td first">
-                                                            <div className="caret-right"></div>
+                                                                <div className="caret-right"></div>
                                                                 Node 3</div>
                                                             <div className="tbody-td"></div>
                                                             <div className="tbody-td">N/A</div>
@@ -283,7 +283,7 @@ export class Service extends React.Component<any, any> {
                                                         </div>
                                                         <div className="tbody">
                                                             <div className="tbody-td first">
-                                                            <div className="caret-right"></div>
+                                                                <div className="caret-right"></div>
                                                                 Node 5</div>
                                                             <div className="tbody-td"></div>
                                                             <div className="tbody-td">N/A</div>
@@ -302,7 +302,7 @@ export class Service extends React.Component<any, any> {
                                                 </div>
                                                 <div className="tbody">
                                                     <div className="tbody-td first">
-                                                    <div className="caret-right"></div>
+                                                        <div className="caret-right"></div>
                                                         RDS</div>
                                                     <div className="tbody-td"></div>
                                                     <div className="tbody-td">N/A</div>
@@ -337,7 +337,7 @@ export class Service extends React.Component<any, any> {
                                                 </div>
                                                 <div className="tbody">
                                                     <div className="tbody-td first">
-                                                    <div className="caret-right"></div>
+                                                        <div className="caret-right"></div>
                                                     Firewall</div>
                                                     <div className="tbody-td"></div>
                                                     <div className="tbody-td">N/A</div>
@@ -384,7 +384,7 @@ export class Service extends React.Component<any, any> {
                                                     <div className="status-icon"></div>
                                                 </div>
                                                 <div className="tbody-td">
-                                                <div className="d-flex">
+                                                    <div className="d-flex">
                                                         <button className="btn btn-link" id="PopoverFocus">
                                                             <i className="fa fa-ellipsis-h"></i>
                                                         </button>
@@ -424,7 +424,7 @@ export class Service extends React.Component<any, any> {
                                                     <div className="status-icon"></div>
                                                 </div>
                                                 <div className="tbody-td">
-                                                <div className="d-flex">
+                                                    <div className="d-flex">
                                                         <button className="btn btn-link" id="PopoverFocus">
                                                             <i className="fa fa-ellipsis-h"></i>
                                                         </button>

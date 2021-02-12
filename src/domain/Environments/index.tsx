@@ -208,7 +208,11 @@ export class Environments extends React.Component<any, any> {
                                 <div className="services-box">
                                     <div className="heading">
                                         <span><img src={images.awsLogo} alt="" /></span>
-                                        <h3>Amazon Web Services</h3>
+                                        <h3>
+                                            <Link to={`${config.basePath}/amazonservices`}>
+                                                Amazon Web Services
+                                            </Link>
+                                        </h3>
                                     </div>
                                     <div className="table-box">
                                         <table className="table">
@@ -236,7 +240,11 @@ export class Environments extends React.Component<any, any> {
                                 <div className="services-box">
                                     <div className="heading">
                                         <span><img src={images.microsoftAzureLogo} alt="" /></span>
-                                        <h3>Azure Cloud</h3>
+                                        <h3>
+                                            <Link to={`${config.basePath}/#`}>
+                                                Azure Cloud
+                                            </Link>
+                                        </h3>
                                     </div>
                                     <div className="table-box">
                                         <table className="table">
@@ -264,7 +272,11 @@ export class Environments extends React.Component<any, any> {
                                 <div className="services-box">
                                     <div className="heading">
                                         <span><img src={images.gcpLogo} alt="" /></span>
-                                        <h3>Google Cloud Platform</h3>
+                                        <h3>
+                                            <Link to={`${config.basePath}/#`}>
+                                                Google Cloud Platform
+                                            </Link>
+                                        </h3>
                                     </div>
                                     <div className="table-box">
                                         <table className="table">
@@ -292,7 +304,11 @@ export class Environments extends React.Component<any, any> {
                                 <div className="services-box">
                                     <div className="heading">
                                         <span><img src={images.KubernetesLogo} alt="" /></span>
-                                        <h3>Kubernetes</h3>
+                                        <h3>
+                                            <Link to={`${config.basePath}/kubernetes`}>
+                                                Kubernetes
+                                            </Link>
+                                        </h3>
                                     </div>
                                     <div className="table-box">
                                         <table className="table">

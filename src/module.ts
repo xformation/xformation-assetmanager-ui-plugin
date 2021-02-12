@@ -1,4 +1,4 @@
-import { Environments, Service } from "./ui";
+import { Environments, AmazonServices, Kubernetes } from "./ui";
 import { ConfigCtrl } from "./ConfigCtrl";
 
 // import { loadPluginCss } from '@grafana/runtime';
@@ -14,4 +14,4 @@ export function loadPluginCss() {
 
 loadPluginCss();
 
-export { ConfigCtrl, Environments, Service };
+export { ConfigCtrl, Environments, AmazonServices, Kubernetes };

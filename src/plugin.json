@@ -26,10 +26,17 @@
     },
     {
       "type": "page",
-      "name": "Service",
+      "name": "AmazonServices",
       "addToNav": false,
       "defaultNav": false,
-      "component": "Service"
+      "component": "AmazonServices"
+    },
+    {
+      "type": "page",
+      "name": "Kubernetes",
+      "addToNav": false,
+      "defaultNav": false,
+      "component": "Kubernetes"
     }
   ],
   "dependencies": {

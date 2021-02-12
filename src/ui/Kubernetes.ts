@@ -1,6 +1,6 @@
-import init from "../domain/ServiceApp";
+import init from "../domain/KubernetesApp";
 
-export class Service {
+export class Kubernetes {
   static templateUrl = "/partials/asset.html";
   constructor() {
     init();
