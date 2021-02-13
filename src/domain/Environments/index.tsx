@@ -14,37 +14,43 @@ export class Environments extends React.Component<any, any> {
                 {
                     name: 'OU',
                     value: 'ou',
+                    isChecked: false,
                     subdata: [
-                        { name: 'IT Department', value: 'itdepartment' },
-                        { name: 'Network Department', value: 'networkdepartment' },
-                        { name: 'Development', value: 'development' },
-                        { name: 'Testing', value: 'testing' },
+                        { name: 'IT Department', value: 'itdepartment', isChecked: false },
+                        { name: 'Network Department', value: 'networkdepartment', isChecked: false },
+                        { name: 'Development', value: 'development', isChecked: false },
+                        { name: 'Testing', value: 'testing', isChecked: false },
                     ],
                 },
                 {
                     name: 'Status',
                     value: 'status',
+                    isChecked: false,
                     subdata: [
-                        { name: 'Enable', value: 'enable' },
-                        { name: 'Disable', value: 'disable' },
+                        { name: 'Enable', value: 'enable', isChecked: false },
+                        { name: 'Disable', value: 'disable', isChecked: false },
                     ],
                 },
                 {
                     name: 'No of Assets',
                     value: 'noOFssets',
+                    isChecked: false,
                     subdata: [],
                 },
                 {
                     name: 'Platform',
                     value: 'platform',
+                    isChecked: false,
                     subdata: [],
                 }, {
                     name: 'Logs',
                     value: 'logs',
+                    isChecked: false,
                     subdata: [],
                 }, {
                     name: 'Performance & Availability',
                     value: 'availabiity',
+                    isChecked: false,
                     subdata: []
                 }
             ],
@@ -52,37 +58,43 @@ export class Environments extends React.Component<any, any> {
                 {
                     name: 'OU',
                     value: 'ou',
+                    isChecked: false,
                     subdata: [
-                        { name: 'IT Department', value: 'itdepartment' },
-                        { name: 'Network Department', value: 'networkdepartment' },
-                        { name: 'Development', value: 'development' },
-                        { name: 'Testing', value: 'testing' },
+                        { name: 'IT Department', value: 'itdepartment', isChecked: false },
+                        { name: 'Network Department', value: 'networkdepartment', isChecked: false },
+                        { name: 'Development', value: 'development', isChecked: false },
+                        { name: 'Testing', value: 'testing', isChecked: false },
                     ],
                 },
                 {
                     name: 'Status',
                     value: 'status',
+                    isChecked: false,
                     subdata: [
-                        { name: 'Enable', value: 'enable' },
-                        { name: 'Disable', value: 'disable' },
+                        { name: 'Enable', value: 'enable', isChecked: false },
+                        { name: 'Disable', value: 'disable', isChecked: false },
                     ],
                 },
                 {
                     name: 'No of Assets',
                     value: 'noOFssets',
+                    isChecked: false,
                     subdata: [],
                 },
                 {
                     name: 'Platform',
                     value: 'platform',
+                    isChecked: false,
                     subdata: [],
                 }, {
                     name: 'Logs',
                     value: 'logs',
+                    isChecked: false,
                     subdata: [],
                 }, {
                     name: 'Performance & Availability',
                     value: 'availabiity',
+                    isChecked: false,
                     subdata: []
                 }
             ],
@@ -116,28 +128,62 @@ export class Environments extends React.Component<any, any> {
     }
 
     displaySelectedTags = () => {
-        const { selectedTeg } = this.state;
+        const { optionJsonData } = this.state;
         let retData = [];
-        if (selectedTeg.length > 0) {
-            for (let i = 0; i < selectedTeg.length; i++) {
-                retData.push(
-                    <div className="fliter-selected">{selectedTeg[i]} <i className="fa fa-times" onClick={() => this.removeSelectedTag(selectedTeg[i])}></i></div>
-                );
+        if (optionJsonData.length > 0) {
+            for (let i = 0; i < optionJsonData.length; i++) {
+                if (optionJsonData[i].isChecked) {
+                    retData.push(
+                        <div className="fliter-selected" onClick={() => this.setChildData(optionJsonData[i])}>{optionJsonData[i].name} <i className="fa fa-times" onClick={() => this.removeSelectedTag(optionJsonData[i].value)}></i></div>
+                    );
+                    if (optionJsonData[i].subdata) {
+                        for (let j = 0; j < optionJsonData[i].subdata.length; j++) {
+                            if (optionJsonData[i].subdata[j].isChecked) {
+                                retData.push(
+                                    <div className="fliter-selected" onClick={() => this.setState({ showTagFilter: false })}>{optionJsonData[i].subdata[j].name} <i className="fa fa-times" onClick={() => this.removeSelectedTag(optionJsonData[i].subdata[j].value)}></i></div>
+                                );
+                            }
+                        }
+                    }
+                }
             }
-        } else {
-            retData.push(
-                <p>Select and add Filters</p>
-            );
         }
         return retData;
     }
 
+    setChildData = (data: any) => {
+        if (data.subdata.length > 0) {
+            this.setState({
+                showTagFilter: true,
+                displayJsonData: data.subdata,
+            })
+        } else {
+            this.setState({
+                showTagFilter: false,
+            })
+        }
+    }
+
     removeSelectedTag = (value: any) => {
-        const { selectedTeg } = this.state;
-        selectedTeg.splice(selectedTeg.indexOf(value), 1);
+        const { optionJsonData } = this.state;
+        for (let i = 0; i < optionJsonData.length; i++) {
+            let row = optionJsonData[i];
+            if (row.value == value) {
+                optionJsonData[i].isChecked = !optionJsonData[i].isChecked;
+            } else {
+                if (optionJsonData[i].subdata) {
+                    for (let j = 0; j < optionJsonData[i].subdata.length; j++) {
+                        if (optionJsonData[i].subdata[j].value == value) {
+                            optionJsonData[i].subdata[j].isChecked = !optionJsonData[i].subdata[j].isChecked;
+                        }
+                    }
+                }
+            }
+        }
         this.setState({
-            selectedTeg,
-        });
+            optionJsonData,
+            displayJsonData: optionJsonData,
+        })
     }
 
     displayTagList = () => {
@@ -146,7 +192,7 @@ export class Environments extends React.Component<any, any> {
         for (let i = 0; i < displayJsonData.length; i++) {
             retData.push(
                 <div className="form-check" onClick={() => this.changeHandleState(i, displayJsonData[i].value)}>
-                    <input type="checkbox" className="checkbox" />
+                    <input type="checkbox" checked={displayJsonData[i].isChecked} className="checkbox" />
                     <label htmlFor={displayJsonData[i].value}>{displayJsonData[i].name}</label>
                 </div>
             );
@@ -158,29 +204,44 @@ export class Environments extends React.Component<any, any> {
         let { displayJsonData, optionJsonData, selectedTeg } = this.state;
         for (let i = 0; i < optionJsonData.length; i++) {
             if (optionJsonData[i].value === value) {
-                selectedTeg.push(value);
-                if (optionJsonData[i].subdata.length > 0) {
-                    displayJsonData = [];
-                    for (let k = 0; k < optionJsonData[i].subdata.length; k++) {
-                        displayJsonData.push(optionJsonData[i].subdata[k]);
+                if (!selectedTeg.includes(value)) {
+                    selectedTeg.push(value);
+                    optionJsonData[i].isChecked = !optionJsonData[i].isChecked;
+                    if (optionJsonData[i].subdata.length > 0) {
+                        displayJsonData = [];
+                        for (let k = 0; k < optionJsonData[i].subdata.length; k++) {
+                            displayJsonData.push(optionJsonData[i].subdata[k]);
+                        }
+                        this.setState({
+                            displayJsonData,
+                        })
                     }
-                    this.setState({
-                        displayJsonData,
-                    })
+                    else {
+                        this.setState({
+                            displayJsonData: optionJsonData,
+                        });
+                    }
                 } else {
-                    this.setState({
-                        displayJsonData: optionJsonData,
-                    });
+                    selectedTeg.splice(selectedTeg.indexOf(value), 1);
+                    optionJsonData[i].isChecked = !optionJsonData[i].isChecked;
+                    displayJsonData = optionJsonData;
                 }
             } else {
                 if (optionJsonData[i].subdata.length > 0) {
                     displayJsonData = [];
                     for (let j = 0; j < optionJsonData[i].subdata.length; j++) {
                         if (optionJsonData[i].subdata[j].value === value) {
-                            selectedTeg.push(value);
-                            this.setState({
-                                displayJsonData: optionJsonData,
-                            });
+                            if (!selectedTeg.includes(value)) {
+                                selectedTeg.push(value);
+                                optionJsonData[i].subdata[j].isChecked = !optionJsonData[i].subdata[j].isChecked;
+                                this.setState({
+                                    displayJsonData: optionJsonData,
+                                });
+                            } else {
+                                selectedTeg.splice(selectedTeg.indexOf(value), 1);
+                                optionJsonData[i].subdata[j].isChecked = !optionJsonData[i].subdata[j].isChecked;
+                                displayJsonData = optionJsonData;
+                            }
                         }
                     }
                 }
@@ -375,8 +436,9 @@ export class Environments extends React.Component<any, any> {
                     </div>
                     <div className="common-container border-bottom-0 environments-table-container">
                         <div className="fliters-container">
-                            <div className="select-fliters" onClick={() => this.setState({ showTagFilter: !showTagFilter })}>
+                            <div className="select-fliters">
                                 {this.displaySelectedTags()}
+                                <div className="fliter-toggel" onClick={() => this.setState({ showTagFilter: !showTagFilter })}></div>
                                 <i className="fa fa-angle-down"></i>
                             </div>
                             <div className={showTagFilter === true ? "fliters-collapse active" : "fliters-collapse"}>

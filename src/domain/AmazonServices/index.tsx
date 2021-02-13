@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { config } from '../../config';
 import { images } from '../../img';
-import { Collapse } from 'reactstrap';
 
 export class AmazonServices extends React.Component<any, any> {
   breadCrumbs: any;
@@ -171,9 +170,9 @@ export class AmazonServices extends React.Component<any, any> {
         </div>
         {
           folder.isOpened == true &&
-          <Collapse>
+          <div className="collapse" style={{ 'display': 'block' }}>
             {subFolderJSX}
-          </Collapse>
+          </div>
         }
       </div>
     );
