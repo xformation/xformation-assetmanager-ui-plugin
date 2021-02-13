@@ -86,6 +86,18 @@ export class Environments extends React.Component<any, any> {
                     subdata: []
                 }
             ],
+            aws_table_data: [
+                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
+                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
+                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
+                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
+            ],
+            azure_table_data: [
+                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
+                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
+                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
+                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
+            ],
             selectedTeg: [],
             showTagFilter: false,
             showRecentFilter: false,
@@ -179,8 +191,35 @@ export class Environments extends React.Component<any, any> {
         })
     }
 
+    displayTableData = (table_data: any) => {
+        let retData = [];
+        for (let i = 0; i < table_data.length; i++) {
+            let row = table_data[i];
+            retData.push(
+                <tr>
+                    <td>
+                        <a href="#">{row.title}</a>
+                    </td>
+                    <td>{row.unit}</td>
+                    <td>{row.instance}</td>
+                    <td>
+                        <div className={row.status ? "status enable" : "status disable"}></div>
+                    </td>
+                    <td>
+                        <div className="d-block text-center">
+                            <button className="asset-white-button min-width-inherit m-r-0">
+                                <i className="fa fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            );
+        }
+        return retData;
+    }
+
     render() {
-        const { showTagFilter, showRecentFilter, showAddNewFilter } = this.state;
+        const { showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data, azure_table_data } = this.state;
         return (
             <div className="asset-container">
                 <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="PERFORMANCE MANAGEMENT" />
@@ -452,74 +491,7 @@ export class Environments extends React.Component<any, any> {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <a href="#">AWS (657907747545)</a>
-                                        </td>
-                                        <td>Synectiks</td>
-                                        <td>N/A</td>
-                                        <td>
-                                            <div className="status"></div>
-                                        </td>
-                                        <td>
-                                            <div className="d-block text-center">
-                                                <button className="asset-white-button min-width-inherit m-r-0">
-                                                    <i className="fa fa-ellipsis-h"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="#">AWS (657907747545)</a>
-                                        </td>
-                                        <td>Synectiks</td>
-                                        <td>N/A</td>
-                                        <td>
-                                            <div className="status"></div>
-                                        </td>
-                                        <td>
-                                            <div className="d-block text-center">
-                                                <button className="asset-white-button min-width-inherit m-r-0">
-                                                    <i className="fa fa-ellipsis-h"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="#">AWS (657907747545)</a>
-                                        </td>
-                                        <td>Synectiks</td>
-                                        <td>N/A</td>
-                                        <td>
-                                            <div className="status"></div>
-                                        </td>
-                                        <td>
-                                            <div className="d-block text-center">
-                                                <button className="asset-white-button min-width-inherit m-r-0">
-                                                    <i className="fa fa-ellipsis-h"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="#">AWS (657907747545)</a>
-                                        </td>
-                                        <td>Synectiks</td>
-                                        <td>N/A</td>
-                                        <td>
-                                            <div className="status"></div>
-                                        </td>
-                                        <td>
-                                            <div className="d-block text-center">
-                                                <button className="asset-white-button min-width-inherit m-r-0">
-                                                    <i className="fa fa-ellipsis-h"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    {this.displayTableData(aws_table_data)}
                                 </tbody>
                             </table>
                             <table className="table">
@@ -529,74 +501,7 @@ export class Environments extends React.Component<any, any> {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <a href="#">AWS (657907747545)</a>
-                                        </td>
-                                        <td>Synectiks</td>
-                                        <td>N/A</td>
-                                        <td>
-                                            <div className="status"></div>
-                                        </td>
-                                        <td>
-                                            <div className="d-block text-center">
-                                                <button className="asset-white-button min-width-inherit m-r-0">
-                                                    <i className="fa fa-ellipsis-h"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="#">AWS (657907747545)</a>
-                                        </td>
-                                        <td>Synectiks</td>
-                                        <td>N/A</td>
-                                        <td>
-                                            <div className="status"></div>
-                                        </td>
-                                        <td>
-                                            <div className="d-block text-center">
-                                                <button className="asset-white-button min-width-inherit m-r-0">
-                                                    <i className="fa fa-ellipsis-h"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="#">AWS (657907747545)</a>
-                                        </td>
-                                        <td>Synectiks</td>
-                                        <td>N/A</td>
-                                        <td>
-                                            <div className="status"></div>
-                                        </td>
-                                        <td>
-                                            <div className="d-block text-center">
-                                                <button className="asset-white-button min-width-inherit m-r-0">
-                                                    <i className="fa fa-ellipsis-h"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="#">AWS (657907747545)</a>
-                                        </td>
-                                        <td>Synectiks</td>
-                                        <td>N/A</td>
-                                        <td>
-                                            <div className="status"></div>
-                                        </td>
-                                        <td>
-                                            <div className="d-block text-center">
-                                                <button className="asset-white-button min-width-inherit m-r-0">
-                                                    <i className="fa fa-ellipsis-h"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    {this.displayTableData(azure_table_data)}
                                 </tbody>
                             </table>
                         </div>
