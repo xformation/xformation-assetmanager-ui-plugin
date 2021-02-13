@@ -339,6 +339,17 @@ a:hover {
   }
 }
 
+#asset-main-container .collapse:not(.show) {
+  display: none;
+}
+
+#asset-main-container .collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.35s ease;
+}
+
 .environments-page-container .environments-services-container .services-box {
   background: #ffffff;
   box-shadow: 0px 1px 6px #00000029;
@@ -1092,7 +1103,7 @@ a:hover {
   cursor: pointer;
 }
 .service-container .service-full-container .service-content {
-  padding: 20px 20px 10px;
+  padding: 20px;
 }
 .service-container .service-full-container .service-content .services-added {
   font-size: 14px;
@@ -1114,7 +1125,7 @@ a:hover {
   border: 1px solid #f5f6f5;
   border-radius: 10px;
   box-shadow: 0px 1px 6px #00000029;
-  padding-bottom: 70px;
+  margin-bottom: 20px;
 }
 .service-container .urganisational-unit-container .unit-tabs {
   border-top-right-radius: 10px;
@@ -1126,10 +1137,11 @@ a:hover {
 }
 .service-container .urganisational-unit-container .unit-tabs ul {
   display: flex;
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 2px;
+  padding-right: 2px;
   padding-top: 2px;
-  justify-content: space-around;
+  padding-bottom: 1px;
+  justify-content: flex-start;
 }
 .service-container .urganisational-unit-container .unit-tabs ul li {
   list-style: none;
@@ -1141,7 +1153,7 @@ a:hover {
   font-weight: 500;
   color: #414d55;
   color: unset;
-  padding: 10px 15px;
+  padding: 10px 20px;
 }
 .service-container .urganisational-unit-container .unit-tabs ul li a:hover {
   background-color: #ffffff;
@@ -1179,7 +1191,7 @@ a:hover {
   .urganisational-unit-container
   .showing-export
   .showing-heading {
-  font-size: 16px;
+  font-size: 13px;
   line-height: 40px;
   font-weight: 500;
   margin-bottom: 0;
@@ -1268,6 +1280,7 @@ a:hover {
   .organisational-details
   .container-inner
   .organisational-data-table {
+  width: 100%;
   background-color: #ffffff;
   font-size: 13px;
   line-height: 24px;
@@ -1278,6 +1291,7 @@ a:hover {
   .organisational-data-table
   .d-flex {
   display: block;
+  text-align: center;
 }
 .service-container
   .organisational-details
@@ -1307,6 +1321,7 @@ a:hover {
   color: #3b4859;
   font-weight: 600;
   vertical-align: top;
+  text-align: center;
 }
 .service-container
   .organisational-details
@@ -1337,6 +1352,7 @@ a:hover {
   .thead
   .thead-th:nth-child(1) {
   width: 30%;
+  text-align: left;
 }
 .service-container
   .organisational-details
@@ -1345,6 +1361,7 @@ a:hover {
   .thead
   .thead-th:nth-child(2) {
   width: 20%;
+  text-align: left;
 }
 .service-container
   .organisational-details
@@ -1385,6 +1402,7 @@ a:hover {
   .tbody {
   display: block;
   width: 100%;
+  position: relative;
 }
 .service-container
   .organisational-details
@@ -1414,6 +1432,7 @@ a:hover {
   color: #3b4859;
   font-weight: 500;
   vertical-align: top;
+  text-align: center;
 }
 .service-container
   .organisational-details
@@ -1422,6 +1441,7 @@ a:hover {
   .tbody
   .tbody-td:nth-child(1) {
   width: 30%;
+  text-align: left;
 }
 .service-container
   .organisational-details
@@ -1430,6 +1450,7 @@ a:hover {
   .tbody
   .tbody-td:nth-child(2) {
   width: 20%;
+  text-align: left;
 }
 .service-container
   .organisational-details
@@ -1468,27 +1489,89 @@ a:hover {
   .container-inner
   .organisational-data-table
   .tbody
-  .tbody-td.first {
-  padding-left: 45px;
+  .collapse-content
+  .tbody:nth-child(odd)
+  .tbody-inner {
+  background-color: #ffffff;
 }
 .service-container
   .organisational-details
   .container-inner
   .organisational-data-table
   .tbody
-  .collapse
-  .load-balancer
-  .first {
-  padding-left: 70px;
-}
-.service-container
-  .organisational-details
-  .container-inner
-  .organisational-data-table
-  .tbody
-  .collapse
-  .tbody:nth-child(even) {
+  .collapse-content
+  .tbody:nth-child(even)
+  .tbody-inner {
   background-color: #f8f9fb;
+}
+.service-container
+  .organisational-details
+  .container-inner
+  .organisational-data-table
+  .tbody
+  .collapse-content
+  .first {
+  padding-left: 35px;
+}
+.service-container
+  .organisational-details
+  .container-inner
+  .organisational-data-table
+  .tbody
+  .collapse-content
+  .caret-right {
+  position: relative;
+}
+.service-container
+  .organisational-details
+  .container-inner
+  .organisational-data-table
+  .tbody
+  .collapse-content
+  .caret-right::before {
+  border-top: 1px dashed #8392a7;
+  width: 17px;
+  height: 1px;
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: 0;
+  z-index: 1;
+}
+.service-container
+  .organisational-details
+  .container-inner
+  .organisational-data-table
+  .tbody
+  .collapse-content
+  .caret-down::before {
+  left: 40px;
+}
+.service-container
+  .organisational-details
+  .container-inner
+  .organisational-data-table
+  .tbody
+  .collapse-content
+  .caret-down::after {
+  border-top: 1px dashed #8392a7;
+  width: 17px;
+  height: 1px;
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 21px;
+  z-index: 1;
+}
+.service-container
+  .organisational-details
+  .container-inner
+  .organisational-data-table
+  .tbody
+  .collapse-content
+  .collapse-content
+  .first {
+  padding-left: 60px;
 }
 .service-container
   .organisational-details
@@ -1521,6 +1604,20 @@ a:hover {
   margin-top: 7px;
   margin-right: 10px;
   cursor: pointer;
+}
+.service-container
+  .organisational-details
+  .container-inner
+  .organisational-data-table
+  .caret-down::before {
+  background-color: #8392a7;
+  width: 1px;
+  height: calc(100% - 49px);
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 27px;
+  z-index: 1;
 }
 .service-container
   .organisational-details
