@@ -1,0 +1,207 @@
+.service-account-container{
+    .account-tabs{
+        ul{
+            display: block;
+            li{
+                display: inline-flex;
+                list-style: none;
+                margin-right: 5px;
+                a{
+                    font-size: 14px;
+                    line-height: 40px;
+                    font-weight: 500;
+                    color: #8998AC;
+                    padding: 0 20px;
+                    background-color: #F0F3F7;
+
+                    span{
+                        padding-left: 20px;
+                        color: #8998AC;
+                    }
+                    &:hover{
+                        color: #3B4859;
+                        border-top-right-radius: 5px;
+                        border-top-left-radius: 5px;
+                        background-color: #D9E4F2;
+                    }
+                }
+                .active{
+                    color: #3B4859;
+                    border-top-right-radius: 5px;
+                    border-top-left-radius: 5px;
+                    background-color: #D9E4F2;
+
+                }
+               
+            }
+        }
+    }
+    .webservice-container{
+        border: 1px solid #f5f6f5;
+        border-radius: 10px;
+        box-shadow: 0px 1px 6px #00000029;
+        .heading{
+            background-color: #D9E4F2;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            padding-top: 10px;
+            padding-left: 20px;
+            padding-bottom: 10px;
+            h3{
+                color: #3B4859;
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 24px;
+                display: inline-block;
+                margin-bottom: 0;
+            }
+            span{
+                width: 40px;
+                display: inline-block;
+                margin-right: 20px;
+                img{
+                    width: 100%;
+                    height: auto;
+                }
+            }
+            p{
+                display: inline-block;
+                font-size: 14px;
+                font-weight: 600;
+                color: #3B4859;
+                padding-left: 30px;
+                margin-bottom: 0;
+            }
+            .breadcrumbs{
+                display: inline-block;
+                font-size: 14px;
+                line-height: 24px;
+                font-weight: 500;
+                color: #2662F0;
+                padding-left: 10px;
+            }
+        }
+    }
+    
+    .account-box{
+       padding: 15px 10px 0 20px;
+       border-bottom: 1px solid #f5f6f5;
+        .account-content{
+            p{
+                font-size: 14px;
+                color: #3B4859;
+                font-weight: 500;
+                line-height: 26px;
+                display: inline-block;
+                margin-bottom: 0;
+            }
+            .breadcrumbs{
+                display: inline-block;
+                font-size: 14px;
+                font-weight: 500;
+                color: #2662F0;
+                padding-left: 10px;
+            }
+            ul{
+                display: inline-block;
+                li{
+                    display: inline-block;
+                    list-style: none;
+                    font-size: 14px;
+                    line-height: 24px;
+                    margin-left: 15px;
+                    color: #3B4859;
+                    span{
+                        margin-right: 15px;
+                        font-size: 16px;
+                        color: #707070;
+                    }
+                }
+            }
+        }
+        .search-box{
+            position: relative;
+            .control-form{
+                font-size: 14px;
+                line-height: 34px;
+                text-align: left;
+                padding-left: 30px;
+                width: 100%;
+                color: #8998AC;
+                border: 1px solid #8392A7;
+                border-radius: 5px;
+                background-color: #ffffff;
+            }
+            button {
+                position: absolute;
+                left: 0;
+                top: 2px;
+                z-index: 1;
+                cursor: pointer;
+                border: none;
+                background-color: transparent;
+                width: 32px;
+                height: 32px;
+                color: #8998AC;
+              }
+        }
+    }
+    .storage-section{
+        .network-boxs{
+            border-right:  1px solid #f5f6f5;
+            min-height: 600px;
+
+            .configuration-box{
+                font-size: 14px;
+                line-height: 24px;
+                color: #39475B;
+                background: #F8F9FB;
+                padding: 10px 0 10px 20px;
+                span{
+                    font-size: 20px;
+                    margin-right: 15px;
+                    color: #39475B;
+                    line-height: 24px;
+                }
+            }
+            .external-box{
+                font-size: 14px;
+                line-height: 30px;
+                color: #39475B;
+                padding: 10px 0 10px 20px;
+                span{
+                    font-size: 20px;
+                    margin-right: 15px;
+                    color: #39475B;
+                    line-height: 24px;
+                }
+            }
+            .last{
+                border-bottom: 1px solid #f5f6f5;
+            }
+        }
+        .storage-details{
+           min-height: 600px;
+           padding-top: 300px;
+        }
+    }
+}
+@media only screen and (max-width: 767px){
+    .service-account-container{
+        .account-tabs{
+            text-align: center;
+            padding-bottom: 15px;
+            ul{
+                li{
+                    display: grid;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+        .account-box{
+            .account-content{
+                padding-bottom: 10px;
+            }
+        }
+    }
+}

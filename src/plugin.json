@@ -37,6 +37,13 @@
       "addToNav": false,
       "defaultNav": false,
       "component": "Kubernetes"
+    },
+    {
+      "type": "page",
+      "name": "StorageDetails",
+      "addToNav": false,
+      "defaultNav": false,
+      "component": "StorageDetails"
     }
   ],
   "dependencies": {
