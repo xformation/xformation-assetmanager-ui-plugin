@@ -56,40 +56,43 @@ export class StorageDetails extends React.Component<any, any> {
                             </div>
                             <div className="webservice-container">
                                 <div className="heading">
-                                    <span><img src={images.awsLogo} alt="" /></span>
-                                    <h3>Amazon Web Services</h3>
-                                    <p>Account Number -</p>
-                                    <div className="breadcrumbs">AWS-(657907747545)</div>
+                                    <h3> <span><img src={images.awsLogo} alt="" /></span>Amazon Web Services</h3>
+                                    <div className="breadcrumbs">
+                                        <ul>
+                                            <li>Account Number - <span>AWS-(657907747545)</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div className="account-box">
-                                    <div className="row d-flex justify-content-center">
-                                        <div className="col-lg-7 col-md-7 col-sm-12">
-                                            <div className="account-content">
-                                                <p>Account Number - </p>
-                                                <div className="breadcrumbs">AWS-(657907747545)</div>
+                                    <div className="row d-flex justify-content-center align-items-center">
+                                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                            <div className="breadcrumbs">
                                                 <ul>
-                                                    <li><span><i className="fa fa-angle-right" aria-hidden="true"></i></span>VPC 1</li>
-                                                    <li><span><i className="fa fa-angle-right" aria-hidden="true"></i></span>EC2</li>
-                                                    <li><span><i className="fa fa-angle-right" aria-hidden="true"></i></span>Node 2</li>
+                                                    <li>Account Number - <span>AWS-(657907747545)</span></li>
+                                                    <li><i className="fa fa-angle-right" aria-hidden="true"></i>VPC 1</li>
+                                                    <li><i className="fa fa-angle-right" aria-hidden="true"></i>EC2</li>
+                                                    <li><i className="fa fa-angle-right" aria-hidden="true"></i>Node 2</li>
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div className="col-lg-5 col-md-5 col-sm-12">
+                                        <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                             <div className="search-box form-group"><input type="text" className="control-form" placeholder="Search" value="" /><button><i className="fa fa-search"></i></button></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="storage-section">
                                     <div className="row">
-                                        <div className="col-lg-4 col-md-6 col-sm-12">
+                                        <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                                             <div className="network-boxs">
-                                                <div className="configuration-box"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Storage</div>
-                                                <div className="external-box"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Network</div>
-                                                <div className="configuration-box"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Configuration</div>
-                                                <div className="external-box last"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>External Storage</div>
+                                                <ul>
+                                                    <li><a href="#"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Storage</a></li>
+                                                    <li><a href="#"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Storage</a></li>
+                                                    <li><a href="#"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Storage</a></li>
+                                                    <li className="last"><a href="#"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Storage</a></li>
+                                                </ul>
                                             </div>
                                         </div>
-                                        <div className="col-lg-8 col-md-6 col-sm-12">
+                                        <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12">
                                             <div className="storage-details text-center">
                                                 <h4>Storage details will be displayed here</h4>
                                             </div>

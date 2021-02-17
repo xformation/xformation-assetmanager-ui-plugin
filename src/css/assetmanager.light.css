@@ -1847,69 +1847,70 @@ a:hover {
   display: inline-block;
   margin-bottom: 0;
 }
-.service-account-container .webservice-container .heading span {
+.service-account-container .webservice-container .heading h3 span {
   width: 40px;
   display: inline-block;
   margin-right: 20px;
 }
-.service-account-container .webservice-container .heading span img {
+.service-account-container .webservice-container .heading h3 span img {
   width: 100%;
   height: auto;
 }
-.service-account-container .webservice-container .heading p {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #3b4859;
-  padding-left: 30px;
-  margin-bottom: 0;
-}
 .service-account-container .webservice-container .heading .breadcrumbs {
+  display: inline-block;
+  padding-left: 30px;
+}
+.service-account-container .webservice-container .heading .breadcrumbs ul li {
   display: inline-block;
   font-size: 14px;
   line-height: 24px;
   font-weight: 500;
+  color: #3b4859;
+}
+.service-account-container
+  .webservice-container
+  .heading
+  .breadcrumbs
+  ul
+  li
+  span {
   color: #2662f0;
-  padding-left: 10px;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
 }
 
 .service-account-container .account-box {
-  padding: 15px 10px 0 20px;
+  padding: 10px 10px 10px 20px;
   border-bottom: 1px solid #f5f6f5;
 }
-.service-account-container .account-box .account-content p {
-  font-size: 14px;
-  color: #3b4859;
-  font-weight: 500;
-  line-height: 26px;
-  display: inline-block;
-  margin-bottom: 0;
+.service-account-container .account-box .breadcrumbs {
+  vertical-align: middle;
 }
-.service-account-container .account-box .account-content .breadcrumbs {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 500;
-  color: #2662f0;
-  padding-left: 10px;
-}
-.service-account-container .account-box .account-content ul {
+.service-account-container .account-box .breadcrumbs ul {
   display: inline-block;
 }
-.service-account-container .account-box .account-content ul li {
+.service-account-container .account-box .breadcrumbs ul li {
   display: inline-block;
   list-style: none;
   font-size: 14px;
-  line-height: 24px;
-  margin-left: 15px;
+  font-weight: 500;
   color: #3b4859;
 }
-.service-account-container .account-box .account-content ul li span {
+.service-account-container .account-box .breadcrumbs ul li span {
+  color: #2662f0;
+  font-size: 14px;
+  font-weight: 500;
+}
+.service-account-container .account-box .breadcrumbs ul li i {
+  font-size: 20px;
   margin-right: 15px;
-  font-size: 16px;
-  color: #707070;
+  margin-left: 15px;
+  color: #8998ac;
 }
 .service-account-container .account-box .search-box {
   position: relative;
+  margin-bottom: 0;
 }
 .service-account-container .account-box .search-box .control-form {
   font-size: 14px;
@@ -1939,42 +1940,41 @@ a:hover {
   border-right: 1px solid #f5f6f5;
   min-height: 600px;
 }
-.service-account-container .storage-section .network-boxs .configuration-box {
+.service-account-container .storage-section .network-boxs ul li {
+  background-color: #ffffff;
+  padding: 10px 0 10px 20px;
+  list-style: none;
+}
+.service-account-container .storage-section .network-boxs ul li:nth-child(odd) {
+  background-color: #f8f9fb;
+}
+.service-account-container .storage-section .network-boxs ul li a {
   font-size: 14px;
   line-height: 24px;
-  color: #39475b;
-  background: #f8f9fb;
-  padding: 10px 0 10px 20px;
 }
-.service-account-container
-  .storage-section
-  .network-boxs
-  .configuration-box
-  span {
+.service-account-container .storage-section .network-boxs ul li a span {
   font-size: 20px;
   margin-right: 15px;
   color: #39475b;
   line-height: 24px;
+  vertical-align: middle;
 }
-.service-account-container .storage-section .network-boxs .external-box {
-  font-size: 14px;
-  line-height: 30px;
-  color: #39475b;
-  padding: 10px 0 10px 20px;
-}
-.service-account-container .storage-section .network-boxs .external-box span {
-  font-size: 20px;
-  margin-right: 15px;
-  color: #39475b;
-  line-height: 24px;
-}
-.service-account-container .storage-section .network-boxs .last {
+.service-account-container .storage-section .network-boxs ul .last {
   border-bottom: 1px solid #f5f6f5;
 }
 
 .service-account-container .storage-section .storage-details {
   min-height: 600px;
   padding-top: 300px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .service-account-container .account-tabs ul li a {
+    padding: 0 12px;
+  }
+  .service-account-container .account-tabs ul li a span {
+    padding-left: 12px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -1986,7 +1986,7 @@ a:hover {
     display: grid;
     margin-bottom: 5px;
   }
-  .service-account-container .account-box .account-content {
+  .service-account-container .account-box .breadcrumbs {
     padding-bottom: 10px;
   }
 }
