@@ -94,6 +94,7 @@ export class SelectCloudFilter extends React.Component<any, any> {
                 }
             ],
             showTagFilter: false,
+            searchKey: '',
         };
     }
 
@@ -220,12 +221,57 @@ export class SelectCloudFilter extends React.Component<any, any> {
         }
     }
 
+    displaymainTagData = () => {
+        const { optionJsonData } = this.state;
+        this.setState({
+            showTagFilter: true,
+            displayJsonData: optionJsonData,
+        })
+    }
+
+    clearAllTagFilter = () => {
+        let { optionJsonData } = this.state;
+        for (let i = 0; i < optionJsonData.length; i++) {
+            optionJsonData[i].isChecked = false;
+            if (optionJsonData[i].subdata.length > 0) {
+                for (let j = 0; j < optionJsonData[i].subdata.length; j++) {
+                    optionJsonData[i].subdata[j].isChecked = false;
+                }
+            }
+        }
+        this.setState({
+            optionJsonData,
+            displayJsonData: optionJsonData,
+            searchKey: ''
+        })
+    }
+
+    searchTag = (e: any) => {
+        const { displayJsonData } = this.state;
+        const { value } = e.target;
+        let resultData = [];
+        this.setState({
+            searchKey: value,
+        })
+        for (let j = 0; j < displayJsonData.length; j++) {
+            if (displayJsonData[j].name.toLowerCase().indexOf(value) !== -1 || displayJsonData[j].name.indexOf(value) !== -1) {
+                resultData.push(displayJsonData[j]);
+            }
+        }
+        this.setState({
+            displayJsonData: resultData
+        })
+    }
+
     render() {
-        const { showTagFilter } = this.state;
+        const { showTagFilter, searchKey } = this.state;
         return (
             <div className="fliters-container">
                 <div className="select-fliters">
                     {this.displaySelectedTags()}
+                    <div className="add-fliters" onClick={() => this.displaymainTagData()}>
+                        <i className="fa fa-plus"></i>
+                    </div>
                     <div className="fliter-toggel" onClick={() => this.setState({ showTagFilter: !showTagFilter })}></div>
                     <i className="fa fa-angle-down"></i>
                 </div>
@@ -234,11 +280,11 @@ export class SelectCloudFilter extends React.Component<any, any> {
                         <button className="btn btn-search">
                             <i className="fa fa-search"></i>
                         </button>
-                        <input type="text" className="input-group-text" placeholder="Search" />
-                        <button className="btn btn-clear">
+                        <input type="text" className="input-group-text" value={searchKey} onChange={this.searchTag} placeholder="Search" />
+                        <button className="btn btn-clear" onClick={this.clearAllTagFilter}>
                             <i className="fa fa-times"></i>
-                        Clear
-                    </button>
+                            Clear
+                        </button>
                     </div>
                     <div className="fliters-links">
                         {this.displayTagList()}
