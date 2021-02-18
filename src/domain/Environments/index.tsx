@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { config } from '../../config';
 import { images } from '../../img';
-
+import { SelectCloudFilter } from './../Components/SelectCloudFilter';
 export class Environments extends React.Component<any, any> {
     breadCrumbs: any;
     constructor(props: any) {
@@ -435,28 +435,7 @@ export class Environments extends React.Component<any, any> {
                         </div>
                     </div>
                     <div className="common-container border-bottom-0 environments-table-container">
-                        <div className="fliters-container">
-                            <div className="select-fliters">
-                                {this.displaySelectedTags()}
-                                <div className="fliter-toggel" onClick={() => this.setState({ showTagFilter: !showTagFilter })}></div>
-                                <i className="fa fa-angle-down"></i>
-                            </div>
-                            <div className={showTagFilter === true ? "fliters-collapse active" : "fliters-collapse"}>
-                                <div className="form-group search-control">
-                                    <button className="btn btn-search">
-                                        <i className="fa fa-search"></i>
-                                    </button>
-                                    <input type="text" className="input-group-text" placeholder="Search" />
-                                    <button className="btn btn-clear">
-                                        <i className="fa fa-times"></i>
-                                        Clear
-                                    </button>
-                                </div>
-                                <div className="fliters-links">
-                                    {this.displayTagList()}
-                                </div>
-                            </div>
-                        </div>
+                        <SelectCloudFilter />
                         <div className="recent-fliters-container">
                             <div className="row">
                                 <div className="col-lg-8 col-md-8 col-sm-12">
