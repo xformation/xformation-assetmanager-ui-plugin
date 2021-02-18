@@ -9,7 +9,7 @@ export class StorageDetails extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            
+
         };
         this.breadCrumbs = [
             {
@@ -49,14 +49,32 @@ export class StorageDetails extends React.Component<any, any> {
                         <div className="service-account-container">
                             <div className="account-tabs">
                                 <ul>
-                                    <li><a href="#" className="active">VPC1 - EC2 - Node 2 <span><i className="fa fa-times" aria-hidden="true"></i></span></a></li>
-                                    <li><a href="#">VPC3 - EC2 - Node 5 <span><i className="fa fa-times" aria-hidden="true"></i></span></a></li>
-                                    <li><a href="#">VPC3 - EC2 - Node 2 <span><i className="fa fa-times" aria-hidden="true"></i></span></a></li>
+                                    <li className="active">
+                                        <a href="#">
+                                            VPC1 - EC2 - Node 2
+                                            <i className="fa fa-times" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            VPC3 - EC2 - Node 5
+                                            <i className="fa fa-times" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            VPC3 - EC2 - Node 2
+                                            <i className="fa fa-times" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             <div className="webservice-container">
                                 <div className="heading">
-                                    <h3> <span><img src={images.awsLogo} alt="" /></span>Amazon Web Services</h3>
+                                    <h3>
+                                        <span><img src={images.awsLogo} alt="" /></span>
+                                        Amazon Web Services
+                                    </h3>
                                     <div className="breadcrumbs">
                                         <ul>
                                             <li>Account Number - <span>AWS-(657907747545)</span></li>
@@ -65,7 +83,7 @@ export class StorageDetails extends React.Component<any, any> {
                                 </div>
                                 <div className="account-box">
                                     <div className="row d-flex justify-content-center align-items-center">
-                                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                        <div className="col-lg-7 col-md-7 col-sm-12">
                                             <div className="breadcrumbs">
                                                 <ul>
                                                     <li>Account Number - <span>AWS-(657907747545)</span></li>
@@ -75,24 +93,47 @@ export class StorageDetails extends React.Component<any, any> {
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                            <div className="search-box form-group"><input type="text" className="control-form" placeholder="Search" value="" /><button><i className="fa fa-search"></i></button></div>
+                                        <div className="col-lg-5 col-md-5 col-sm-12">
+                                            <div className="search-box form-group">
+                                                <input type="text" className="control-form" placeholder="Search" value="" />
+                                                <button><i className="fa fa-search"></i></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="storage-section">
                                     <div className="row">
-                                        <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                        <div className="col-lg-3 col-md-9 col-sm-12">
                                             <div className="network-boxs">
                                                 <ul>
-                                                    <li><a href="#"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Storage</a></li>
-                                                    <li><a href="#"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Storage</a></li>
-                                                    <li><a href="#"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Storage</a></li>
-                                                    <li className="last"><a href="#"><span><i className="fa fa-caret-right" aria-hidden="true"></i></span>Storage</a></li>
+                                                    <li>
+                                                        <a href="#">
+                                                            <i className="fa fa-caret-right" aria-hidden="true"></i>
+                                                            Storage
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">
+                                                            <i className="fa fa-caret-right" aria-hidden="true"></i>
+                                                            Network
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">
+                                                            <i className="fa fa-caret-right" aria-hidden="true"></i>
+                                                            Configuration
+                                                        </a>
+                                                    </li>
+                                                    <li className="last">
+                                                        <a href="#">
+                                                            <i className="fa fa-caret-right" aria-hidden="true"></i>
+                                                            External Storage
+                                                        </a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+                                        <div className="col-lg-9 col-md-9 col-sm-12">
                                             <div className="storage-details text-center">
                                                 <h4>Storage details will be displayed here</h4>
                                             </div>
