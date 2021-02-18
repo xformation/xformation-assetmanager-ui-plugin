@@ -442,8 +442,8 @@ a:hover {
   border-radius: 4px;
   width: 100%;
   display: block;
-  height: 42px;
-  padding: 5px 15px;
+  min-height: 42px;
+  padding: 5px 15px 0;
   position: relative;
 }
 .environments-page-container
@@ -476,16 +476,54 @@ a:hover {
   .environments-table-container
   .fliters-container
   .select-fliters
+  .add-fliters {
+  background-color: #f0f3f7;
+  font-size: 12px;
+  font-weight: 400;
+  color: #414d55;
+  line-height: 30px;
+  cursor: pointer;
+  padding: 0px;
+  display: inline-block;
+  min-width: 30px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  vertical-align: top;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.environments-page-container
+  .environments-table-container
+  .fliters-container
+  .select-fliters
+  .add-fliters
+  i {
+  float: none;
+}
+.environments-page-container
+  .environments-table-container
+  .fliters-container
+  .select-fliters
+  .add-fliters:hover {
+  color: #464c54;
+}
+.environments-page-container
+  .environments-table-container
+  .fliters-container
+  .select-fliters
   .fliter-selected {
   background-color: #f0f3f7;
   font-size: 12px;
   font-weight: 400;
   color: #414d55;
   line-height: 30px;
-  padding: 0 10px;
+  padding: 0px;
   display: inline-block;
   min-width: 100px;
   margin-right: 5px;
+  margin-bottom: 5px;
   vertical-align: top;
   cursor: pointer;
   position: relative;
@@ -496,9 +534,23 @@ a:hover {
   .fliters-container
   .select-fliters
   .fliter-selected
+  span {
+  display: block;
+  padding: 0 30px 0 10px;
+}
+.environments-page-container
+  .environments-table-container
+  .fliters-container
+  .select-fliters
+  .fliter-selected
   i {
   font-weight: 100;
-  padding-left: 10px;
+  padding-left: 0;
+  float: none;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  z-index: 1;
 }
 .environments-page-container
   .environments-table-container
@@ -520,7 +572,7 @@ a:hover {
   border-radius: 4px;
   position: absolute;
   left: 0;
-  top: 41px;
+  top: 100%;
   width: 30%;
   padding: 15px;
   display: none;

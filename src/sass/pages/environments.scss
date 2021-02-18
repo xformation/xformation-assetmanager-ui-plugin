@@ -63,17 +63,18 @@
   .environments-table-container {
     .fliters-container {
       position: relative;
-
+      
       .select-fliters {
         background: #FFFFFF;
         border: 1px solid #8392A7;
         border-radius: 4px;
         width: 100%;
         display: block;
-        height: 42px;
-        padding: 5px 15px;
+        min-height: 42px;
+        padding: 5px 15px 0;
         position: relative;
-        .fliter-toggel{
+
+        .fliter-toggel {
           position: absolute;
           left: 0;
           top: 0;
@@ -92,25 +93,59 @@
           margin-right: 10px;
           vertical-align: top;
         }
-
+        .add-fliters{
+          background-color: #F0F3F7;
+          font-size: 12px;
+          font-weight: 400;
+          color: #414D55;
+          line-height: 30px;
+          cursor: pointer;
+          padding: 0px;
+          display: inline-block;
+          min-width: 30px;
+          margin-right: 5px;
+          margin-bottom: 5px;
+          vertical-align: top;
+          cursor: pointer;
+          position: relative;
+          z-index: 1;
+          text-align: center;
+          i{
+            float: none;
+          }
+          &:hover{
+            color: #464c54;
+          }
+        }
         .fliter-selected {
           background-color: #F0F3F7;
           font-size: 12px;
           font-weight: 400;
           color: #414D55;
           line-height: 30px;
-          padding: 0 10px;
+          padding: 0px;
           display: inline-block;
           min-width: 100px;
           margin-right: 5px;
+          margin-bottom: 5px;
           vertical-align: top;
           cursor: pointer;
           position: relative;
           z-index: 1;
 
+          span {
+            display: block;
+            padding: 0 30px 0 10px;
+          }
+
           i {
             font-weight: 100;
-            padding-left: 10px;
+            padding-left: 0;
+            float: none;
+            position: absolute;
+            right: 10px;
+            top: 0;
+            z-index: 1;
           }
         }
 
@@ -130,7 +165,7 @@
         border-radius: 4px;
         position: absolute;
         left: 0;
-        top: 41px;
+        top: 100%;
         width: 30%;
         padding: 15px;
         display: none;
