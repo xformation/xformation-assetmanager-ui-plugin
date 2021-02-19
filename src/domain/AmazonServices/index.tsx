@@ -203,12 +203,12 @@ export class AmazonServices extends React.Component<any, any> {
                 <div className="service-container">
                     <div className="common-container">
                         <div className="row">
-                            <div className="col-lg-3 col-md-12 col-sm-12">
+                            <div className="col-lg-9 col-md-9 col-sm-12">
                                 <div className="asset-heading">
                                     Environments
                                 </div>
                             </div>
-                            <div className="col-lg-9 col-md-12 col-sm-12">
+                            <div className="col-lg-3 col-md-3 col-sm-12">
                                 <div className="float-right common-right-btn">
                                     <Link to={`${config.basePath}/`} className="asset-white-button min-width-inherit m-r-0">
                                         <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;

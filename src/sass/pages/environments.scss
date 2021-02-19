@@ -29,7 +29,7 @@
 
         h3 {
           display: inline-block;
-          font-size: 15px;
+          font-size: 14px;
           line-height: 18px;
           font-weight: 600;
           color: #3B4859;
@@ -80,6 +80,7 @@
           top: 0;
           width: 100%;
           height: 100%;
+          cursor: pointer;
         }
 
         p {
@@ -155,6 +156,7 @@
           line-height: 30px;
           color: #8998AC;
           opacity: 0.72;
+          cursor: pointer;
         }
 
       }

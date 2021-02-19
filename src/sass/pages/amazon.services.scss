@@ -372,6 +372,7 @@
               &::before {
                 left: 40px;
               }
+
               &::after {
                 border-top: 1px dashed #8392A7;
                 width: 17px;
@@ -506,10 +507,10 @@
 @media only screen and (max-width: 992px) {
   .service-container {
     .organisational-details {
-      overflow-x: scroll;
-
-      .organisational-data-table {
-        width: 1040px;
+      .container-inner {
+        .organisational-data-table {
+          width: 1040px;
+        }
       }
     }
   }

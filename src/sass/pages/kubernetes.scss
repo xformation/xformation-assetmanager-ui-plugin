@@ -1,25 +1,6 @@
-.main-view{
-    min-height: calc(100% - 51px);
-    height: calc(100% - 51px);
-    > div{
-        height: 100%;
-        > div{
-            height: 100%;
-        }
-    }
-    .monitor-main-body{
-        height: calc(100% - 2px);
-        > div{
-            height: 100%;
-        }
-        #asset-main-container{
-            height: 100%;
-            .asset-container{
-                height: 100%;
-                .service-container{
-                    height: 100%;
-                }
-            }
-        }
+.asset-container{
+    height: 100%;
+    .service-container{
+        height: 140vh;
     }
 }

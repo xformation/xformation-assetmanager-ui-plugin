@@ -273,7 +273,7 @@ export class SelectCloudFilter extends React.Component<any, any> {
                         <i className="fa fa-plus"></i>
                     </div>
                     <div className="fliter-toggel" onClick={() => this.setState({ showTagFilter: !showTagFilter })}></div>
-                    <i className="fa fa-angle-down"></i>
+                    <i className="fa fa-angle-down" onClick={() => this.setState({ showTagFilter: !showTagFilter })}></i>
                 </div>
                 <div className={showTagFilter === true ? "fliters-collapse active" : "fliters-collapse"}>
                     <div className="form-group search-control">

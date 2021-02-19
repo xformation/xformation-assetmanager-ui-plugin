@@ -200,6 +200,8 @@
         }
 
         .storage-details {
+            padding-top: 30px;
+            padding-bottom: 30px;
             min-height: 450px;
             display: flex;
             width: 100%;
@@ -229,6 +231,14 @@
 
 @media only screen and (max-width: 767px) {
     .service-account-container {
+        .storage-section{
+            .network-boxs{
+                min-height: inherit;
+            }
+            .storage-details{
+                min-height: 200px;
+            }
+        }
         .account-tabs {
             text-align: center;
             padding-bottom: 15px;
