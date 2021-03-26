@@ -41,6 +41,7 @@ export class StorageDetails extends React.Component<any, any> {
                                         <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;
                                         Back
                                     </Link>
+                                   
                                 </div>
                             </div>
                         </div>

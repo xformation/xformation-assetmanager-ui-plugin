@@ -4,11 +4,17 @@ import { Breadcrumbs } from '../Breadcrumbs';
 import { config } from '../../config';
 import { images } from '../../img';
 import { SelectCloudFilter } from './../Components/SelectCloudFilter';
+import { AddEnvironment } from './AddEnvironment';
+import { AddAccount } from '../Account/AddAccount';
+import { RestService } from '../_service/RestService';
 export class Environments extends React.Component<any, any> {
     breadCrumbs: any;
+    addEnvironmentRef: any;
+    addAccountRef: any;
     constructor(props: any) {
         super(props);
         this.state = {
+            isApiCalled: false,
             codeEditorValue: "",
             optionJsonData: [
                 {
@@ -125,6 +131,8 @@ export class Environments extends React.Component<any, any> {
                 isCurrentPage: true
             }
         ];
+        this.addEnvironmentRef = React.createRef();
+        this.addAccountRef = React.createRef();
     }
 
     displaySelectedTags = () => {
@@ -251,6 +259,36 @@ export class Environments extends React.Component<any, any> {
             selectedTeg
         })
     }
+    async componentDidMount(){
+        this.getEnvironment();
+    }
+    getEnvironment = async () => {
+        this.setState({
+            isApiCalled: true
+        });
+        try {
+            await RestService.getData(config.GET_ALL_ENVIRONMENT, null, null).then(
+                (response: any) => {
+                    this.setState({
+                        Environment: response,
+                        displaygetEnvironmentData: response
+                    });
+                    console.log("getEnvironment response : ", response);
+                }
+            );
+        } catch (err) {
+            console.log("Loading catalog failed. Error: ", err);
+        }
+        this.setState({
+            isApiCalled: false
+        });
+    }
+    onClickCreateEnvironment = () => {
+        this.addEnvironmentRef.current.toggle();
+    };
+    onClickCreateAccount = (e: any) => {
+        this.addAccountRef.current.toggle();
+    };
 
     displayTableData = (table_data: any) => {
         let retData = [];
@@ -292,12 +330,16 @@ export class Environments extends React.Component<any, any> {
                                     Environments
                                 </div>
                             </div>
-                            <div className="col-lg-9 col-md-3 col-sm-12">
-                                <div className="float-right common-right-btn">
+                            <div className="col-lg-9 col-md-9 col-sm-12">
+                                <div className="float-right common-right-btn ">
                                     <Link to={`${config.basePath}/`} className="asset-white-button min-width-inherit">
                                         <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;
-                                        Back
+                                        Back 
                                     </Link>
+                                    <a href="#" style={{ float: 'left' }}  onClick={this.onClickCreateEnvironment} className="asset-white-button min-width-inherit">
+                                    <i className="fa fa-add"></i>&nbsp;&nbsp;
+                                        Add Environment
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -316,6 +358,10 @@ export class Environments extends React.Component<any, any> {
                                     </div>
                                     <div className="table-box">
                                         <table className="table">
+                                        <a className="fliter fliter-toggel" onClick={this.onClickCreateAccount}>
+                                            <i className="fa fa-plus"></i>
+                                            <span>Add Account </span>
+                                        </a>
                                             <tr>
                                                 <td>Accounts</td>
                                                 <td>20</td>
@@ -548,6 +594,8 @@ export class Environments extends React.Component<any, any> {
                         </div>
                     </div>
                 </div>
+                <AddEnvironment  ref={this.addEnvironmentRef} />
+                <AddAccount  ref={this.addAccountRef} />
             </div>
         );
     }

@@ -7,8 +7,10 @@ declare const window: any;
 export function loadPluginCss() {
   if (window.grafanaBootData.user.lightTheme) {
     require("./css/assetmanager.light.css");
+    require("./css/perfmanager.light.css");
   } else {
     require("./css/assetmanager.dark.css");
+    require("./css/perfmanager.dark.css");
   }
 }
 
