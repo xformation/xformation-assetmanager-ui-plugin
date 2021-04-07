@@ -6,8 +6,15 @@ export const config = {
   octantURL: "http://100.64.108.25:7777/#/",
   SEVERITY_ERROR: "error",
   ADD_ENVIRONMENT: `${assetSrvUrl}/addEnvironment`,
+  UPDATE_ENVIRONMENT: `${assetSrvUrl}/updateEnvironment`,
   GET_ALL_ENVIRONMENT: `${assetSrvUrl}/getAllEnvironment`,
-  SEVERITY_SUCCESS: " SEVERITY_SUCCESS",
+  ADD_ACOOUNT: `${assetSrvUrl}/addAccount`,
+  SEVERITY_SUCCESS: "SUCCESS",
   ADD_ENVIRONMENT_SUCCESS_MESSAGE: "ADD_ENVIRONMENT_SUCCESS_MESSAGE",
-  SERVER_ERROR_MESSAGE: "SERVER_ERROR_MESSAGE"
+  Update_ENVIRONMENT_SUCCESS_MESSAGE: "Update ENVIRONMENT Succesfully",
+  ADD_ACCOUNT_SUCCESS_MESSAGE: "ADD_ACCOUNT_SUCCESS_MESSAGE",
+  SERVER_ERROR_MESSAGE: "SERVER_ERROR_MESSAGE",
+  DETELE_ENVIRONMENT: `${assetSrvUrl}/deleteEnvironment/`,
+
+  PARENT_NAME: "xformation-assetmanager-ui-plugin"
 };
