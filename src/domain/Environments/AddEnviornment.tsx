@@ -53,14 +53,14 @@ export class AddEnviornment extends React.Component<any, any> {
             }
             console.log("Environment Name = " + EnvironmentName, + " Environment description = " + EnvironmentDescription, + " Environment Scopes = " + EnvironmentScopes, + " Environment AuthUrl = " + EnvironmentAuthUrl, + " Environment TokenUrl = " + EnvironmentTokenUrl, + " Environment ApiUrl = " + EnvironmentApiUrl, "Environment Type = " + Type);
 
-            const cd = new FormData();
-            cd.append("name", EnvironmentName);
-            cd.append("description", EnvironmentDescription);
-            cd.append("scopes", EnvironmentScopes);
-            cd.append("authUrl", EnvironmentAuthUrl);
-            cd.append("tokenUrl", EnvironmentTokenUrl);
-            cd.append("apiUrl", EnvironmentApiUrl);
-            cd.append("type", Type);
+            // const cd = new FormData();
+            // cd.append("name", EnvironmentName);
+            // cd.append("description", EnvironmentDescription);
+            // cd.append("scopes", EnvironmentScopes);
+            // cd.append("authUrl", EnvironmentAuthUrl);
+            // cd.append("tokenUrl", EnvironmentTokenUrl);
+            // cd.append("apiUrl", EnvironmentApiUrl);
+            // cd.append("type", Type);
             await fetch(config.ADD_ENVIRONMENT + "?name=" + EnvironmentName + "&type=" + Type + "&description=" + EnvironmentDescription + "&authUrl=" + EnvironmentAuthUrl + "&tokenUrl=" + EnvironmentTokenUrl + "&apiUrl=" + EnvironmentApiUrl + "&scopes=" + EnvironmentScopes, {
                 method: 'post',
                 headers: {
@@ -114,12 +114,13 @@ export class AddEnviornment extends React.Component<any, any> {
             if (!EnvironmentName) {
                 retData.EnvironmentName = {
                     isValid: false,
-                    message: "full Name is required"
+                    message: "Name is required"
                 };
             }
         }
         return retData;
     }
+
     handleClose = () => {
         this.setState({
             modal: false,
