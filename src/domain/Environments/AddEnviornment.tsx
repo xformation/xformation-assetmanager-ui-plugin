@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { config } from '../../config';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { CustomTextbox } from '../../Components/CustomTextbox';
-import { Customselectbox } from '../../Components/Customselectbox';
 import AlertMessage from '../../Components/AlertMessage';
+import {RestService} from '../_service/RestService';
+
 export class AddEnviornment extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -34,73 +35,6 @@ export class AddEnviornment extends React.Component<any, any> {
         });
 
     }
-    addEnvironment = async (event: any) => {
-        event.preventDefault();
-        this.setState({
-            isSubmitted: true
-        });
-        const errorData = this.validate(true);
-        console.log("Error Data : ", errorData)
-        if (errorData.EnvironmentName.isValid) {
-            const { EnvironmentName, EnvironmentDescription, EnvironmentScopes, EnvironmentAuthUrl, EnvironmentTokenUrl, EnvironmentApiUrl, Type } = this.state;
-            if (!EnvironmentName) {
-                this.setState({
-                    severity: config.SEVERITY_ERROR,
-                    message: "Environment  name is mandatory. Please provide some value for catalog name",
-                    isAlertOpen: true,
-                });
-                return;
-            }
-            console.log("Environment Name = " + EnvironmentName, + " Environment description = " + EnvironmentDescription, + " Environment Scopes = " + EnvironmentScopes, + " Environment AuthUrl = " + EnvironmentAuthUrl, + " Environment TokenUrl = " + EnvironmentTokenUrl, + " Environment ApiUrl = " + EnvironmentApiUrl, "Environment Type = " + Type);
-
-            // const cd = new FormData();
-            // cd.append("name", EnvironmentName);
-            // cd.append("description", EnvironmentDescription);
-            // cd.append("scopes", EnvironmentScopes);
-            // cd.append("authUrl", EnvironmentAuthUrl);
-            // cd.append("tokenUrl", EnvironmentTokenUrl);
-            // cd.append("apiUrl", EnvironmentApiUrl);
-            // cd.append("type", Type);
-            await fetch(config.ADD_ENVIRONMENT + "?name=" + EnvironmentName + "&type=" + Type + "&description=" + EnvironmentDescription + "&authUrl=" + EnvironmentAuthUrl + "&tokenUrl=" + EnvironmentTokenUrl + "&apiUrl=" + EnvironmentApiUrl + "&scopes=" + EnvironmentScopes, {
-                method: 'post',
-                headers: {
-                    "Access-Control-Allow-Origin": "*"
-                }
-            }).then(response => response.json())
-                .then(response => {
-                    console.log('response: ', response);
-                    let refreshEnvironment = this.props.refreshEnvironment;
-                    refreshEnvironment();
-                    console.log('response1324: ', response);
-                    if (response != null) {
-                        console.log("Done");
-                        this.setState({
-                            severity: config.SEVERITY_SUCCESS,
-                            message: config.ADD_ENVIRONMENT_SUCCESS_MESSAGE,
-                            isAlertOpen: true,
-
-                        });
-                    } else {
-                        console.log("Not Complete");
-                        this.setState({
-                            severity: config.SEVERITY_ERROR,
-                            message: config.SERVER_ERROR_MESSAGE,
-                            isAlertOpen: true,
-                        });
-                    }
-                    setTimeout(() => {
-                        this.setState({
-                            isAlertOpen: false,
-                            modal: !this.state.modal,
-
-                        });
-
-                    },
-                        500
-                    );
-                });
-        }
-    }
     validate = (isSubmitted: any) => {
         const validObj = {
             isValid: true,
@@ -121,6 +55,55 @@ export class AddEnviornment extends React.Component<any, any> {
         return retData;
     }
 
+    addEnvironment = async (event: any) => {
+        const { EnvironmentName, EnvironmentDescription, EnvironmentScopes, EnvironmentAuthUrl, EnvironmentTokenUrl, EnvironmentApiUrl, Type } = this.state;
+        event.preventDefault();
+        this.setState({
+            isSubmitted: true
+        });
+        const errorData = this.validate(true);
+        if (!errorData.EnvironmentName.isValid) {
+            return;
+        }
+          
+            console.log("Environment Name = " + EnvironmentName, + " Environment description = " + EnvironmentDescription, + " Environment Scopes = " + EnvironmentScopes, + " Environment AuthUrl = " + EnvironmentAuthUrl, + " Environment TokenUrl = " + EnvironmentTokenUrl, + " Environment ApiUrl = " + EnvironmentApiUrl, "Environment Type = " + Type);
+            var qryw ="?name=" + EnvironmentName + "&type=" + Type + "&description=" + EnvironmentDescription + "&authUrl=" + EnvironmentAuthUrl + "&tokenUrl=" + EnvironmentTokenUrl + "&apiUrl=" + EnvironmentApiUrl + "&scopes=" + EnvironmentScopes;
+            await RestService.add(config.ADD_ENVIRONMENT+ qryw,{})
+            .then(response => {
+                    console.log('response: ', response);
+                    let refreshEnvironment = this.props.refreshEnvironment;
+                    refreshEnvironment();
+                    console.log('response1324: ', response);
+                    if (response != null) {
+                        console.log("Done");
+                        this.setState({
+                            severity: config.SEVERITY_SUCCESS,
+                            message: config.ADD_ENVIRONMENT_SUCCESS_MESSAGE,
+                            isAlertOpen: true,
+
+                        });
+                    } 
+                    else {
+                         console.log("Not Complete");
+                         this.setState({
+                             severity: config.SEVERITY_ERROR,
+                             message: config.SERVER_ERROR_MESSAGE,
+                             isAlertOpen: true,
+                         });
+                     }
+                     setTimeout(() => {
+                         this.setState({
+                             isAlertOpen: false,
+                             modal: !this.state.modal,
+
+                         });
+                        },500);
+                  });
+             }
+        
+      
+    
+   
     handleClose = () => {
         this.setState({
             modal: false,

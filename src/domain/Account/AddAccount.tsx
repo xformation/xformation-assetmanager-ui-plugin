@@ -11,11 +11,11 @@ export class AddAccount extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            AccountName: null,
-            AccountDescription: null,
-            Enviornmentid: null,
-            Password: null,
-            AccountEmail: null,
+            accountName: null,
+            accountDescription: null,
+            enviornmentId: null,
+            password: null,
+            accountEmail: null,
             User_Type: null,
             isApiCalled: false,
             modal: false,
@@ -41,12 +41,12 @@ export class AddAccount extends React.Component<any, any> {
             message: ""
         };
         const retData = {
-            AccountName: validObj,
+            accountName: validObj,
         };
         if (isSubmitted) {
-            const { AccountName } = this.state;
-            if (!AccountName) {
-                retData.AccountName = {
+            const { accountName } = this.state;
+            if (!accountName) {
+                retData.accountName = {
                     isValid: false,
                     message: "Name is required"
                 };
@@ -56,19 +56,19 @@ export class AddAccount extends React.Component<any, any> {
     }
 
     addEnvAccount = async (e: any) => {
-        const { AccountName, AccountDescription, AccountEmail, Password, Enviornmentid } = this.state;
+        const { accountName, accountDescription, accountEmail, password, enviornmentId } = this.state;
         e.preventDefault();
         this.setState({
             isSubmitted: true
         });
         const errorData = this.validate(true);
-        if (!errorData.AccountName.isValid) {
+        if (!errorData.accountName.isValid) {
             return;
         }
-        console.log("Environment Name = " + AccountName, + " Environment description = " + AccountDescription, + " Email = " + AccountEmail, + " Password = " + Password + "Environment id = " + Enviornmentid,);
-        var qry = "?environmentId=" + Enviornmentid + "&name=" +AccountName + "&description=" +AccountDescription + "&email ="+AccountEmail + " &password =" +Password;
+        console.log("Environment Name = " + accountName + ", Environment description = " + accountDescription + ", Email = " + accountEmail + ", password = " + password + ", Environment id = " + enviornmentId);
+        var qry = `environmentId=${enviornmentId}&name=${accountName}&description=${accountDescription}&email=${accountEmail}&password=${password}`;
         
-        await RestService.add(config.ADD_ACOOUNT + qry, {})
+        await RestService.add(`${config.ADD_ACOOUNT}?${qry}`, {})
         .then(response => {
             console.log("Add ac response = ", response );
             if(response.length > 0){
@@ -104,7 +104,7 @@ export class AddAccount extends React.Component<any, any> {
         this.setState({
             modal: !this.state.modal,
             EnviornmentName: selectedEnviornment.name,
-            Enviornmentid: selectedEnviornment.id
+            enviornmentId: selectedEnviornment.id
         });
     }
 
@@ -163,28 +163,28 @@ export class AddAccount extends React.Component<any, any> {
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="AccountName">Name:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="AccountName" id="AccountName" placeholder="Enter Environment Name" name="AccountName" value={state.AccountName} onChange={this.handleStateChange} isValid={errorData.AccountName.isValid} message={errorData.AccountName.message}/>
+                                    <label htmlFor="accountName">Account Name:</label>
+                                    <CustomTextbox containerClass="form-group-inner" maxlength={255} inputClass="form-control" htmlFor="accountName" id="accountName" placeholder="Enter Account Name" name="accountName" value={state.accountName} onChange={this.handleStateChange} isValid={errorData.accountName.isValid} message={errorData.accountName.message}/>
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="AccountDescription">Description:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="AccountDescription" id="AccountDescription" placeholder="Write something that describe this Environment" name="AccountDescription" value={state.AccountDescription} onChange={this.handleStateChange} />
+                                    <label htmlFor="accountDescription">Description:</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="accountDescription" id="accountDescription" placeholder="Write something that describe this account" name="accountDescription" value={state.accountDescription} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="AccountEmail">Email:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="AccountEmail" id="AccountEmail" placeholder="Enter Your Email" name="AccountEmail" value={state.AccountEmail} onChange={this.handleStateChange} />
+                                    <label htmlFor="accountEmail">Email:</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="accountEmail" id="accountEmail" placeholder="Enter account's email id" name="accountEmail" value={state.accountEmail} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="Password">Password</label>
-                                    <CustomTextbox type="password" containerClass="form-group-inner" inputClass="form-control" htmlFor="Password" id="Password" placeholder="Enter Your Password" name="Password" value={state.Password} onChange={this.handleStateChange} />
+                                    <label htmlFor="password">Password</label>
+                                    <CustomTextbox type="password" containerClass="form-group-inner" inputClass="form-control" htmlFor="password" id="password" placeholder="Enter account's password" name="password" value={state.password} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                         </div>
