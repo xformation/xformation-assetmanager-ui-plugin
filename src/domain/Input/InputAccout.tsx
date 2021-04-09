@@ -7,18 +7,18 @@ import { Customselectbox } from '../../Components/Customselectbox';
 import AlertMessage from '../../Components/AlertMessage';
 import { RestService } from '../_service/RestService';
 import axios from 'axios';
-export class EditEnviornment extends React.Component<any, any> {
+export class InputAccount extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            EnvironmentName: null,
-            EnvironmentDescription: null,
-            EnvironmentScopes: null,
-            EnvironmentAuthUrl: null,
-            EnvironmentTokenUrl: null,
-            EnvironmentApiUrl: null,
-            Enviornmentid: null,
-            Type: null,
+            inputName: null,
+            inputDescription: null,
+            inputScopes: null,
+            inputUrl: null,
+            inputuserId: null,
+            inputPassword: null,
+            inputType: null,
+            Accountid: null,
             isApiCalled: false,
             modal: false,
             folderArray: [],
@@ -36,12 +36,12 @@ export class EditEnviornment extends React.Component<any, any> {
             message: ""
         };
         const retData = {
-            EnvironmentName: validObj,
+            inputName: validObj,
         };
         if (isSubmitted) {
-            const { EnvironmentName } = this.state;
-            if (!EnvironmentName) {
-                retData.EnvironmentName = {
+            const { inputName } = this.state;
+            if (!inputName) {
+                retData.inputName = {
                     isValid: false,
                     message: "full Name is required"
                 };
@@ -49,32 +49,29 @@ export class EditEnviornment extends React.Component<any, any> {
         }
         return retData;
     }
-    UpdateEnvironment = async (event: any) => {
-        const { EnvironmentName, EnvironmentDescription, EnvironmentScopes, EnvironmentAuthUrl, EnvironmentTokenUrl, EnvironmentApiUrl, Type, Enviornmentid } = this.state;
-        event.preventDefault();
+
+    InputAccount = async (e: any) => {
+        const {inputName, inputDescription, inputScopes, inputUrl, inputuserId, inputPassword, Accountid, inputType } = this.state;
+        e.preventDefault();
         this.setState({
             isSubmitted: true
         });
         const errorData = this.validate(true);
-        if (!errorData.EnvironmentName.isValid) {
+        if (!errorData.inputName.isValid) {
             return;
         }
-            console.log("Environment Name = " + EnvironmentName + " ,Environment description = " + EnvironmentDescription + " ,Environment Scopes = " + EnvironmentScopes + " ,Environment AuthUrl = " + EnvironmentAuthUrl + " ,Environment TokenUrl = " + EnvironmentTokenUrl + ", Environment ApiUrl = " + EnvironmentApiUrl+ ",Environment Type = " + Type+",Environment id = " + Enviornmentid);
-            var env = `&name=${EnvironmentName}&description=${EnvironmentDescription}&scopes=${EnvironmentScopes}&authUrl=${EnvironmentAuthUrl}&tokenUrl =${EnvironmentTokenUrl}&apiUrl=${EnvironmentApiUrl}&type=${Type}&id=${Enviornmentid}`;
-                await RestService.put(`${config.UPDATE_ENVIRONMENT}?${env}`, {})
-                .then(response => {
-                let refreshEnvironment = this.props.refreshEnvironment;
-                refreshEnvironment();
+        console.log("Account id= " + Accountid + ",Input Name = " + inputName + ", Input Description  = " + inputDescription, +" Input Scopes  = " + inputScopes + ", Input Url = " + inputUrl + ", Input UserId  = " + inputuserId + ", Input Password = " + inputPassword + ", Input Type = " + inputType);
+        var acounts = `&name=${inputName}&description=${inputDescription}&source=${inputScopes}&url=${inputUrl}&userId =${inputuserId}&password=${inputPassword}&type=${inputType}`;
+        await RestService.add(`${config.INPUT_ACOOUNT}?${acounts}`, {})
+            .then(response => {
+                console.log("Input Acc response = ", response);
                 if (response != null) {
-                    console.log("Done");
                     this.setState({
                         severity: config.SEVERITY_SUCCESS,
-                        message: config.Update_ENVIRONMENT_SUCCESS_MESSAGE,
+                        message: config.INPUT_ACCOUNT_SUCCESS_MESSAGE,
                         isAlertOpen: true,
-
                     });
                 } else {
-                    console.log("Not Complete");
                     this.setState({
                         severity: config.SEVERITY_ERROR,
                         message: config.SERVER_ERROR_MESSAGE,
@@ -85,15 +82,14 @@ export class EditEnviornment extends React.Component<any, any> {
                     this.setState({
                         isAlertOpen: false,
                         modal: !this.state.modal,
-
                     });
+                }, 2000);
 
-                },
-                    500
-                );
             });
-    
     }
+
+
+
     handleClose = () => {
         this.setState({
             modal: false,
@@ -101,21 +97,15 @@ export class EditEnviornment extends React.Component<any, any> {
     }
 
 
-    toggle = async (selectedEnviornment: any) => {
-        console.log("Selected data :::: ", selectedEnviornment.name, selectedEnviornment.description, selectedEnviornment.scopes, selectedEnviornment.authUrl, selectedEnviornment.tokenUrl, selectedEnviornment.apiUrl, selectedEnviornment.type, selectedEnviornment.id);
+    toggle = async (selectedAccount: any) => {
+        console.log("Account id :::: ", selectedAccount);
         this.setState({
             modal: !this.state.modal,
-            EnvironmentName: selectedEnviornment.name,
-            EnvironmentDescription: selectedEnviornment.description,
-            EnvironmentScopes: selectedEnviornment.scopes,
-            EnvironmentAuthUrl: selectedEnviornment.authUrl,
-            EnvironmentTokenUrl: selectedEnviornment.tokenUrl,
-            EnvironmentApiUrl: selectedEnviornment.apiUrl,
-            Type: selectedEnviornment.type,
-            Enviornmentid: selectedEnviornment.id
+            // Accountid: selectedAccount.id
+
+
         });
     }
-
     setLink = (link: any) => {
         this.setState({
             link
@@ -126,7 +116,14 @@ export class EditEnviornment extends React.Component<any, any> {
             modal: false,
         });
     }
-   
+    handleImageChange = (e: any) => {
+        this.setState({
+            companyPhotoUrl: URL.createObjectURL(e.target.files[0])
+        })
+        this.setState({
+            companyLogo: e.target.files[0]
+        })
+    };
     handleCloseAlert = (e: any) => {
         this.setState({
             isAlertOpen: false
@@ -140,7 +137,7 @@ export class EditEnviornment extends React.Component<any, any> {
     };
     onClickFilterType = (e: any) => {
         this.setState({
-           Type: e.target.value,
+            inputType: e.target.value
         });
     }
     render() {
@@ -155,56 +152,56 @@ export class EditEnviornment extends React.Component<any, any> {
                     <div className="d-block width-100 contact-popup-container">
                         <div className="d-block p-b-20 heading">
                             <div className="d-block width-100">
-                                <h4 className="d-block"><i className="fa fa-building"></i> Edit Environment</h4>
+                                <h4 className="d-block"><i className="fa fa-building"></i> Input Account</h4>
 
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="EnvironmentName">Name:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentName" id="EnvironmentName" placeholder="Enter the Environment Name" name="EnvironmentName" value={state.EnvironmentName} onChange={this.handleStateChange} isValid={errorData.EnvironmentName.isValid} message={errorData.EnvironmentName.message} />
+                                    <label htmlFor="inputName">Name:</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control"maxLength={255} htmlFor="inputName" id="inputName" placeholder="Enter input name" name="inputName" value={state.inputName} onChange={this.handleStateChange} isValid={errorData.inputName.isValid} message={errorData.inputName.message} />
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="EnvironmentDescription">Description:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentDescription" id="EnvironmentDescription" placeholder="Write something that describe this Environment" name="EnvironmentDescription" value={state.EnvironmentDescription} onChange={this.handleStateChange} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-6 col-md-6 col-sm-12">
-                                <div className="form-group">
-                                    <label htmlFor="EnvironmentScopes">Scopes:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentScopes" id="EnvironmentScopes" placeholder="Add notes about this Environment - make something about a recent deal, etc." name="EnvironmentScopes" value={state.EnvironmentScopes} onChange={this.handleStateChange} />
-                                </div>
-                            </div>
-                            <div className="col-lg-6 col-md-6 col-sm-12">
-                                <div className="form-group">
-                                    <label htmlFor="AuthUrl">AuthUrl :</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentAuthUrl" id="EnvironmentAuthUrl" placeholder="eg: My company1.com, mycompany2.com" name="EnvironmentAuthUrl" value={state.EnvironmentAuthUrl} onChange={this.handleStateChange} />
+                                    <label htmlFor="inputDescription">Description:</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxlength={5000} htmlFor="inputDescription" id="inputDescription" placeholder="Write something that describe this input" name="inputDescription" value={state.inputDescription} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="EnvironmentTokenUrl">TokenUrl :</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentTokenUrl" id="EnvironmentTokenUrl" placeholder="Any" name="EnvironmentTokenUrl" value={state.EnvironmentTokenUrl} onChange={this.handleStateChange} />
+                                    <label htmlFor="inputScopes">Source:</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="inputScopes" id="inputScopes" placeholder="Enter your input scopes " name="inputScopes" value={state.inputScopes} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="EnvironmentApiUrl">ApiUrl :</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentApiUrl" id="EnvironmentApiUrl" placeholder="Any" name="EnvironmentApiUrl" value={state.EnvironmentApiUrl} onChange={this.handleStateChange} />
+                                    <label htmlFor="inputUrl">Url :</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="inputUrl" id="inputUrl" placeholder="Enter your input url" name="inputUrl" value={state.inputUrl} onChange={this.handleStateChange} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="inputuserId">UserId :</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="inputuserId " id="inputuserId " placeholder="Enter your input user Id " name="inputuserId " value={state.inputuserId} onChange={this.handleStateChange} />
+                                </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="inputPassword">Password</label>
+                                    <CustomTextbox type="password" containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="inputPassword" id="inputPassword" placeholder="Enter your input-account password" name="inputPassword" value={state.inputPassword} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12">
                             <div className="form-group">
-                                <label htmlFor="Type">Type :</label>
-                                <select className="form-control" name={this.state.name} value={this.state.Type} onChange={this.onClickFilterType} >
+                                <label htmlFor="inputType">Type :</label>
+                                <select className="form-control" name="inputType" value={state.inputType} onChange={this.onClickFilterType} >
                                     <option value="ALL">ALL</option>
                                     <option value="AWS">AWS</option>
                                     <option value="AZURE">AZURE</option>
@@ -213,12 +210,11 @@ export class EditEnviornment extends React.Component<any, any> {
                                 </select>
                             </div>
                         </div>
-
                         <div className="row">
                             <div className="col-lg-12 col-md-12 col-sm-12">
                                 <div className="d-block text-center p-t-20 contact-popup-buttons">
                                     <button className="cancel" onClick={this.handleClose}>Cancel</button>
-                                    <button className="save" onClick={this.UpdateEnvironment}>Update Environment</button>
+                                    <button className="save" onClick={this.InputAccount}>Input Account</button>
                                 </div>
                             </div>
                         </div>

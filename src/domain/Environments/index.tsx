@@ -8,7 +8,7 @@ import { RestService } from '../_service/RestService';
 import { AddAccount } from '../Account/AddAccount';
 import { AddEnviornment } from './AddEnviornment';
 import { EditEnviornment } from './EditEnviornment';
-import { InputAccount } from './InputAccout';
+import { InputAccount } from '../Input/InputAccout';
 import Rbac from '../../components/Rbac';
 export class Environments extends React.Component<any, any> {
     breadCrumbs: any;

@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom';
 import { config } from '../../config';
 import { Modal, ModalHeader, ModalBody, ModalFooter, CustomInput } from 'reactstrap';
 import { CustomTextbox } from '../../Components/CustomTextbox';
-import { Customselectbox } from '../../Components/Customselectbox';
+import { RestService } from '../_service/RestService';
 import AlertMessage from '../../Components/AlertMessage';
-import {RestService} from '../_service/RestService';
-
 export class AddAccount extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -16,25 +14,27 @@ export class AddAccount extends React.Component<any, any> {
             enviornmentId: null,
             password: null,
             accountEmail: null,
-            User_Type: null,
+            accountclientId: null,
+            accountclientSecret: null,
+            acoountuserType: null,
             isApiCalled: false,
+            status: null,
             modal: false,
             folderArray: [],
-            checkedFolder: [], 
+            checkedFolder: [],
             isAlertOpen: false,
             message: null,
             severity: null,
             isSubmitted: false,
         };
         this.handleCloseAlert = this.handleCloseAlert.bind(this);
+        this.addEnvAccount = this.addEnvAccount.bind(this);
     }
     async componentDidMount() {
         this.setState({
             isApiCalled: true,
         });
-
     }
-
     validate = (isSubmitted: any) => {
         const validObj = {
             isValid: true,
@@ -56,7 +56,8 @@ export class AddAccount extends React.Component<any, any> {
     }
 
     addEnvAccount = async (e: any) => {
-        const { accountName, accountDescription, accountEmail, password, enviornmentId } = this.state;
+        const { accountName, accountDescription, accountEmail, password, accountclientSecret,
+            enviornmentId, acoountuserType, accountclientId, status } = this.state;
         e.preventDefault();
         this.setState({
             isSubmitted: true
@@ -65,40 +66,38 @@ export class AddAccount extends React.Component<any, any> {
         if (!errorData.accountName.isValid) {
             return;
         }
-        console.log("Environment Name = " + accountName + ", Environment description = " + accountDescription + ", Email = " + accountEmail + ", password = " + password + ", Environment id = " + enviornmentId);
-        var qry = `environmentId=${enviornmentId}&name=${accountName}&description=${accountDescription}&email=${accountEmail}&password=${password}`;
-        
+        var qry = `environmentId=${enviornmentId}&name=${accountName}&description=${accountDescription}&email=${accountEmail}&password=${password}&clientSecret=${accountclientSecret}&userType=${acoountuserType}&status=${status}&clientId=${accountclientId}`;
+
         await RestService.add(`${config.ADD_ACOOUNT}?${qry}`, {})
-        .then(response => {
-            console.log("Add ac response = ", response );
-            if(response.length > 0){
-                this.setState({
-                    severity: config.SEVERITY_SUCCESS,
-                    message: config.ADD_ACCOUNT_SUCCESS_MESSAGE,
-                    isAlertOpen: true,
-                }); 
-            }else{
-                this.setState({
-                    severity: config.SEVERITY_ERROR,
-                    message: config.SERVER_ERROR_MESSAGE,
-                    isAlertOpen: true,
-                });
-            }
-            setTimeout(() => {
-                this.setState({
-                    isAlertOpen: false,
-                    modal: !this.state.modal,
-                });
-            },2000);
-        });
+            .then(response => {
+                console.log("Add ac response = ", response);
+                if (response.length > 0) {
+                    this.setState({
+                        severity: config.SEVERITY_SUCCESS,
+                        message: config.ADD_ACCOUNT_SUCCESS_MESSAGE,
+                        isAlertOpen: true,
+                    });
+                } else {
+                    this.setState({
+                        severity: config.SEVERITY_ERROR,
+                        message: config.SERVER_ERROR_MESSAGE,
+                        isAlertOpen: true,
+                    });
+                }
+                setTimeout(() => {
+                    this.setState({
+                        isAlertOpen: false,
+                        modal: !this.state.modal,
+                    });
+                }, 2000);
+            });
     }
-  
+
     handleClose = () => {
         this.setState({
             modal: false,
         });
     }
-
 
     toggle = async (selectedEnviornment: any) => {
         this.setState({
@@ -113,43 +112,33 @@ export class AddAccount extends React.Component<any, any> {
             link
         });
     };
+
     HandleClose = () => {
         this.setState({
             modal: false,
         });
     }
-    handleImageChange = (e: any) => {
-        this.setState({
-            companyPhotoUrl: URL.createObjectURL(e.target.files[0])
-        })
-        this.setState({
-            companyLogo: e.target.files[0]
-        })
-    };
+
     handleCloseAlert = (e: any) => {
         this.setState({
             isAlertOpen: false
         })
     }
+    
     handleStateChange = (e: any) => {
         const { name, value } = e.target;
         this.setState({
             [name]: value
         });
     };
-    onClickFilterType = (e: any) => {
-        const Type = e.target.value;
-        this.setState({
-            Type: Type,
-        });
-    }
+
     render() {
         const { isSubmitted, } = this.state;
         const state = this.state;
         const errorData = this.validate(isSubmitted);
         return (
             <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
-                <AlertMessage handleCloseAlert={this.handleCloseAlert} open={state.isAlertOpen} severity={state.severity} msg={state.message}></AlertMessage>
+                               <AlertMessage handleCloseAlert={this.handleCloseAlert} open={state.isAlertOpen} severity={state.severity} msg={state.message}></AlertMessage>
                 <button className="close-btn" onClick={this.handleClose}>X</button>
                 <ModalBody style={{ height: 'calc(75vh - 50px)', overflowY: 'auto', overflowX: "hidden" }}>
                     <div className="d-block width-100 contact-popup-container">
@@ -164,13 +153,13 @@ export class AddAccount extends React.Component<any, any> {
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="accountName">Account Name:</label>
-                                    <CustomTextbox containerClass="form-group-inner" maxlength={255} inputClass="form-control" htmlFor="accountName" id="accountName" placeholder="Enter Account Name" name="accountName" value={state.accountName} onChange={this.handleStateChange} isValid={errorData.accountName.isValid} message={errorData.accountName.message}/>
+                                    <CustomTextbox containerClass="form-group-inner" maxLength={255} inputClass="form-control" htmlFor="accountName" id="accountName" placeholder="Enter Account Name" name="accountName" value={state.accountName} onChange={this.handleStateChange} isValid={errorData.accountName.isValid} message={errorData.accountName.message} />
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="accountDescription">Description:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="accountDescription" id="accountDescription" placeholder="Write something that describe this account" name="accountDescription" value={state.accountDescription} onChange={this.handleStateChange} />
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={5000} htmlFor="accountDescription" id="accountDescription" placeholder="Write something that describe this account" name="accountDescription" value={state.accountDescription} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                         </div>
@@ -178,16 +167,48 @@ export class AddAccount extends React.Component<any, any> {
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="accountEmail">Email:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="accountEmail" id="accountEmail" placeholder="Enter account's email id" name="accountEmail" value={state.accountEmail} onChange={this.handleStateChange} />
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="accountEmail" id="accountEmail" placeholder="Enter account's email id" name="accountEmail" value={state.accountEmail} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
-                                    <CustomTextbox type="password" containerClass="form-group-inner" inputClass="form-control" htmlFor="password" id="password" placeholder="Enter account's password" name="password" value={state.password} onChange={this.handleStateChange} />
+                                    <CustomTextbox type="password" containerClass="form-group-inner" maxLength={255} inputClass="form-control" htmlFor="password" id="password" placeholder="Enter account's password" name="password" value={state.password} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="accountclientId"> ClientId:</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={2000} id="accountclientId" placeholder="accountclientId" name="accountclientId" value={state.accountclientId} onChange={this.handleStateChange} />
+                                </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="accountclientSecret">ClientSecret</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={2000} htmlFor="accountclientSecret" id="accountclientSecret" placeholder="null" name="accountclientSecret" value={state.accountclientSecret} onChange={this.handleStateChange} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="acoountuserType"> UserType:</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="acoountuserType" id="acoountuserType" placeholder="any" name="acoountuserType" value={state.acoountuserType} onChange={this.handleStateChange} />
+                                </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                            <div className="form-group">
+                                <label htmlFor="Status">Status :</label>
+                                <select className="form-control" name="status" value={state.status} onChange={this.handleStateChange} >
+                                    <option value="">Select Status</option>
+                                    <option value="Enable">Enable</option>
+                                    <option value="Disable">Disable</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                         <div className="row">
                             <div className="col-lg-12 col-md-12 col-sm-12">
                                 <div className="d-block text-center p-t-20 contact-popup-buttons">

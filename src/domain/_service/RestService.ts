@@ -2,12 +2,21 @@ export const RestService = {
   getData,
   add,
   getDashboardList,
-  deleteObject
+  deleteObject,
+  put
 };
 
 function add(url: any, data: any) {
   const requestOptions = getRequestOptions(
     "POST",
+    { "Content-Type": "application/json;charset=UTF-8" },
+    JSON.stringify(data)
+  );
+  return fetch(url, requestOptions).then(response => response.json());
+}
+function put(url: any, data: any) {
+  const requestOptions = getRequestOptions(
+    "put",
     { "Content-Type": "application/json;charset=UTF-8" },
     JSON.stringify(data)
   );

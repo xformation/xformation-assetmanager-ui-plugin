@@ -100,10 +100,6 @@ export class AddEnviornment extends React.Component<any, any> {
                         },500);
                   });
              }
-        
-      
-    
-   
     handleClose = () => {
         this.setState({
             modal: false,
@@ -126,14 +122,6 @@ export class AddEnviornment extends React.Component<any, any> {
             modal: false,
         });
     }
-    handleImageChange = (e: any) => {
-        this.setState({
-            companyPhotoUrl: URL.createObjectURL(e.target.files[0])
-        })
-        this.setState({
-            companyLogo: e.target.files[0]
-        })
-    };
     handleCloseAlert = (e: any) => {
         this.setState({
             isAlertOpen: false
@@ -173,7 +161,7 @@ export class AddEnviornment extends React.Component<any, any> {
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="EnvironmentName">Name:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentName" id="EnvironmentName" placeholder="Enter  Environment Name" name="EnvironmentName" value={state.EnvironmentName} onChange={this.handleStateChange} isValid={errorData.EnvironmentName.isValid} message={errorData.EnvironmentName.message} />
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="EnvironmentName" id="EnvironmentName" placeholder="Enter  Environment Name" name="EnvironmentName" value={state.EnvironmentName} onChange={this.handleStateChange} isValid={errorData.EnvironmentName.isValid} message={errorData.EnvironmentName.message} />
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
@@ -187,13 +175,13 @@ export class AddEnviornment extends React.Component<any, any> {
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="Scopes">Scopes:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="Scopes" id="EnvironmentScopes" placeholder="Enter Environment Scopes" name="EnvironmentScopes" value={state.EnvironmentScopes} onChange={this.handleStateChange} />
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="Scopes" id="EnvironmentScopes" placeholder="Enter Environment Scopes" name="EnvironmentScopes" value={state.EnvironmentScopes} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="AuthUrl">AuthUrl :</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentAuthUrl" id="EnvironmentAuthUrl" placeholder="Enter Environment AuthUrl" name="EnvironmentAuthUrl" value={state.EnvironmentAuthUrl} onChange={this.handleStateChange} />
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="EnvironmentAuthUrl" id="EnvironmentAuthUrl" placeholder="Enter Environment AuthUrl" name="EnvironmentAuthUrl" value={state.EnvironmentAuthUrl} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                         </div>
@@ -201,13 +189,13 @@ export class AddEnviornment extends React.Component<any, any> {
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="TokenUrl">TokenUrl :</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentTokenUrl" id="EnvironmentTokenUrl" placeholder="Any" name="EnvironmentTokenUrl" value={state.EnvironmentTokenUrl} onChange={this.handleStateChange} />
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="EnvironmentTokenUrl" id="EnvironmentTokenUrl" placeholder="Any" name="EnvironmentTokenUrl" value={state.EnvironmentTokenUrl} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="EnvironmentApiUrl">ApiUrl :</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" htmlFor="EnvironmentApiUrl" id="EnvironmentApiUrl" placeholder="Any" name="EnvironmentApiUrl" value={state.EnvironmentApiUrl} onChange={this.handleStateChange} />
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="EnvironmentApiUrl" id="EnvironmentApiUrl" placeholder="Any" name="EnvironmentApiUrl" value={state.EnvironmentApiUrl} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                         </div>
