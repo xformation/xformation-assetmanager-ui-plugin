@@ -309,8 +309,8 @@ export class Environments extends React.Component<any, any> {
     onClickAddAccount = (e: any,selectedEnviornment: any) => {
         this.AddAccountRef.current.toggle(selectedEnviornment);
     };
-    onClickInputAccount = (e: any) => {
-        this.InputAccountRef.current.toggle();
+    onClickInputAccount = (e: any,selectedEnviornment: any) => {
+        this.InputAccountRef.current.toggle(selectedEnviornment);
     };
 
 
@@ -396,7 +396,7 @@ export class Environments extends React.Component<any, any> {
                         </div>
                         <div className="table-box">
                             <table className="table">
-                            <a style={{ float: 'left', marginRight: '9px',marginLeft: "-22px", fontSize:"14px" }} onClick={this.onClickInputAccount}>
+                            <a style={{ float: 'left', marginRight: '9px',marginLeft: "-22px", fontSize:"14px" }} onClick={e=> this.onClickInputAccount(e, val)}>
                                     <i>Add Input</i>
                                     </a>
                                 <a style={{ float: 'left', marginRight:'-54px', fontSize:"14px" }} onClick={e => this.onClickAddAccount(e, val)} >

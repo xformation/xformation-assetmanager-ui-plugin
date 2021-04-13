@@ -18,5 +18,17 @@ export const config = {
   SERVER_ERROR_MESSAGE: "SERVER_ERROR_MESSAGE",
   DETELE_ENVIRONMENT: `${assetSrvUrl}/deleteEnvironment/`,
 
-  PARENT_NAME: "xformation-assetmanager-ui-plugin"
+  GET_ALL_NODES_IN_CLUSTER: assetSrvUrl + `/cluster`,
+  PARENT_NAME: "xformation-assetmanager-ui-plugin",
+  TCP_INPUT_STREAM: assetSrvUrl + `/system/inputs`,
+  TCP_INPUT_ADDED_SUCESS: "TCP INPUT SAVED",
+  TCP_INPUT_ADDED_ERROR: "TCP Input can't added",
+  USERID: "admin",
+  PASSWORD: "admin",
+  INPUT_URL: {
+    KPI_INPUT : "http://127.0.0.1:7035/system/inputs",
+    LOG_INPUT : "http://127.0.0.1:7037/system/inputs",
+    CAMPLIANCE_INPUT : "http://127.0.0.1:7039/system/inputs",
+    NATIVEDS_INPUT : "http://127.0.0.1:7055/system/inputs"  
+    },
 };
