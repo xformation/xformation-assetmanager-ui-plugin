@@ -18,8 +18,10 @@ export class Environments extends React.Component<any, any> {
     EditEnviornmentRef: any;
     constructor(props: any) {
         super(props);
+      
         this.state = {
             Environment: [],
+
             displaygetEnvironmentData: [],
             isApiCalled: false,
             codeEditorValue: "",
@@ -111,18 +113,7 @@ export class Environments extends React.Component<any, any> {
                     subdata: []
                 }
             ],
-            aws_table_data: [
-                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
-                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
-                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
-                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
-            ],
-            azure_table_data: [
-                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
-                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
-                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
-                { title: 'AWS (657907747545)', unit: 'Synectiks', instance: 'N/A', status: true },
-            ],
+            
             selectedTeg: [],
             showTagFilter: false,
             showRecentFilter: false,
@@ -270,10 +261,13 @@ export class Environments extends React.Component<any, any> {
     }
     async componentDidMount() {
         this.getEnvironment();
+        
       
     }
       refreshEnvironment = async () => {
         this.getEnvironment();
+        this.displayTableData();
+    
     }
     getEnvironment = async () => {
         this.setState({
@@ -284,13 +278,16 @@ export class Environments extends React.Component<any, any> {
                 (response: any) => {
                     this.setState({
                         Environment: response,
-                        displaygetEnvironmentData: response
+                        displaygetEnvironmentData: response,
+                       result : response.length
                
                     });
-
+                   
+                    
                 }
 
             );
+            
         } catch (err) {
             console.log("Loading catalog failed. Error: ", err);
         }
@@ -298,6 +295,7 @@ export class Environments extends React.Component<any, any> {
             isApiCalled: false
         });
     }
+    
     onClickEditAccount = (e: any, selectedEnviornment: any) => {
         this.EditEnviornmentRef.current.toggle(selectedEnviornment);
 
@@ -313,14 +311,57 @@ export class Environments extends React.Component<any, any> {
         this.AddAccountRef.current.toggle(selectedEnviornment);
     };
 
-    displayTableData = (table_data: any) => {
+    displayTableData () {
+        const { displaygetEnvironmentData } = this.state;
+       
         let retData = [];
-        for (let i = 0; i < table_data.length; i++) {
-            let row = table_data[i];
+        for (let i = 0; i < displaygetEnvironmentData.length; i++) {
+            let row = displaygetEnvironmentData[i];
+            if(row.type=="AWS"){
             retData.push(
+                console.log("Loading data11 : ", row),
+                
                 <tr>
                     <td>
-                        <a href="#">{row.title}</a>
+                        <a href="#">{row.name}</a>
+                    </td>
+                    <td>{row.unit}</td>
+                    <td>{row.instance}</td>
+                    <td>
+                        <div className={row.status ? "status enable" : "status disable"}></div>
+                    </td>
+                    <td>
+                         <div className="d-block text-center">
+                            <button className="asset-white-button min-width-inherit m-r-0">
+                                <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
+                                 {<CreateButtonInput /> }   
+                                 
+                                    </Rbac>  
+                            </button>
+                        </div> 
+                    </td> 
+                </tr>
+          
+        
+            );
+          
+        }
+      
+    }
+        return retData;
+ 
+    }
+    AzureTableData () {
+        const { displaygetEnvironmentData } = this.state;
+        let retData = [];
+        for (let i = 0; i < displaygetEnvironmentData.length; i++) {
+            let row = displaygetEnvironmentData[i];
+            if(row.type=="AZURE"){
+            retData.push(
+                console.log("Loading data11 : ", row),
+                <tr>
+                    <td>
+                        <a href="#">{row.name}</a>
                     </td>
                     <td>{row.unit}</td>
                     <td>{row.instance}</td>
@@ -339,9 +380,13 @@ export class Environments extends React.Component<any, any> {
                     </td> 
                 </tr>
             );
+            }
         }
         return retData;
+ 
     }
+
+   
     onClickAddfolder = (link: any) => {
         this.AddfolderRef.current.setLink(link);
         this.AddfolderRef.current.toggle();
@@ -431,7 +476,8 @@ export class Environments extends React.Component<any, any> {
     }
     render() {
         const state = this.state;
-        const { displaygetEnvironmentData, showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data, azure_table_data } = this.state;
+        const {row, displaygetEnvironmentData, showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data, result } = this.state;
+     
         return (
 
             <div className="asset-container">
@@ -488,7 +534,7 @@ export class Environments extends React.Component<any, any> {
 
                                     <tr>
                                         <td>Accounts</td>
-                                        <td>0</td>
+                                        <td>{result}</td>
                                     </tr>
                                     <tr>
                                         <td>Assets</td>
@@ -742,9 +788,9 @@ export class Environments extends React.Component<any, any> {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.displayTableData(aws_table_data)}
+                                    {/* {this.displayTableData(aws_table_data)} */}
                                    
-                                 
+                                    {this.displayTableData()}
                                    
                                 </tbody>
                                
@@ -756,7 +802,7 @@ export class Environments extends React.Component<any, any> {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.displayTableData(azure_table_data)}
+                                {this.AzureTableData()}
                                 </tbody>
                             </table>
                         </div>
