@@ -11,12 +11,17 @@ export class AddAccount extends React.Component<any, any> {
         this.state = {
             accountName: null,
             accountDescription: null,
-            enviornmentId: null,
+            enviornmentId: '1',
             password: null,
             accountEmail: null,
             accountclientId: null,
             accountclientSecret: null,
             acoountuserType: null,
+            accountapiUrl:null,
+            accounttokenUrl:null,
+            authUrl:null,
+            accountScopes:null,
+            Type:null,
             isApiCalled: false,
             status: null,
             modal: false,
@@ -54,10 +59,29 @@ export class AddAccount extends React.Component<any, any> {
         }
         return retData;
     }
+    refreshEnvironment(){
+        this.setState({
+            accountName: null,
+            accountDescription: null,
+            enviornmentId: '1',
+            password: null,
+            accountEmail: null,
+            accountclientId: null,
+            accountclientSecret: null,
+            acoountuserType: null,
+            accountapiUrl:null,
+            accounttokenUrl:null,
+            authUrl:null,
+            accountScopes:null,
+            Type:null,
+         
+        });
+    }
 
     addEnvAccount = async (e: any) => {
         const { accountName, accountDescription, accountEmail, password, accountclientSecret,
-            enviornmentId, acoountuserType, accountclientId, status } = this.state;
+       
+            enviornmentId, acoountuserType, accountclientId, status,accountapiUrl,accounttokenUrl,authUrl,accountScopes,Type} = this.state;
         e.preventDefault();
         this.setState({
             isSubmitted: true
@@ -65,16 +89,26 @@ export class AddAccount extends React.Component<any, any> {
         const errorData = this.validate(true);
         if (!errorData.accountName.isValid) {
             return;
-        }
-        var qry = `environmentId=${enviornmentId}&name=${accountName}&description=${accountDescription}&email=${accountEmail}&password=${password}&clientSecret=${accountclientSecret}&userType=${acoountuserType}&status=${status}&clientId=${accountclientId}`;
+        } 
+        else{
+            this.setState({
+                isSubmitted: false
+            });
+        } 
+        var qry = `environmentId=${enviornmentId}&name=${accountName}&description=${accountDescription}&email=${accountEmail}&password=${password}&clientSecret=${accountclientSecret}&userType=${acoountuserType}&status=${status}&clientId=${accountclientId}&apiUrl=${accountapiUrl}&tokenUrl=${accounttokenUrl}&authUrl=${authUrl}&scopes=${accountScopes}&type=${Type}`;
+        console.log("Add  = ", qry);
 
-        await RestService.add(`${config.ADD_ACOOUNT}?${qry}`, {})
+        await fetch(config.ADD_ENVIRONMENT + "?environmentId=" + enviornmentId + "&name=" + accountName + "&description=" + accountDescription + "&email="+ accountEmail+ "&password="+ password + "&clientSecret="+ accountclientSecret + "&userType="+ acoountuserType + "&status="+ status + "&clientId="+ accountclientId +"&apiUrl="+ accountapiUrl + "&tokenUrl="+ accounttokenUrl + "&authUrl="+ authUrl + "&scopes=" +accountScopes + "&type="+ Type,{
+            method: 'post',
+        }).then(response => response.json())
             .then(response => {
                 console.log("Add ac response = ", response);
+                // let refreshEnvironment= this.props.refreshEnvironment;
+                
                 if (response.length > 0) {
                     this.setState({
                         severity: config.SEVERITY_SUCCESS,
-                        message: config.ADD_ACCOUNT_SUCCESS_MESSAGE,
+                        message: config. ADD_ENVIRONMENT_SUCCESS_MESSAGE,
                         isAlertOpen: true,
                     });
                 } else {
@@ -89,21 +123,26 @@ export class AddAccount extends React.Component<any, any> {
                         isAlertOpen: false,
                         modal: !this.state.modal,
                     });
-                }, 2000);
+                  
+                },1000);
             });
-    }
-
+            this.refreshEnvironment();
+        }
+   
+        
     handleClose = () => {
         this.setState({
-            modal: false,
+             modal: false,
+            
         });
+        this.refreshEnvironment();
+
     }
 
     toggle = async (selectedEnviornment: any) => {
         this.setState({
             modal: !this.state.modal,
-            EnviornmentName: selectedEnviornment.name,
-            enviornmentId: selectedEnviornment.id
+            EnviornmentName: selectedEnviornment,
         });
     }
 
@@ -131,6 +170,11 @@ export class AddAccount extends React.Component<any, any> {
             [name]: value
         });
     };
+    onClickFilterType = (e: any) => {
+              this.setState({
+                 Type: e.target.value,
+              });
+            }
 
     render() {
         const { isSubmitted, } = this.state;
@@ -138,14 +182,14 @@ export class AddAccount extends React.Component<any, any> {
         const errorData = this.validate(isSubmitted);
         return (
             <Modal isOpen={state.modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
-                               <AlertMessage handleCloseAlert={this.handleCloseAlert} open={state.isAlertOpen} severity={state.severity} msg={state.message}></AlertMessage>
+             <AlertMessage handleCloseAlert={this.handleCloseAlert} open={state.isAlertOpen} severity={state.severity} msg={state.message}></AlertMessage>
                 <button className="close-btn" onClick={this.handleClose}>X</button>
                 <ModalBody style={{ height: 'calc(75vh - 50px)', overflowY: 'auto', overflowX: "hidden" }}>
                     <div className="d-block width-100 contact-popup-container">
                         <div className="d-block p-b-20 heading">
                             <div className="d-block width-100">
                                 <h4 className="d-block"><i className="fa fa-building"></i>Add Account</h4>
-                                <label >Environment Name :{this.state.EnviornmentName}</label>
+                                <label >Environment: {this.state.EnviornmentName}</label>
 
                             </div>
                         </div>
@@ -200,15 +244,54 @@ export class AddAccount extends React.Component<any, any> {
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12">
                             <div className="form-group">
-                                <label htmlFor="Status">Status :</label>
+                                <label htmlFor="status">Status :</label>
                                 <select className="form-control" name="status" value={state.status} onChange={this.handleStateChange} >
-                                    <option value="">Select Status</option>
                                     <option value="Enable">Enable</option>
                                     <option value="Disable">Disable</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                        <div className="row">
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="accountScopes">Scopes</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={2000} htmlFor="accountScopes" id="accountScopes" placeholder="null" name="accountScopes" value={state.accountScopes} onChange={this.handleStateChange} />
+                                </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="accountapiUrl">ApiUrl</label>
+                                    <CustomTextbox containerClass="form-group-inner" maxLength={255} inputClass="form-control" htmlFor="accountapiUrl" id="accountapiUrl" placeholder="" name="accountapiUrl" value={state.accountapiUrl} onChange={this.handleStateChange}  />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="authUrl"> AuthUrl:</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={2000} htmlFor="authUrl" id="authUrl" placeholder="account authUrl" name="authUrl" value={state.authUrl} onChange={this.handleStateChange} />
+                                </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="accounttokenUrl">TokenUrl</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={2000} htmlFor="accounttokenUrl" id="accounttokenUrl" placeholder="null" name="accounttokenUrl" value={state.accounttokenUrl} onChange={this.handleStateChange} />
+                                </div>
+                            </div>
+                        </div>
+                         <div className="col-lg-12 col-md-12 col-sm-12">
+                             <div className="form-group">
+                                 <label htmlFor="Type">Type :</label>
+                                 <select className="form-control" name={this.state.name} value={this.state.Type} onChange={this.onClickFilterType}>
+                                     <option value="ALL">ALL</option>
+                                     <option value="AWS">AWS</option>
+                                     <option value="AZURE">AZURE</option>
+                                     <option value="GCP">GCP</option>
+                                     <option value="Synectiks">Synectiks</option>
+                                 </select>
+                             </div>
+                         </div>
                         <div className="row">
                             <div className="col-lg-12 col-md-12 col-sm-12">
                                 <div className="d-block text-center p-t-20 contact-popup-buttons">

@@ -8,12 +8,11 @@ export const config = {
   ADD_ENVIRONMENT: `${assetSrvUrl}/addEnvironment`,
   UPDATE_ENVIRONMENT: `${assetSrvUrl}/updateEnvironment`,
   GET_ALL_ENVIRONMENT: `${assetSrvUrl}/getAllEnvironment`,
-  ADD_ACOOUNT: `${assetSrvUrl}/addAccount`,
   INPUT_ACOOUNT: `${assetSrvUrl}/addInput`,
   SEVERITY_SUCCESS: "success",
   ADD_ENVIRONMENT_SUCCESS_MESSAGE: "ADD_ENVIRONMENT_SUCCESS_MESSAGE",
   Update_ENVIRONMENT_SUCCESS_MESSAGE: "Update ENVIRONMENT Succesfully",
-  ADD_ACCOUNT_SUCCESS_MESSAGE: "ADD_ACCOUNT_SUCCESS_MESSAGE",
+
   INPUT_ACCOUNT_SUCCESS_MESSAGE: "INPUT_ACCOUNT_SUCCESS_MESSAGE",
   SERVER_ERROR_MESSAGE: "SERVER_ERROR_MESSAGE",
   DETELE_ENVIRONMENT: `${assetSrvUrl}/deleteEnvironment/`,
@@ -23,12 +22,12 @@ export const config = {
   TCP_INPUT_STREAM: assetSrvUrl + `/system/inputs`,
   TCP_INPUT_ADDED_SUCESS: "TCP INPUT SAVED",
   TCP_INPUT_ADDED_ERROR: "TCP Input can't added",
-  USERID: "admin",
-  PASSWORD: "admin",
   INPUT_URL: {
-    KPI_INPUT : "http://127.0.0.1:7035/system/inputs",
-    LOG_INPUT : "http://127.0.0.1:7037/system/inputs",
-    CAMPLIANCE_INPUT : "http://127.0.0.1:7039/system/inputs",
-    NATIVEDS_INPUT : "http://127.0.0.1:7055/system/inputs"  
-    },
+    KPI_INPUT: "http://127.0.0.1:7035/system/inputs",
+    LOG_INPUT: "http://127.0.0.1:7037/system/inputs",
+    CAMPLIANCE_INPUT: "http://127.0.0.1:7039/system/inputs",
+    NATIVEDS_INPUT: "http://127.0.0.1:7055/system/inputs"
+  },
+  USERID: "admin",
+  PASSWORD: "admin"
 };

@@ -7,10 +7,12 @@ declare const window: any;
 export function loadPluginCss() {
   if (window.grafanaBootData.user.lightTheme) {
     require("./css/assetmanager.light.css");
-    require("./css/perfmanager.light.css");
+    require("./css/servicedesk.light.css");
+    // require("./css/logmanager.light.css");
   } else {
     require("./css/assetmanager.dark.css");
-    require("./css/perfmanager.dark.css");
+    require("./css/servicedesk.dark.css");
+    // require("./css/logmanager.dark.css");
   }
 }
 

@@ -6,14 +6,14 @@ import { images } from '../../img';
 import { SelectCloudFilter } from '../../Components/SelectCloudFilter';
 import { RestService } from '../_service/RestService';
 import { AddAccount } from '../Account/AddAccount';
-import { AddEnviornment } from './AddEnviornment';
-import { EditEnviornment } from './EditEnviornment';
-import { InputAccount } from '../Input/InputAccout';
+// import { AddEnviornment } from './AddEnviornment';
+// import { EditEnviornment } from './EditEnviornment';
+import { CreateButtonInput } from "../CreateButtonInput/CreateButtonInput";
 import Rbac from '../../components/Rbac';
 export class Environments extends React.Component<any, any> {
     breadCrumbs: any;
     AddAccountRef: any;
-    InputAccountRef: any;
+    
     AddfolderRef: any;
     EditEnviornmentRef: any;
     constructor(props: any) {
@@ -138,7 +138,7 @@ export class Environments extends React.Component<any, any> {
                 isCurrentPage: true
             }
         ];
-        this.InputAccountRef = React.createRef();
+       
         this.AddAccountRef = React.createRef();
         this.AddfolderRef = React.createRef();
         this.EditEnviornmentRef = React.createRef();
@@ -270,7 +270,10 @@ export class Environments extends React.Component<any, any> {
     }
     async componentDidMount() {
         this.getEnvironment();
-
+      
+    }
+      refreshEnvironment = async () => {
+        this.getEnvironment();
     }
     getEnvironment = async () => {
         this.setState({
@@ -282,12 +285,12 @@ export class Environments extends React.Component<any, any> {
                     this.setState({
                         Environment: response,
                         displaygetEnvironmentData: response
+               
                     });
 
                 }
 
             );
-
         } catch (err) {
             console.log("Loading catalog failed. Error: ", err);
         }
@@ -306,13 +309,9 @@ export class Environments extends React.Component<any, any> {
 
     };
 
-    onClickAddAccount = (e: any,selectedEnviornment: any) => {
+    onClickAddAccount = (e: any, selectedEnviornment: any) => {
         this.AddAccountRef.current.toggle(selectedEnviornment);
     };
-    onClickInputAccount = (e: any,selectedEnviornment: any) => {
-        this.InputAccountRef.current.toggle(selectedEnviornment);
-    };
-
 
     displayTableData = (table_data: any) => {
         let retData = [];
@@ -329,12 +328,15 @@ export class Environments extends React.Component<any, any> {
                         <div className={row.status ? "status enable" : "status disable"}></div>
                     </td>
                     <td>
-                        <div className="d-block text-center">
+                         <div className="d-block text-center">
                             <button className="asset-white-button min-width-inherit m-r-0">
-                                <i className="fa fa-ellipsis-h"></i>
+                                <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
+                                 {<CreateButtonInput /> }   
+                                 
+                                    </Rbac>  
                             </button>
-                        </div>
-                    </td>
+                        </div> 
+                    </td> 
                 </tr>
             );
         }
@@ -344,93 +346,94 @@ export class Environments extends React.Component<any, any> {
         this.AddfolderRef.current.setLink(link);
         this.AddfolderRef.current.toggle();
     };
-    refreshEnvironment = async () => {
-        this.getEnvironment();
-    }
-
     _displayEnvironmentBox() {
 
         const EnvironmentBox = this.state.displaygetEnvironmentData.map((val: any, key: any) => {
             return (
-                <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-                    <div className="services-box">
-                        <div className="heading">
-                            {(() => {
-                                if (val.type == "AWS") {
-                                    return (
-                                        <span><img src={images.awsLogo} alt="" /></span>
-                                    )
-                                } else {
-                                    if (val.type == "AZURE") {
+                <>
+                    <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div className="services-box">
+                            <div className="heading">
+                                {(() => {
+                                    if (val.type == "AWS") {
                                         return (
-                                            <span><img src={images.microsoftAzureLogo} alt="" /></span>
+                                            <span><img src={images.awsLogo} alt="" /></span>
                                         )
                                     } else {
-                                        if (val.type == "Synectiks") {
+                                        if (val.type == "AZURE") {
                                             return (
-                                                <span><img src={images.KubernetesLogo} alt="" /></span>
+                                                <span><img src={images.microsoftAzureLogo} alt="" /></span>
                                             )
                                         } else {
-                                            if (val.type == "GCP") {
+                                            if (val.type == "Synectiks") {
                                                 return (
-                                                    <span><img src={images.gcpLogo} alt="" /></span>
+                                                    <span><img src={images.KubernetesLogo} alt="" /></span>
                                                 )
+                                            } else {
+                                                if (val.type == "GCP") {
+                                                    return (
+                                                        <span><img src={images.gcpLogo} alt="" /></span>
+                                                    )
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            })()}
+                                })()}
 
 
-                            <h3>
-                                <Link to={`${config.basePath}/amazonservices`}>
-                                    {val.name}
-                                </Link>
-                                <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, val)} >
-                                    <i className="fa fa-edit"></i>
-                                </a>
-                                <a style={{ float: 'right', marginRight: '-39px' }} onClick={e => this.onClickDeleteAccount(e, val)} >
-                                    <i className="fa fa-trash"></i>
-                                </a>
-                            </h3>
-                        </div>
-                        <div className="table-box">
-                            <table className="table">
-                            <a style={{ float: 'left', marginRight: '9px',marginLeft: "-22px", fontSize:"14px" }} onClick={e=> this.onClickInputAccount(e, val)}>
-                                    <i>Add Input</i>
+                                <h3>
+                                    <Link to={`${config.basePath}/amazonservices`}>
+                                        {val.name}
+                                    </Link>
+                                    <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, val)} >
+                                        <i className="fa fa-edit"></i>
                                     </a>
-                                <a style={{ float: 'left', marginRight:'-54px', fontSize:"14px" }} onClick={e => this.onClickAddAccount(e, val)} >
-                                    <i>Add Account</i>
-                                </a>
-        
-                                <tr>
-                                    <td>Accounts</td>
-                                    <td>20</td>
-                                </tr>
-                                <tr>
-                                    <td>Assets</td>
-                                    <td>150</td>
-                                </tr>
-                                <tr>
-                                    <td>Log Monitored</td>
-                                    <td>100</td>
-                                </tr>
-                                <tr>
-                                    <td>KPI Monitored</td>
-                                    <td>18</td>
-                                </tr>
-                            </table>
+                                    <a style={{ float: 'right', marginRight: '-39px' }} onClick={e => this.onClickDeleteAccount(e, val)} >
+                                        <i className="fa fa-trash"></i>
+                                    </a>
+                                </h3>
+                            </div>
+                            <div className="table-box">
+                                <table className="table">
+                                    {/* <a style={{ float: 'left', marginRight: '9px', marginLeft: "-22px", fontSize: "14px" }} onClick={e => this.onClickInputAccount(e, val)}>
+                                        <i>Add Input</i>
+                                    </a> */}
+                                    <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, val)} >
+                                        <i>Add Account</i>
+                                    </a>
+
+                                    <tr>
+                                        <td>Accounts</td>
+                                        <td>20</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Assets</td>
+                                        <td>150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Log Monitored</td>
+                                        <td>100 </td>
+                                    </tr>
+                                    <tr>
+                                        <td>KPI Monitored</td>
+                                        <td>18</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                </>
             );
 
         });
         return EnvironmentBox;
     }
     render() {
-        const { showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data, azure_table_data } = this.state;
+        const state = this.state;
+        const { displaygetEnvironmentData, showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data, azure_table_data } = this.state;
         return (
+
             <div className="asset-container">
                 <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="PERFORMANCE MANAGEMENT" />
                 <div className="environments-page-container">
@@ -447,16 +450,197 @@ export class Environments extends React.Component<any, any> {
                                         <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;
                                         Back
                                     </Link>
-                                    <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
+                                    {/* <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
                                         <a href="#" className="blue-button m-r-5 add-folder" style={{ marginLeft: '207PX' }} onClick={() => this.onClickAddfolder("")}>Add Environment</a>
-                                    </Rbac>
+                                    </Rbac> */}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="common-container border-bottom-0 environments-services-container">
                         <div className="row">
-                            {this._displayEnvironmentBox()}
+                        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div className="services-box">
+                            <div className="heading">
+                                <span><img src={images.awsLogo} alt="" /></span>
+                                <h3>
+                                    <Link to={`${config.basePath}/amazonservices`}>
+                                        AWS
+                                     
+                                </Link>
+                                    {/* <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, 'AWS')} >
+                                        <i className="fa fa-edit"></i>
+                                    </a>
+                                    <a style={{ float: 'right', marginRight: '-39px' }} onClick={e => this.onClickDeleteAccount(e, displaygetEnvironmentData)} >
+                                        <i className="fa fa-trash"></i>
+                                    </a> */}
+                                </h3>
+                            </div>
+                            <div className="table-box">
+                                <table className="table">
+                                    {/* <a style={{ float: 'left', marginRight: '9px', marginLeft: "-22px", fontSize: "14px" }}>
+                                        <i>Add Input</i>
+                                    </a> */}
+                                    {/* <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, 'AWS')} >
+                                        <i>Add Account</i>
+                                       
+                                    </a> */}
+
+                                    <tr>
+                                        <td>Accounts</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Assets</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Log Monitored</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>KPI Monitored</td>
+                                        <td>0</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div className="services-box">
+                            <div className="heading">
+                               <span><img src={images.microsoftAzureLogo} alt="" /></span>
+                                <h3>
+                                    <Link to={`${config.basePath}/amazonservices`}>
+                                        Azure
+                                </Link>
+                                    {/* <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, displaygetEnvironmentData)} >
+                                        <i className="fa fa-edit"></i>
+                                    </a>
+                                    <a style={{ float: 'right', marginRight: '-39px' }} onClick={e => this.onClickDeleteAccount(e, displaygetEnvironmentData)} >
+                                        <i className="fa fa-trash"></i>
+                                    </a> */}
+                                </h3>
+                            </div>
+                            <div className="table-box">
+                                <table className="table">
+                                    {/* <a style={{ float: 'left', marginRight: '9px', marginLeft: "-22px", fontSize: "14px" }} onClick={e => this.onClickInputAccount(e, displaygetEnvironmentData)}>
+                                        <i>Add Input</i>
+                                    </a> */}
+                                    {/* <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, "Azure")} >
+                                        <i>Add Account</i>
+                                    </a> */}
+                                    <tr>
+                                        <td>Accounts</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Assets</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Log Monitored</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>KPI Monitored</td>
+                                        <td>0</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div className="services-box">
+                            <div className="heading">
+                              <span><img src={images.gcpLogo} alt="" /></span>
+                                <h3>
+                                    <Link to={`${config.basePath}/amazonservices`}>
+                                        CGP
+                                </Link>
+                                    {/* <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, displaygetEnvironmentData)} >
+                                        <i className="fa fa-edit"></i>
+                                    </a>
+                                    <a style={{ float: 'right', marginRight: '-39px' }} onClick={e => this.onClickDeleteAccount(e, displaygetEnvironmentData)} >
+                                        <i className="fa fa-trash"></i>
+                                    </a> */}
+                                </h3>
+                            </div>
+                            <div className="table-box">
+                                <table className="table">
+                                    {/* <a style={{ float: 'left', marginRight: '9px', marginLeft: "-22px", fontSize: "14px" }} onClick={e => this.onClickInputAccount(e, displaygetEnvironmentData)}>
+                                        <i>Add Input</i>
+                                    </a> */}
+                                    {/* <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e,"CGP")} >
+                                        <i>Add Account</i>
+                                    </a> */}
+
+                                    <tr>
+                                        <td>Accounts</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Assets</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Log Monitored</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>KPI Monitored</td>
+                                        <td>0</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div className="services-box">
+                            <div className="heading">
+                                <span><img src={images.KubernetesLogo} alt="" /></span>
+                                <h3>
+                                    <Link to={`${config.basePath}/amazonservices`}>
+                                        Synectiks
+                                </Link>
+                                    {/* <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, displaygetEnvironmentData)} >
+                                        <i className="fa fa-edit">dsffff</i>
+                                    </a>
+                                    <a style={{ float: 'right', marginRight: '-39px' }} onClick={e => this.onClickDeleteAccount(e, displaygetEnvironmentData)} >
+                                        <i className="fa fa-trash">dsf</i>
+                                    </a> */}
+                                </h3>
+                            </div>
+                            <div className="table-box">
+                                <table className="table">
+                                    {/* <a style={{ float: 'left', marginRight: '9px', marginLeft: "-22px", fontSize: "14px" }} onClick={e => this.onClickInputAccount(e, displaygetEnvironmentData)}>
+                                        <i>Add Input</i>
+                                    </a> */}
+                                    {/* <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, "Synectiks")} >
+                                        <i>Add Account</i>
+                                    </a> */}
+
+                                    <tr>
+                                        <td>Accounts</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Assets</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Log Monitored</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>KPI Monitored</td>
+                                        <td>0</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                            {/* {this._displayEnvironmentBox()} */}
                         </div>
                     </div>
                     <div className="common-container border-bottom-0 environments-table-container">
@@ -498,28 +682,29 @@ export class Environments extends React.Component<any, any> {
                                                 <div className={showAddNewFilter === true ? "fliter-collapse active" : "fliter-collapse"}>
                                                     <ul>
                                                         <li>
-                                                            <a href="#">
-                                                                <span><img src={images.awsLogo} alt="" /></span>
-                                                                <p>AWS Environment</p>
+                                                            <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, 'AWS')} >
+                                                            <span><img src={images.awsLogo} alt="" /></span>
+                                                             <i>AWS Environment</i>                                   
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="#">
-                                                                <span><img src={images.microsoftAzureLogo} alt="" /></span>
-                                                                <p>Azure Subscription</p>
-                                                            </a>
+                                                            <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, "Azure")} >
+                                                            <span><img src={images.microsoftAzureLogo} alt="" /></span>
+                                                            <i>Azure Environment</i>
+                                                             </a>
+                                          
                                                         </li>
                                                         <li>
-                                                            <a href="#">
-                                                                <span><img src={images.gcpLogo} alt="" /></span>
-                                                                <p>GCP Project</p>
-                                                            </a>
+                                                             <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e,"CGP")} >
+                                                             <span><img src={images.gcpLogo} alt="" /></span>
+                                                            <i>GCP Environment</i>
+                                                                 </a>    
                                                         </li>
                                                         <li>
-                                                            <a href="#">
-                                                                <span><img src={images.KubernetesLogo} alt="" /></span>
-                                                                <p>Kubernetes Cluster</p>
-                                                            </a>
+                                                              <a style={{ float: 'left',  fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, "Synectiks")} >
+                                                              <span><img src={images.KubernetesLogo} alt="" /></span>
+                                                             <i>Kubernetes </i>
+                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -558,7 +743,11 @@ export class Environments extends React.Component<any, any> {
                                 </thead>
                                 <tbody>
                                     {this.displayTableData(aws_table_data)}
+                                   
+                                 
+                                   
                                 </tbody>
+                               
                             </table>
                             <table className="table">
                                 <thead>
@@ -573,10 +762,10 @@ export class Environments extends React.Component<any, any> {
                         </div>
                     </div>
                 </div>
-                <AddAccount ref={this.AddAccountRef} />
-                <InputAccount ref={this.InputAccountRef} />
-                <AddEnviornment refreshEnvironment={this.refreshEnvironment} ref={this.AddfolderRef} />
-                <EditEnviornment refreshEnvironment={this.refreshEnvironment} ref={this.EditEnviornmentRef} />
+                <AddAccount refreshEnvironment={this. refreshEnvironment}displaygetEnvironmentData ={state.displaygetEnvironmentData } ref={this.AddAccountRef} />
+              
+                {/* <AddEnviornment refreshEnvironment={this.refreshEnvironment} ref={this.AddfolderRef} /> */}
+                {/* <EditEnviornment refreshEnvironment={this.refreshEnvironment} ref={this.EditEnviornmentRef} /> */}
 
             </div>
         );
