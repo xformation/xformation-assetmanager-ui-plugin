@@ -13,15 +13,12 @@ import Rbac from '../../components/Rbac';
 export class Environments extends React.Component<any, any> {
     breadCrumbs: any;
     AddAccountRef: any;
-    
     AddfolderRef: any;
     EditEnviornmentRef: any;
     constructor(props: any) {
         super(props);
-      
         this.state = {
             Environment: [],
-
             displaygetEnvironmentData: [],
             isApiCalled: false,
             codeEditorValue: "",
@@ -260,42 +257,57 @@ export class Environments extends React.Component<any, any> {
         })
     }
     async componentDidMount() {
-        this.getEnvironment();
+       this.getAccountList();
         
       
     }
-      refreshEnvironment = async () => {
-        this.getEnvironment();
-        this.displayTableData();
     
-    }
-    getEnvironment = async () => {
+    getAccountList = async () => {
         this.setState({
             isApiCalled: true
         });
         try {
-            await RestService.getData(config.GET_ALL_ENVIRONMENT, null, null).then(
+            await RestService.getData(config.GET_ALL_ACCOUNT, null, null).then(
                 (response: any) => {
                     this.setState({
-                        Environment: response,
+                        // Environment: response,
                         displaygetEnvironmentData: response,
-                       result : response.length
-               
+                        result : response.length
                     });
-                   
-                    
-                }
-
-            );
-            
+                    console.log("Loading Asstes : ", response);
+            });
         } catch (err) {
-            console.log("Loading catalog failed. Error: ", err);
+            console.log("Loading Asstes failed. Error: ", err);
         }
         this.setState({
             isApiCalled: false
         });
     }
+
+    refreshEnvironment = async () => {
+        this.getAccountList();
+        // this.displayAWSAccountList();
     
+    }
+    // getEnvioronment = async () => {
+    //     const { displaygetEnvironmentData } = this.state;
+    //     let retData = [];
+        
+    //     for (let i = 0; i < displaygetEnvironmentData.length; i++) {
+    //         let row = displaygetEnvironmentData[i];
+    //         if(row.type=="AWS"){
+    //             (row: any) => {
+    //                 this.setState({
+    //                     Environment: row,
+    //                     displaygetEnvironmentData: row,
+    //                   result : row.length
+    //                 });
+    //         }
+    //         }
+     
+    //     }
+    // }
+
     onClickEditAccount = (e: any, selectedEnviornment: any) => {
         this.EditEnviornmentRef.current.toggle(selectedEnviornment);
 
@@ -311,82 +323,78 @@ export class Environments extends React.Component<any, any> {
         this.AddAccountRef.current.toggle(selectedEnviornment);
     };
 
-    displayTableData () {
-        const { displaygetEnvironmentData } = this.state;
-       
-        let retData = [];
-        for (let i = 0; i < displaygetEnvironmentData.length; i++) {
-            let row = displaygetEnvironmentData[i];
-            if(row.type=="AWS"){
-            retData.push(
-                console.log("Loading data11 : ", row),
-                
-                <tr>
-                    <td>
-                        <a href="#">{row.name}</a>
-                    </td>
-                    <td>{row.unit}</td>
-                    <td>{row.instance}</td>
-                    <td>
-                        <div className={row.status ? "status enable" : "status disable"}></div>
-                    </td>
-                    <td>
-                         <div className="d-block text-center">
-                            <button className="asset-white-button min-width-inherit m-r-0">
-                                <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
-                                 {<CreateButtonInput /> }   
-                                 
-                                    </Rbac>  
-                            </button>
-                        </div> 
-                    </td> 
-                </tr>
-          
-        
-            );
-          
-        }
-      
-    }
-        return retData;
- 
-    }
-    AzureTableData () {
+    displayAWSAccountList () {
         const { displaygetEnvironmentData } = this.state;
         let retData = [];
         for (let i = 0; i < displaygetEnvironmentData.length; i++) {
             let row = displaygetEnvironmentData[i];
-            if(row.type=="AZURE"){
-            retData.push(
-                console.log("Loading data11 : ", row),
-                <tr>
-                    <td>
-                        <a href="#">{row.name}</a>
-                    </td>
-                    <td>{row.unit}</td>
-                    <td>{row.instance}</td>
-                    <td>
-                        <div className={row.status ? "status enable" : "status disable"}></div>
-                    </td>
-                    <td>
-                         <div className="d-block text-center">
-                            <button className="asset-white-button min-width-inherit m-r-0">
-                                <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
-                                 {<CreateButtonInput /> }   
-                                 
-                                    </Rbac>  
-                            </button>
-                        </div> 
-                    </td> 
-                </tr>
-            );
+            if(row.environment.type=="AWS"){
+                retData.push(
+                    console.log("Loading data11 : ", row),
+                    <tr>
+                        <td>
+                            <a href="#">{row.environment.name}</a>
+                        </td>
+                        <td>{row.organization && row.organization.name}</td>
+                        <td>{row.organizationalUnit && row.organizationalUnit.name}</td> 
+                        <td>{row.environment.instance}</td>
+                        <td>
+                            <div className={row.environment.status ? "status enable" : "status disable"}></div>
+                        </td>
+                        <td>
+                            <div className="d-block text-center">
+                                <button className="asset-white-button min-width-inherit m-r-0">
+                                    <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
+                                        <CreateButtonInput detail={row}/>    
+                                    </Rbac>                                  
+                                </button>
+                            </div> 
+                        </td> 
+                    </tr>
+                );
             }
+      
         }
         return retData;
- 
     }
 
-   
+    displayAzureTableData() {
+        const { displaygetEnvironmentData } = this.state;
+        let retData = [];
+        for (let i = 0; i < displaygetEnvironmentData.length; i++) {
+            let row = displaygetEnvironmentData[i];
+            if(row.environment.type=="AZURE"){
+        retData.push(
+                console.log("Loading data333 : ", row),
+                <tr>
+                    <td>
+                        <a href="#">{row.environment.name}</a>
+                    </td>
+                    <td>{row.organization.name}</td>
+                    
+                    <td>{row.instance}</td>
+                    <td>
+                    <td>vfghg</td> 
+                        {/* {row.organizationalUnit.name}  */}
+                      
+                        <td>{row.environment.instance}</td>
+                        <div className={row.status ? "status enable" : "status disable"}></div>
+                    </td>
+                    <td>
+                         <div className="d-block text-center">
+                            <button className="asset-white-button min-width-inherit m-r-0">
+                                <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
+                                 <CreateButtonInput />  
+                                    </Rbac>  
+                            </button>
+                        </div> 
+                    </td> 
+                </tr>
+            );
+        }
+    }
+        return retData;
+ }
     onClickAddfolder = (link: any) => {
         this.AddfolderRef.current.setLink(link);
         this.AddfolderRef.current.toggle();
@@ -476,8 +484,8 @@ export class Environments extends React.Component<any, any> {
     }
     render() {
         const state = this.state;
-        const {row, displaygetEnvironmentData, showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data, result } = this.state;
-     
+        const { displaygetEnvironmentData, showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data, result } = this.state;
+      console.log("gdgdsd",displaygetEnvironmentData);
         return (
 
             <div className="asset-container">
@@ -531,7 +539,6 @@ export class Environments extends React.Component<any, any> {
                                         <i>Add Account</i>
                                        
                                     </a> */}
-
                                     <tr>
                                         <td>Accounts</td>
                                         <td>{result}</td>
@@ -578,7 +585,7 @@ export class Environments extends React.Component<any, any> {
                                     </a> */}
                                     <tr>
                                         <td>Accounts</td>
-                                        <td>0</td>
+                                        <td>{result}</td>
                                     </tr>
                                     <tr>
                                         <td>Assets</td>
@@ -781,6 +788,7 @@ export class Environments extends React.Component<any, any> {
                                 <thead>
                                     <tr>
                                         <th><span><img src={images.awsLogo} alt="" /></span> AWS</th>
+                                        <th>Organisation</th>
                                         <th>Organisational Unit</th>
                                         <th>Online Instance</th>
                                         <th>Status</th>
@@ -788,22 +796,21 @@ export class Environments extends React.Component<any, any> {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* {this.displayTableData(aws_table_data)} */}
-                                   
-                                    {this.displayTableData()}
-                                   
+                                    {/* {this.displayAWSAccountList(aws_table_data)} */}
+                                    {this.displayAWSAccountList()}
                                 </tbody>
-                               
                             </table>
                             <table className="table">
                                 <thead>
                                     <tr>
-                                        <th colSpan={5}><span><img src={images.microsoftAzureLogo} alt="" /></span> Azure Cloud</th>
+                                      <th colSpan={5}><span><img src={images.microsoftAzureLogo} alt="" /></span> Azure Cloud</th>
                                     </tr>
                                 </thead>
+                                
                                 <tbody>
-                                {this.AzureTableData()}
+                                {this. displayAzureTableData()}
                                 </tbody>
+                            
                             </table>
                         </div>
                     </div>

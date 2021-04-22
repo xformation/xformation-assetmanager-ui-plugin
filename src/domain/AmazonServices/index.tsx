@@ -4,13 +4,20 @@ import { Breadcrumbs } from '../Breadcrumbs';
 import { config } from '../../config';
 import { images } from '../../img';
 import { Collapse } from 'reactstrap';
-
+import { RestService } from '../_service/RestService';
+import { OrganisationUnit} from '../OrganisationUnit/OrganistaionUnit';
+import Rbac from '../../components/Rbac';
+// import  dateFormat  from 'dateformat/index';
+// import { Customselectbox } from '../../Components/Customselectbox';
 export class AmazonServices extends React.Component<any, any> {
     breadCrumbs: any;
+    dateFormat: any
+    OrganisationunitRef:any;
     constructor(props: any) {
         super(props);
         this.state = {
             display_detail: true,
+            displaygetEnvironmentData:null,
             tableData: [
                 {
                     title: 'VPC 1', unit: '', instance: 'N/A',
@@ -86,6 +93,7 @@ export class AmazonServices extends React.Component<any, any> {
                 isCurrentPage: true
             }
         ];
+        this.OrganisationunitRef = React.createRef();
     }
 
     showHideDetail = () => {
@@ -95,15 +103,201 @@ export class AmazonServices extends React.Component<any, any> {
         })
     }
 
-    displayTable = () => {
-        const retData = [];
-        const { tableData } = this.state;
-        const length = tableData.length;
-        for (let i = 0; i < length; i++) {
-            const folder = tableData[i];
-            retData.push(this.renderTree(folder, [i]));
+    // displayTable = () => {
+    //     const { displaygetEnvironmentData } = this.state;
+    //     const retData = [];
+        
+    //     const { tableData } = this.state;
+    //     const length = tableData.length;
+    //     for (let i = 0; i < length; i++) {
+    //         const folder = tableData[i];
+    //         retData.push(this.renderTree(folder, [i]));
+    //     }
+    //     return retData;
+    // }
+    async componentDidMount() {
+        const queryPrm = new URLSearchParams(this.props.location.search);
+        const assetId = queryPrm.get('assetId')
+        const orgId = queryPrm.get('orgId')
+        console.log("asset id: "+assetId);
+        await this.getEnvironment(assetId, orgId);
+    }
+
+    getEnvironment = async (assetId : any, orgId: any) =>{
+        this.setState({
+            isApiCalled: true
+        });
+        try {
+            await RestService.getData(config.GET_ACCOUNT_BY_ID+`?envId=${assetId}&orgId=${orgId}`, null, null).then(
+                (response: any) => {
+                    this.setState({
+                        // Environment: response,
+                        displaygetEnvironmentData: response,       
+                    });     
+                    console.log(" response", response);
+            });
+        } catch (err) {
+            console.log("Loading catalog failed. Error: ", err);
         }
+        this.setState({
+            isApiCalled: false
+        });
+    }
+
+    // getOrganisation = async (assetId : any, orgId: any) =>{
+    //     this.setState({
+    //         isApiCalled: true
+    //     });
+    //     try {
+    //         await RestService.getData(config.GET_ACCOUNT_BY_ID+`?envId=${assetId}&orgId=${orgId}`, null, null).then(
+    //             (response: any) => {
+    //                 this.setState({
+    //                     // Environment: response,
+    //                     displaygetEnvironmentData: response,       
+    //                 });     
+    //                 console.log(" response", response);
+    //         });
+    //     } catch (err) {
+    //         console.log("Loading catalog failed. Error: ", err);
+    //     }
+    //     this.setState({
+    //         isApiCalled: false
+    //     });
+    // }
+
+    displayTableData() {
+        const { displaygetEnvironmentData } = this.state;
+        let retData = [];
+        
+        // for (let i = 0; i < displaygetEnvironmentData.length; i++) {
+            console.log("Env Data:::: ", displaygetEnvironmentData);
+            let row = displaygetEnvironmentData;
+            if(row.environment.type=="AWS"){
+                // row.date = dateFormat(row.date, "mmmm dS, yyyy")
+                console.log(row.environment.date); 
+                const { display_detail } = this.state;
+            retData.push(
+                <div>
+                <div className="heading"><span><img src={images.awsLogo} alt="" /></span><h2>Amazon Web Services</h2>
+                <div className="icon float-right" onClick={this.showHideDetail}><i className={display_detail ? "fa fa-minus" : "fa fa-plus"} aria-hidden="true"></i></div>
+            </div>
+            <div className="col-lg-12 col-md-12 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-12 col-md-12 col-sm-12 col-xs-12">
+                        <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-createbtn">
+                            <a  onClick={this.onClickOrganisationUnit} className="blue-button m-r-0 min-width-inherit width-auto create-btn" style={{ float: 'right',marginTop:'25px' }}>
+                                Organisation Unit
+                            </a>
+                        </Rbac>
+                    </div>
+                  </div>
+               </div>
+             
+             {display_detail && 
+                <div className="service-content">
+                <div className="row">
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
+                            <div className="services-added">Account Name</div>
+                        </div>
+                        <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                            <div className="services-added"><span>{row.environment.name}</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added">Organisation</div>
+                        </div>
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added"><span>{ row.organization && row.organization.name}</span></div>
+                        </div>
+                    </div>
+                </div>
+                {/* <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
+                            <div className="services-added">Organisation Unit</div>
+                        </div>
+                        <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                            <div className="services-added">null</div>
+                        </div>
+                    </div>
+                </div> */}
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added">Total Online Instances</div>
+                        </div>
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added">0</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
+                            <div className="services-added">Account Number</div>
+                        </div>
+                        <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                            <div className="services-added"><span>0</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added">Full Protection Security Group</div>
+                        </div>
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added">0</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
+                            <div className="services-added">Cloud Guard ID</div>
+                        </div>
+                        <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                            <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added">Read Only Security Group</div>
+                        </div>
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added">0</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="row">
+                        <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
+                            <div className="services-added">Added At</div>
+                        </div>
+                        <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                            <div className="services-added">{row.environment.createdOn}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            }
+            </div>
+             
+            );
+            
+        }
+      
+    // }
         return retData;
+ 
     }
 
     renderTree = (folder: any, indexArr: any): any => {
@@ -194,9 +388,14 @@ export class AmazonServices extends React.Component<any, any> {
             return this.findChild(folderList[index].subData, indexArr);
         }
     };
-
+    onClickOrganisationUnit = () => {
+         this.OrganisationunitRef.current.toggle();
+    }
+   
+   
+   
     render() {
-        const { display_detail } = this.state;
+       
         return (
             <div className="asset-container">
                 <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="PERFORMANCE MANAGEMENT" />
@@ -219,85 +418,12 @@ export class AmazonServices extends React.Component<any, any> {
                         </div>
                     </div>
                     <div className="common-container border-bottom-0 p-b-0">
-                        <div className="service-full-container">
-                            <div className="heading"><span><img src={images.awsLogo} alt="" /></span><h2>Amazon Web Services</h2>
-                                <div className="icon float-right" onClick={this.showHideDetail}><i className={display_detail ? "fa fa-minus" : "fa fa-plus"} aria-hidden="true"></i></div>
+                        {this.state.displaygetEnvironmentData && 
+                            <div className="service-full-container">
+                                        {this.displayTableData()}
                             </div>
-                            {display_detail && <div className="service-content">
-                                <div className="row">
-                                    <div className="col-lg-6 col-md-6 col-sm-12">
-                                        <div className="row">
-                                            <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
-                                                <div className="services-added">Organisation Unit</div>
-                                            </div>
-                                            <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                                                <div className="services-added">Organisation Unit</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-6 col-sm-12">
-                                        <div className="row">
-                                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                                <div className="services-added">Total Online Instances</div>
-                                            </div>
-                                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                                <div className="services-added">4</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-6 col-sm-12">
-                                        <div className="row">
-                                            <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
-                                                <div className="services-added">Account Number</div>
-                                            </div>
-                                            <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                                                <div className="services-added"><span>AWS (657907747545)</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-6 col-sm-12">
-                                        <div className="row">
-                                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                                <div className="services-added">Full Protection Security Group</div>
-                                            </div>
-                                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                                <div className="services-added">0</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-6 col-sm-12">
-                                        <div className="row">
-                                            <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
-                                                <div className="services-added">Cloud Guard ID</div>
-                                            </div>
-                                            <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                                                <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-6 col-sm-12">
-                                        <div className="row">
-                                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                                <div className="services-added">Read Only Security Group</div>
-                                            </div>
-                                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                                <div className="services-added">66</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-6 col-sm-12">
-                                        <div className="row">
-                                            <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
-                                                <div className="services-added">Added At</div>
-                                            </div>
-                                            <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                                                <div className="services-added">Feb 01, 2021 21:30</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>}
-                        </div>
+                            
+                        }              
                     </div>
                     <div className="common-container border-bottom-0">
                         <div className="urganisational-unit-container">
@@ -344,13 +470,15 @@ export class AmazonServices extends React.Component<any, any> {
                                             <div className="thead-th">Status</div>
                                             <div className="thead-th">Action</div>
                                         </div>
-                                        {this.displayTable()}
+                                        {/* {this.displayTable()} */}
+                                       
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <OrganisationUnit ref={this.OrganisationunitRef} />   
             </div>
         );
     }

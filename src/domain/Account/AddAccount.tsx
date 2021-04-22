@@ -22,6 +22,7 @@ export class AddAccount extends React.Component<any, any> {
             authUrl:null,
             accountScopes:null,
             Type:null,
+            Organization:null,
             isApiCalled: false,
             status: null,
             modal: false,
@@ -81,7 +82,7 @@ export class AddAccount extends React.Component<any, any> {
     addEnvAccount = async (e: any) => {
         const { accountName, accountDescription, accountEmail, password, accountclientSecret,
        
-            enviornmentId, acoountuserType, accountclientId, status,accountapiUrl,accounttokenUrl,authUrl,accountScopes,Type} = this.state;
+            enviornmentId, acoountuserType, accountclientId, status,accountapiUrl,accounttokenUrl,authUrl,accountScopes,Type,Organization} = this.state;
         e.preventDefault();
         this.setState({
             isSubmitted: true
@@ -95,10 +96,10 @@ export class AddAccount extends React.Component<any, any> {
                 isSubmitted: false
             });
         } 
-        var qry = `environmentId=${enviornmentId}&name=${accountName}&description=${accountDescription}&email=${accountEmail}&password=${password}&clientSecret=${accountclientSecret}&userType=${acoountuserType}&status=${status}&clientId=${accountclientId}&apiUrl=${accountapiUrl}&tokenUrl=${accounttokenUrl}&authUrl=${authUrl}&scopes=${accountScopes}&type=${Type}`;
+        var qry = `environmentId=${enviornmentId}&name=${accountName}&description=${accountDescription}&email=${accountEmail}&password=${password}&clientSecret=${accountclientSecret}&userType=${acoountuserType}&status=${status}&clientId=${accountclientId}&apiUrl=${accountapiUrl}&tokenUrl=${accounttokenUrl}&authUrl=${authUrl}&scopes=${accountScopes}&type=${Type}&name=${Organization}`;
         console.log("Add  = ", qry);
 
-        await fetch(config.ADD_ENVIRONMENT + "?environmentId=" + enviornmentId + "&name=" + accountName + "&description=" + accountDescription + "&email="+ accountEmail+ "&password="+ password + "&clientSecret="+ accountclientSecret + "&userType="+ acoountuserType + "&status="+ status + "&clientId="+ accountclientId +"&apiUrl="+ accountapiUrl + "&tokenUrl="+ accounttokenUrl + "&authUrl="+ authUrl + "&scopes=" +accountScopes + "&type="+ Type,{
+        await fetch(config.ADD_ENVIRONMENT + "?environmentId=" + enviornmentId + "&name=" + accountName + "&description=" + accountDescription + "&email="+ accountEmail+ "&password="+ password + "&clientSecret="+ accountclientSecret + "&userType="+ acoountuserType + "&status="+ status + "&clientId="+ accountclientId +"&apiUrl="+ accountapiUrl + "&tokenUrl="+ accounttokenUrl + "&authUrl="+ authUrl + "&scopes=" +accountScopes + "&type="+ Type+"&oganizationName="+Organization,{
             method: 'post',
         }).then(response => response.json())
             .then(response => {
@@ -193,6 +194,26 @@ export class AddAccount extends React.Component<any, any> {
 
                             </div>
                         </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12">
+                             <div className="form-group">
+                                 <label htmlFor="Type">Type :</label>
+                                 <select className="form-control" name={this.state.name} value={this.state.Type} onChange={this.onClickFilterType}>
+                                     <option value="ALL">ALL</option>
+                                     <option value="AWS">AWS</option>
+                                     <option value="AZURE">AZURE</option>
+                                     <option value="GCP">GCP</option>
+                                     <option value="Synectiks">Synectiks</option>
+                                 </select>
+                             </div>
+                         </div>
+                         <div className="row">
+                            <div className="col-lg-12 col-md-12 col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="Organization">Organization Name:</label>
+                                    <CustomTextbox containerClass="form-group-inner" maxLength={255} inputClass="form-control" htmlFor="Organization" id="Organization" placeholder="Organization Name" name="Organization" value={state.Organization} onChange={this.handleStateChange} isValid={errorData.accountName.isValid} message={errorData.accountName.message} />
+                                </div>
+                            </div>
+                            </div>
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
@@ -280,18 +301,6 @@ export class AddAccount extends React.Component<any, any> {
                                 </div>
                             </div>
                         </div>
-                         <div className="col-lg-12 col-md-12 col-sm-12">
-                             <div className="form-group">
-                                 <label htmlFor="Type">Type :</label>
-                                 <select className="form-control" name={this.state.name} value={this.state.Type} onChange={this.onClickFilterType}>
-                                     <option value="ALL">ALL</option>
-                                     <option value="AWS">AWS</option>
-                                     <option value="AZURE">AZURE</option>
-                                     <option value="GCP">GCP</option>
-                                     <option value="Synectiks">Synectiks</option>
-                                 </select>
-                             </div>
-                         </div>
                         <div className="row">
                             <div className="col-lg-12 col-md-12 col-sm-12">
                                 <div className="d-block text-center p-t-20 contact-popup-buttons">
