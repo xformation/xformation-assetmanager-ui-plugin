@@ -10,13 +10,8 @@ export class  OrganisationUnit extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            EnvironmentName: null,
-            EnvironmentDescription: null,
-            EnvironmentScopes: null,
-            EnvironmentAuthUrl: null,
-            EnvironmentTokenUrl: null,
-            EnvironmentApiUrl: null,
-            Type: null,
+           organisationunitName:null,
+           organizatioName:null,
             isApiCalled: false,
             modal: false,
             folderArray: [],
@@ -35,20 +30,56 @@ export class  OrganisationUnit extends React.Component<any, any> {
         });
 
     }
+    toggle = async (selectedorganization: any) => {
+        this.setState({
+            modal: !this.state.modal,
+            organizatioName: selectedorganization,
+        });
+        console.log("  organizatioName",selectedorganization);
+    }
+    saveOrganisationunit = async (e: any) => {
+    e.preventDefault();
+        this.setState({
+            isSubmitted: true
+        });
+        const errorData = this.validate(true);
+        console.log("Error Data : ", errorData);
+        if (! errorData. organizatioName.isValid) {
+            return;
+        } 
+        if ( !errorData.organisationunitName.isValid) {
+            return;
+        } 
+        else{
+            this.setState({
+                isSubmitted: false
+            });
+        } 
+    }
+    
     validate = (isSubmitted: any) => {
         const validObj = {
             isValid: true,
             message: ""
-        };
+        }; 
         const retData = {
-            EnvironmentName: validObj,
+            organizatioName: validObj,
+            organisationunitName: validObj, 
         };
         if (isSubmitted) {
-            const { EnvironmentName } = this.state;
-            if (!EnvironmentName) {
-                retData.EnvironmentName = {
+            const { organizatioName,organisationunitName } = this.state;
+            console.log("organisationName111",organizatioName);
+            console.log("organisationunitName 111",organisationunitName );
+            if (!organizatioName) {
+                retData. organizatioName = {
                     isValid: false,
-                    message: "Name is required"
+                    message: "Organisation is required. Please create organization before adding any organizational unit under it"
+                };
+            }
+            if (!organisationunitName) {
+                retData. organisationunitName = {
+                    isValid: false,
+                    message: " Organisationunit is required"
                 };
             }
         }
@@ -59,12 +90,8 @@ export class  OrganisationUnit extends React.Component<any, any> {
             modal: false,
         });
     }
-    toggle = async () => {
-        this.setState({
-            modal: !this.state.modal,
-        });
-    }
-
+ 
+    
     setLink = (link: any) => {
         this.setState({
             link
@@ -95,7 +122,7 @@ export class  OrganisationUnit extends React.Component<any, any> {
         });
     }
     render() {
-        const { isSubmitted } = this.state;
+        const { isSubmitted, } = this.state;
         const state = this.state;
         const errorData = this.validate(isSubmitted);
         return (
@@ -105,16 +132,17 @@ export class  OrganisationUnit extends React.Component<any, any> {
                 <ModalBody style={{ height: 'calc(45vh - 50px)', overflowY: 'auto', overflowX: "hidden" }}>
                     <div className="d-block width-100 contact-popup-container">
                         <div className="d-block p-b-20 heading">
-                            <div className="d-block width-100">
+                            <div className="d-block width-100">                                          
                                 <h4 className="d-block"><i className="fa fa-building"></i> Organisation Unit</h4>
-
                             </div>
+                            <label htmlFor="  organisationName"  >Organisation Name:</label> <span>{this.state.organizatioName}</span><span style={{ color: "red"}}>{errorData. organizatioName.isValid}{errorData. organizatioName.message}</span> 
+          
                         </div>
                         <div className="row">
                             <div className="col-lg-12 col-md-12 col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="Organisation"> Organisation Name:</label>
-                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="EnvironmentName" id="EnvironmentName" placeholder="Enter  Organisation Unit Name" name="EnvironmentName" value={state.EnvironmentName} onChange={this.handleStateChange} isValid={errorData.EnvironmentName.isValid} message={errorData.EnvironmentName.message} />
+                                    <label htmlFor="organisationunitName">  Name:</label>
+                                    <CustomTextbox containerClass="form-group-inner" inputClass="form-control" maxLength={255} htmlFor="organisationunitName" id="organisationunitName" placeholder="Enter  Organisation Unit Name" name="organisationunitName" value={state.organisationunitName} onChange={this.handleStateChange} isValid={errorData. organisationunitName.isValid} message={errorData. organisationunitName.message} />
                                 </div>
                             </div>
                         </div>
@@ -122,7 +150,7 @@ export class  OrganisationUnit extends React.Component<any, any> {
                             <div className="col-lg-12 col-md-12 col-sm-12">
                                 <div className="d-block text-center p-t-20 contact-popup-buttons">
                                     <button className="cancel" onClick={this.handleClose}>Cancel</button>
-                                    <button className="save" >Save</button>
+                                    <button className="save" onClick={this.saveOrganisationunit} >Save</button>
                                 </div>
                             </div>
                         </div>

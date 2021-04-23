@@ -333,7 +333,9 @@ export class Environments extends React.Component<any, any> {
                     console.log("Loading data11 : ", row),
                     <tr>
                         <td>
-                            <a href="#">{row.environment.name}</a>
+                        <Link to={`${config.basePath}/amazonservices?assetId=${row.environment.id}&orgId=${row.organization ? row.organization.id : null}`}>
+                        {row.environment.name}
+                            </Link>
                         </td>
                         <td>{row.organization && row.organization.name}</td>
                         <td>{row.organizationalUnit && row.organizationalUnit.name}</td> 
@@ -434,7 +436,7 @@ export class Environments extends React.Component<any, any> {
                                 })()}
 
 
-                                <h3>
+                                {/* <h3>
                                     <Link to={`${config.basePath}/amazonservices`}>
                                         {val.name}
                                     </Link>
@@ -444,7 +446,7 @@ export class Environments extends React.Component<any, any> {
                                     <a style={{ float: 'right', marginRight: '-39px' }} onClick={e => this.onClickDeleteAccount(e, val)} >
                                         <i className="fa fa-trash"></i>
                                     </a>
-                                </h3>
+                                </h3> */}
                             </div>
                             <div className="table-box">
                                 <table className="table">

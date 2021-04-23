@@ -210,7 +210,7 @@ export class AddAccount extends React.Component<any, any> {
                             <div className="col-lg-12 col-md-12 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="Organization">Organization Name:</label>
-                                    <CustomTextbox containerClass="form-group-inner" maxLength={255} inputClass="form-control" htmlFor="Organization" id="Organization" placeholder="Organization Name" name="Organization" value={state.Organization} onChange={this.handleStateChange} isValid={errorData.accountName.isValid} message={errorData.accountName.message} />
+                                    <CustomTextbox containerClass="form-group-inner" maxLength={255} inputClass="form-control" htmlFor="Organization" id="Organization" placeholder="Organization Name" name="Organization" value={state.Organization} onChange={this.handleStateChange} />
                                 </div>
                             </div>
                             </div>

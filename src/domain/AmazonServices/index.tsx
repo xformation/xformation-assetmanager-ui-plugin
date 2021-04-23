@@ -7,7 +7,7 @@ import { Collapse } from 'reactstrap';
 import { RestService } from '../_service/RestService';
 import { OrganisationUnit} from '../OrganisationUnit/OrganistaionUnit';
 import Rbac from '../../components/Rbac';
-// import  dateFormat  from 'dateformat/index';
+import * as dateFormat from 'dateformat'
 // import { Customselectbox } from '../../Components/Customselectbox';
 export class AmazonServices extends React.Component<any, any> {
     breadCrumbs: any;
@@ -18,6 +18,7 @@ export class AmazonServices extends React.Component<any, any> {
         this.state = {
             display_detail: true,
             displaygetEnvironmentData:null,
+            
             tableData: [
                 {
                     title: 'VPC 1', unit: '', instance: 'N/A',
@@ -121,6 +122,7 @@ export class AmazonServices extends React.Component<any, any> {
         const orgId = queryPrm.get('orgId')
         console.log("asset id: "+assetId);
         await this.getEnvironment(assetId, orgId);
+        // this.displayList();
     }
 
     getEnvironment = async (assetId : any, orgId: any) =>{
@@ -144,37 +146,48 @@ export class AmazonServices extends React.Component<any, any> {
         });
     }
 
-    // getOrganisation = async (assetId : any, orgId: any) =>{
-    //     this.setState({
-    //         isApiCalled: true
-    //     });
-    //     try {
-    //         await RestService.getData(config.GET_ACCOUNT_BY_ID+`?envId=${assetId}&orgId=${orgId}`, null, null).then(
-    //             (response: any) => {
-    //                 this.setState({
-    //                     // Environment: response,
-    //                     displaygetEnvironmentData: response,       
-    //                 });     
-    //                 console.log(" response", response);
-    //         });
-    //     } catch (err) {
-    //         console.log("Loading catalog failed. Error: ", err);
-    //     }
-    //     this.setState({
-    //         isApiCalled: false
-    //     });
+    // displayList () {
+    //     const { displaygetEnvironmentData } = this.state;
+    //      let retData = [];
+    //     //  for (let i = 0; i < displaygetEnvironmentData.length; i++) {
+    //         console.log("i am hare ",displaygetEnvironmentData.environment);
+    //         let row = displaygetEnvironmentData.environment;
+    //         console.log("i am",row);
+    //          if(row.type==="AWS"){
+    //             console.log("i am",row.environment.type);
+    //              retData.push(
+    //                  console.log("Loading data11 : ", row),
+    //         <tr>
+    //             <td>
+    //             <td> {row.environment.name}</td>
+                           
+    //             </td>
+    //             <td>{row.organization && row.organization.name}</td>
+    //             <td>{row.organizationalUnit && row.organizationalUnit.name}</td> 
+    //             <td>{row.environment.instance}</td>
+    //             <td>
+    //                 <div className={row.environment.status ? "status enable" : "status disable"}></div>
+    //             </td>
+    //         </tr>
+    //             );
+    //          }
+      
+    //     //  }
+    //       return retData;
     // }
 
-    displayTableData() {
+    displayAwsData() {
         const { displaygetEnvironmentData } = this.state;
         let retData = [];
         
         // for (let i = 0; i < displaygetEnvironmentData.length; i++) {
-            console.log("Env Data:::: ", displaygetEnvironmentData);
+           
             let row = displaygetEnvironmentData;
             if(row.environment.type=="AWS"){
-                // row.date = dateFormat(row.date, "mmmm dS, yyyy")
-                console.log(row.environment.date); 
+                row.date = dateFormat(row.environment.createdOn)
+                console.log("date=",row.environment.createdOn);
+
+               
                 const { display_detail } = this.state;
             retData.push(
                 <div>
@@ -185,7 +198,7 @@ export class AmazonServices extends React.Component<any, any> {
                     <div className="row">
                         <div className="col-gl-12 col-md-12 col-sm-12 col-xs-12">
                         <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-createbtn">
-                            <a  onClick={this.onClickOrganisationUnit} className="blue-button m-r-0 min-width-inherit width-auto create-btn" style={{ float: 'right',marginTop:'25px' }}>
+                            <a onClick={e => this.onClickOrganisationUnit(e, row.organization && row.organization.name)} className="blue-button m-r-0 min-width-inherit width-auto create-btn" style={{ float: 'right',marginTop:'25px' }}>
                                 Organisation Unit
                             </a>
                         </Rbac>
@@ -282,7 +295,7 @@ export class AmazonServices extends React.Component<any, any> {
                             <div className="services-added">Added At</div>
                         </div>
                         <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                            <div className="services-added">{row.environment.createdOn}</div>
+                            <div className="services-added">{row.date}</div>
                         </div>
                     </div>
                 </div>
@@ -388,12 +401,10 @@ export class AmazonServices extends React.Component<any, any> {
             return this.findChild(folderList[index].subData, indexArr);
         }
     };
-    onClickOrganisationUnit = () => {
-         this.OrganisationunitRef.current.toggle();
-    }
-   
-   
-   
+    onClickOrganisationUnit = (e: any, selectedorganization: any) => {
+        console.log("selectedEnviornment",selectedorganization);
+         this.OrganisationunitRef.current.toggle(selectedorganization);
+    } 
     render() {
        
         return (
@@ -420,7 +431,7 @@ export class AmazonServices extends React.Component<any, any> {
                     <div className="common-container border-bottom-0 p-b-0">
                         {this.state.displaygetEnvironmentData && 
                             <div className="service-full-container">
-                                        {this.displayTableData()}
+                                        {this.displayAwsData()}
                             </div>
                             
                         }              
@@ -461,19 +472,23 @@ export class AmazonServices extends React.Component<any, any> {
                                 </div>
                             </div>
                             <div className="organisational-details">
-                                <div className="container-inner">
-                                    <div className="organisational-data-table">
-                                        <div className="thead">
-                                            <div className="thead-th organisational-heading"><span><img src={images.awsLogo} alt="" /></span>AWS</div>
-                                            <div className="thead-th">Organisational Unit</div>
-                                            <div className="thead-th">Online Instance</div>
-                                            <div className="thead-th">Status</div>
-                                            <div className="thead-th">Action</div>
-                                        </div>
-                                        {/* {this.displayTable()} */}
-                                       
-                                    </div>
-                                </div>
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th><span><img src={images.awsLogo} alt="" /></span> AWS</th>
+                                        <th>Organisation</th>
+                                        <th>Organisational Unit</th>
+                                        <th>Online Instance</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* {this.displayAWSAccountList(aws_table_data)} */}
+                                    {/* {this.displayList ()} */}
+                                    {/* {this.displayAwsData()} */}
+                                </tbody>
+                            </table>
                             </div>
                         </div>
                     </div>
