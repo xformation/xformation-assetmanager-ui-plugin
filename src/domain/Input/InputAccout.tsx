@@ -34,7 +34,7 @@ export class InputAccount extends React.Component<any, any> {
             nullFramedelimiter: "",
             overrideSource: "",
             DecompressedSize: "",
-            maximumMessage : "",
+            maximumMessage: "",
         };
     }
     async componentDidMount() {
@@ -98,7 +98,7 @@ export class InputAccount extends React.Component<any, any> {
             inputType: e.target.value,
         });
     }
-   
+
     saveInput = async (event: any) => {
         event.preventDefault();
         this.setState({
@@ -107,9 +107,9 @@ export class InputAccount extends React.Component<any, any> {
         const errorData = this.validate(true);
         if (errorData?.title.isValid) {
             const { inputType, global, node, title, bindAddress, port, reciveBufferSize, noOfWorkerthreads, tlsCertFile, tlsPrivateKeyFile, enableTls, tlsKeyPassword, tlsClientAuthentication, tlsClientAuthTrustedCerts,
-                tcpKeepAlive, nullFramedelimiter, overrideSource, DecompressedSize,maximumMessage,  } = this.state;
+                tcpKeepAlive, nullFramedelimiter, overrideSource, DecompressedSize, maximumMessage, } = this.state;
             var configurations = {
-                
+
                 "inputType": inputType,
                 "global": global,
                 "node": node,
@@ -128,8 +128,8 @@ export class InputAccount extends React.Component<any, any> {
                 "nullFramedelimiter": nullFramedelimiter,
                 "overrideSource": overrideSource,
                 "DecompressedSize": DecompressedSize,
-                "maximumMessage" : maximumMessage,
-               
+                "maximumMessage": maximumMessage,
+
             };
             var data = {
                 "title": title,
@@ -142,9 +142,9 @@ export class InputAccount extends React.Component<any, any> {
 
             console.log("Data : ", raw)
             let urlJson = JSON.parse(JSON.stringify(config.INPUT_URL));
-            let url=urlJson[this.state.inputType];
-            console.log("Selected URL : ",url);
-            var requestOptions=CommonService.requestOptionsForPostRequest(raw);
+            let url = urlJson[this.state.inputType];
+            console.log("Selected URL : ", url);
+            var requestOptions = CommonService.requestOptionsForPostRequest(raw);
             fetch(url, requestOptions)
                 .then(response => response.text())
                 .then(result => {
@@ -210,41 +210,41 @@ export class InputAccount extends React.Component<any, any> {
     }
 
     render() {
-        const { modal, isSubmitted,inputType, global, node, title, bindAddress, port, reciveBufferSize, noOfWorkerthreads, tlsCertFile, tlsPrivateKeyFile, enableTls, tlsKeyPassword, tlsClientAuthentication, tlsClientAuthTrustedCerts,
-            tcpKeepAlive, nullFramedelimiter, overrideSource, DecompressedSize,maximumMessage,  } = this.state;
+        const { modal, isSubmitted, inputType, global, node, title, bindAddress, port, reciveBufferSize, noOfWorkerthreads, tlsCertFile, tlsPrivateKeyFile, enableTls, tlsKeyPassword, tlsClientAuthentication, tlsClientAuthTrustedCerts,
+            tcpKeepAlive, nullFramedelimiter, overrideSource, DecompressedSize, maximumMessage, } = this.state;
         const errorData = this.validate(isSubmitted);
         const state = this.state;
         return (
             <Modal isOpen={modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
                 {/* <AlertMessage handleCloseAlert={this.handleCloseAlert} open={state.isAlertOpen} severity={state.severity} msg={state.message}></AlertMessage> */}
                 <ModalHeader toggle={this.toggle}>Lounch new Input  </ModalHeader>
-                
+
                 <ModalBody style={{ height: 'calc(60vh - 50px)', overflowY: 'auto', overflowX: "hidden" }}>
-                <label htmlFor="description"> Enviornment Name : </label> <span>{this.state.EnviornmentName}</span>
-                <div className="row">
-                                <div className="col-lg-12 col-md-12 col-sm-12">
-                                    <div className="form-group">
-                                        <label htmlFor="description">Type</label>
-                                        <select className="input-group-text" name="inputType" value={state.inputType} onChange={this.onChangeSelectBox}>
-                                            <option>Select Input Type</option>
-                                            <option key="KPI_INPUT" value="KPI_INPUT">KPI</option>
-                                           <option key="LOG_INPUT" value="LOG_INPUT">LOG</option>
-                                           <option key="CAMPLIANCE_INPUT" value="CAMPLIANCE_INPUT">CAMPLIANCE</option>
-                                            <option key="NATIVEDS_INPUT" value="NATIVEDS_INPUT">NATIVEDS</option>
-                                        </select>
-                                    </div>
-                                </div>
+                    <label htmlFor="description"> Enviornment Name : </label> <span>{this.state.EnviornmentName}</span>
+                    <div className="row">
+                        <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="form-group">
+                                <label htmlFor="description">Type</label>
+                                <select className="input-group-text" name="inputType" value={state.inputType} onChange={this.onChangeSelectBox}>
+                                    <option>Select Input Type</option>
+                                    <option key="KPI_INPUT" value="KPI_INPUT">KPI</option>
+                                    <option key="LOG_INPUT" value="LOG_INPUT">LOG</option>
+                                    <option key="CAMPLIANCE_INPUT" value="CAMPLIANCE_INPUT">CAMPLIANCE</option>
+                                    <option key="NATIVEDS_INPUT" value="NATIVEDS_INPUT">NATIVEDS</option>
+                                </select>
                             </div>
+                        </div>
+                    </div>
                     <div className="d-block width-100 stream-popup-container">
                         <div className="row">
                             <div className="col-lg-12 col-md-12 col-sm-12">
                                 <div className="form-group">
                                     <input type="checkbox" id="global" name="global" value={global} onChange={this.checkboxChange} /> Global
                                     <div className="col-lg-12 col-md-12 col-sm-12">
-                                    <span>Should this input start on all nodes</span>
+                                        <span>Should this input start on all nodes</span>
+                                    </div>
                                 </div>
-                                </div>
-                                
+
                             </div>
                         </div>
                         {
@@ -324,7 +324,7 @@ export class InputAccount extends React.Component<any, any> {
                                 <div className="form-group">
                                     <input type="checkbox" id="enableTls" name="enableTls" value={enableTls} onChange={this.checkboxChange} /> Enable TLS
                                     <div className="col-lg-6 col-md-6 col-sm-12">
-                                    <span>Accept TLS connections</span>
+                                        <span>Accept TLS connections</span>
                                     </div>
                                 </div>
                             </div>
@@ -362,7 +362,7 @@ export class InputAccount extends React.Component<any, any> {
                                 <div className="form-group">
                                     <input type="checkbox" name="tcpKeepAlive" onChange={this.checkboxChange} value={tcpKeepAlive} id="RemoveMessages" /> &nbsp;TCP keepalive
                                     <div className="col-lg-8 col-md-8 col-sm-12">
-                                    <span>Enable TCP keep alive packets</span>
+                                        <span>Enable TCP keep alive packets</span>
                                     </div>
                                 </div>
                             </div>
@@ -372,12 +372,12 @@ export class InputAccount extends React.Component<any, any> {
                                 <div className="form-group">
                                     <input type="checkbox" name="nullFramedelimiter" onChange={this.checkboxChange} value={nullFramedelimiter} id="nullFramedelimiter" /> &nbsp;Null frame delimiter?
                                     <div className="col-lg-10 col-md-10 col-sm-12">
-                                    <span>Use null byte as frame delimiter? Otherwise newline delimiter is used.</span>
-                                </div>
+                                        <span>Use null byte as frame delimiter? Otherwise newline delimiter is used.</span>
+                                    </div>
                                 </div>
                             </div>
-                            </div>
-                            <div className="row">
+                        </div>
+                        <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="title"> Override Source  &nbsp;<sub>(optional)</sub></label>
@@ -401,8 +401,8 @@ export class InputAccount extends React.Component<any, any> {
                                     <span> The maximum length of a message.</span>
                                 </div>
                             </div>
-                            </div>
-                        
+                        </div>
+
                         <div className="row">
                             <div className="col-lg-12 col-md-12 col-sm-12">
                                 <div className="d-block text-right p-t-20 contact-popup-buttons">

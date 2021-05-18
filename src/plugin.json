@@ -44,6 +44,13 @@
       "addToNav": false,
       "defaultNav": false,
       "component": "StorageDetails"
+    },
+    {
+      "type": "page",
+      "name": "AccountSetup",
+      "addToNav": false,
+      "defaultNav": false,
+      "component": "AccountSetup"
     }
   ],
   "dependencies": {

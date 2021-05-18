@@ -2034,4 +2034,346 @@ a:hover {
   }
 }
 
+.accountsetup-page-container .account-setup-container {
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 6px -4px #3b4859;
+  box-shadow: 0px 0px 6px -4px #3b4859;
+  padding: 15px;
+  border: 1px solid #f5f6f5;
+}
+.accountsetup-page-container .account-setup-container .heading {
+  display: block;
+  border-bottom: 1px dashed #8392a7;
+  line-height: 26px;
+  color: #3b4859;
+  font-size: 15px;
+  font-weight: 600;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents {
+  padding: 0px 20px 20px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  h4 {
+  display: block;
+  line-height: 26px;
+  color: #3b4859;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .contents {
+  padding-left: 20px;
+  padding-bottom: 20px;
+  display: block;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .contents
+  strong {
+  font-weight: 600;
+  font-size: 15px;
+  color: #3b4859;
+  line-height: 22px;
+  padding-bottom: 3px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .contents
+  p {
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: 15px;
+  color: #3b4859;
+  display: block;
+  line-height: 22px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .contents
+  a {
+  color: #2662f0;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .contents
+  ul {
+  padding-left: 20px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .contents
+  ul
+  li {
+  font-weight: 400;
+  font-size: 15px;
+  color: #3b4859;
+  line-height: 22px;
+  padding-bottom: 2px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .account-setup-left-contents {
+  border-right: 1px solid #ddd;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .account-setup-right-contents {
+  padding-top: 20px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .sub-heading {
+  border-bottom: 1px solid #3b4859;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .collapse-contents
+  ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .collapse-contents
+  ul
+  li {
+  display: block;
+  padding-bottom: 5px;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .collapse-contents
+  ul
+  li
+  .caret-right {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 8px;
+  border-color: transparent transparent transparent #8392a7;
+  margin-top: -3px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .collapse-contents
+  ul
+  li
+  .caret-down {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 5px 0 5px;
+  border-color: #8392a7 transparent transparent transparent;
+  margin-top: 0px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.accountsetup-page-container
+  .account-setup-container
+  .account-setup-tab-contents
+  .collapse-contents
+  ul
+  li
+  .show {
+  padding-left: 30px;
+  margin-top: 5px;
+}
+
+.modal-container .collapse-contents {
+  background-color: #ffffff;
+  border: 1px solid #8392a7;
+  border-radius: 4px;
+  padding: 0 15px;
+  min-height: 150px;
+}
+.modal-container .collapse-contents ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+}
+.modal-container .collapse-contents ul li {
+  display: block;
+  padding-bottom: 5px;
+}
+.modal-container .collapse-contents ul li .caret-right {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 8px;
+  border-color: transparent transparent transparent #8392a7;
+  margin-top: -3px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.modal-container .collapse-contents ul li .caret-down {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 5px 0 5px;
+  border-color: #8392a7 transparent transparent transparent;
+  margin-top: 0px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.modal-container .collapse-contents ul li .show {
+  padding-left: 30px;
+  margin-top: 5px;
+}
+
+@media (max-width: 767px) {
+  .accountsetup-page-container
+    .account-setup-container
+    .account-setup-tab-contents
+    .account-setup-left-contents {
+    border: none;
+  }
+}
+
+/*************************** Wizard ********************/
+.wizard-container {
+  margin-right: 20px;
+}
+
+.wizard-step-line-container {
+  padding: 5px;
+  background-color: #f8f9fb;
+}
+.wizard-step-line-container .wizard-step-button {
+  display: inline-block;
+  width: 20%;
+  border-top: 1px solid #707070b5;
+  border-bottom: 1px solid #707070b5;
+  background-color: #dde4e9;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 5px 0;
+  text-align: center;
+  color: #414d55;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+}
+.wizard-step-line-container .wizard-step-button:last-child {
+  border-right: 1px solid #707070b5;
+}
+.wizard-step-line-container .wizard-step-button:first-child {
+  border-left: 1px solid #707070b5;
+}
+.wizard-step-line-container .wizard-step-button:hover {
+  background-color: #efefef;
+  color: #2662f0;
+}
+.wizard-step-line-container .wizard-step-button.active {
+  background-color: #ffffff;
+  color: #2662f0;
+}
+.wizard-step-line-container .wizard-step-button:after {
+  position: absolute;
+  top: 1px;
+  right: -27px;
+  content: "";
+  border: solid transparent;
+  border-color: rgba(221, 228, 233, 0);
+  border-left-color: #dde4e9;
+  border-width: 14px;
+  margin-top: 0px;
+  width: 0;
+  height: 0;
+  z-index: 1;
+}
+.wizard-step-line-container .wizard-step-button:before {
+  position: absolute;
+  top: 1px;
+  right: -28px;
+  content: "";
+  border: solid transparent;
+  border-color: rgba(159, 163, 165, 0);
+  border-left-color: #9fa3a5;
+  border-width: 14px;
+  margin-top: 0px;
+  width: 0;
+  height: 0;
+  z-index: 1;
+}
+.wizard-step-line-container .wizard-step-button:hover:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-left-color: #efefef;
+}
+.wizard-step-line-container .wizard-step-button.active:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-left-color: #ffffff;
+}
+.wizard-step-line-container .wizard-step-button:hover:before {
+  border-color: rgba(255, 255, 255, 0);
+  border-left-color: #efefef;
+}
+.wizard-step-line-container .wizard-step-button.active:before {
+  border-color: rgba(255, 255, 255, 0);
+  border-left-color: #ffffff;
+}
+.wizard-step-line-container .wizard-step-button:last-child:after,
+.wizard-step-line-container .wizard-step-button:last-child:before {
+  display: none;
+}
+
+.wizard-step-component {
+  padding: 20px 0px;
+  display: block;
+}
+.wizard-step-component.d-none {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .wizard-step-line-container .wizard-step-button {
+    width: 100%;
+    border-right: 1px solid #707070b5;
+    border-left: 1px solid #707070b5;
+    border-bottom: none;
+  }
+  .wizard-step-line-container .wizard-step-button:last-child {
+    border-bottom: 1px solid #707070b5;
+  }
+  .wizard-step-line-container .wizard-step-button::before {
+    display: none;
+  }
+  .wizard-step-line-container .wizard-step-button::after {
+    display: none;
+  }
+}
+
 /*# sourceMappingURL=assetmanager.dark.css.map */
