@@ -6,13 +6,14 @@ export class Wizard extends React.Component<any, any>{
         this.state = {
             currentStep: 0
         };
-        
+
     }
 
     onClickStepButton = (activeStep: any) => {
         this.setState({
             currentStep: activeStep
         });
+        this.props.submitPage();
     };
 
     createStepLine = () => {
@@ -55,10 +56,10 @@ export class Wizard extends React.Component<any, any>{
                 <div className="wizard-step-component-container">
                     {this.createStepContainer()}
                     <div className="d-block text-right next">
-                        {currentStep < steps.length-1 && <button onClick={e => this.onClickStepButton(currentStep - 1)} className="blue-button m-b-0">Previous</button>}
-                        {currentStep >= steps.length+1 && <button className="blue-button m-b-0">Previous</button>}
-                        {currentStep < steps.length-1 && <button onClick={e => this.onClickStepButton(currentStep + 1)} className="blue-button m-r-0 m-b-0">Next</button>}
-                        {currentStep >= steps.length-1 && <button className="blue-button m-r-0 m-b-0">Next</button>}
+                        {currentStep < steps.length - 1 && <button onClick={e => this.onClickStepButton(currentStep - 1)} className="blue-button m-b-0">Previous</button>}
+                        {currentStep >= steps.length + 1 && <button className="blue-button m-b-0">Previous</button>}
+                        {currentStep < steps.length - 1 && <button onClick={e => this.onClickStepButton(currentStep + 1)} className="blue-button m-r-0 m-b-0">Next</button>}
+                        {currentStep >= steps.length - 1 && <button className="blue-button m-r-0 m-b-0">Next</button>}
                     </div>
                 </div>
             </div>

@@ -4,11 +4,77 @@ export class CreateRole extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
-
+            displayname: '',
+            accesskeyID: '',
+            secretekeyID: '',
+            isSubmitted: false,
         };
     }
 
+    componentDidMount() {
+        console.log(this.props.submitted);
+        // this.setState({
+        //     isSubmitted: this.props.submitted,
+        // })
+    }
+
+    componentDidUpdate() {
+        console.log(this.props.submitted);
+        // this.setState({
+        //     isSubmitted: this.props.submitted,
+        // })
+    }
+
+    validate = (submitted: any) => {
+        const validObj = {
+            isValid: true,
+            message: ""
+        };
+        let isValid = true;
+        const retData = {
+            displayname: validObj,
+            accesskeyID: validObj,
+            secretekeyID: validObj,
+            isValid
+        };
+        if (submitted) {
+            const { displayname, accesskeyID, secretekeyID } = this.state;
+            if (!displayname) {
+                retData.displayname = {
+                    isValid: false,
+                    message: ("Display is required")
+                };
+                isValid = false;
+            }
+            if (!accesskeyID) {
+                retData.accesskeyID = {
+                    isValid: false,
+                    message: ("Access key Id is required")
+                };
+                isValid = false;
+            }
+            if (!secretekeyID) {
+                retData.secretekeyID = {
+                    isValid: false,
+                    message: ("Secrete key Id is required")
+                };
+                isValid = false;
+            }
+        }
+        retData.isValid = isValid;
+        return retData;
+    }
+
+    handleStateChange = (e: any) => {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value,
+        })
+    }
+
     render() {
+        const { displayname, accesskeyID, secretekeyID, isSubmitted } = this.state;
+        const errorData = this.validate(isSubmitted);
         return (
             <div className="d-inline-block width-100 account-setup-tab-contents">
                 <div className="row">
@@ -44,20 +110,22 @@ export class CreateRole extends React.Component<any, any>{
                         <div className="account-setup-right-contents">
                             <div className="form-group">
                                 <label>Display Name</label>
-                                <input className="form-control" type="text" placeholder="Normal"></input>
+                                <input className="form-control" type="text" name="displayname" value={displayname} placeholder="Normal" onChange={this.handleStateChange}></input>
                             </div>
+                            <span>{errorData.displayname.message}</span>
                             <div className="form-group">
                                 <label>Access Key Id</label>
-                                <input className="form-control" type="text" placeholder="Normal"></input>
+                                <input className="form-control" type="text" name="accesskeyID" value={accesskeyID} placeholder="Normal" onChange={this.handleStateChange}></input>
                             </div>
+                            <span>{errorData.accesskeyID.message}</span>
                             <div className="form-group">
                                 <label>Secrete Key</label>
-                                <input className="form-control" type="text" placeholder="Normal"></input>
+                                <input className="form-control" type="text" name="secretekeyID" value={secretekeyID} placeholder="Normal" onChange={this.handleStateChange}></input>
                             </div>
+                            <span>{errorData.secretekeyID.message}</span>
                         </div>
                     </div>
                 </div>
-
             </div>
         );
     }

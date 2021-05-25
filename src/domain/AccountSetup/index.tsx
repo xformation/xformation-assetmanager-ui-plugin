@@ -14,7 +14,7 @@ export class AccountSetup extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            
+            isSubmitted: false,
         };
         this.steps = [
             {
@@ -27,7 +27,7 @@ export class AccountSetup extends React.Component<any, any> {
             },
             {
                 name: "Create Role",
-                component: <CreateRole />
+                component: <CreateRole submitted={this.state.isSubmitted} />
             },
             {
                 name: "OU",
@@ -48,9 +48,13 @@ export class AccountSetup extends React.Component<any, any> {
                 isCurrentPage: true
             }
         ];
-       
-    }
 
+    }
+    setsubmitted = () => {
+        this.setState({
+            isSubmitted: true,
+        })
+    }
 
     render() {
         return (
@@ -75,7 +79,7 @@ export class AccountSetup extends React.Component<any, any> {
                         </div>
                     </div>
                     <div className="common-container">
-                        <Wizard steps={this.steps} />
+                        <Wizard steps={this.steps} submitPage={this.setsubmitted} />
                     </div>
                 </div>
             </div>
