@@ -38,10 +38,10 @@ export class InputAccount extends React.Component<any, any> {
         };
     }
     async componentDidMount() {
-        this.getAllNodesInCluster();
-        this.setState({
-            isApiCalled: true
-        });
+        // this.getAllNodesInCluster();
+        // this.setState({
+        //     isApiCalled: true
+        // });
     }
 
     getAllNodesInCluster = async () => {
@@ -59,6 +59,7 @@ export class InputAccount extends React.Component<any, any> {
             }
             ).catch(error => console.log('error', error));
     }
+
     createNodeOptions = () => {
         let retData: any = [];
         nodeIdMap.forEach((value: any, key: any) => {

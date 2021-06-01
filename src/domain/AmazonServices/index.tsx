@@ -125,25 +125,26 @@ export class AmazonServices extends React.Component<any, any> {
         // this.displayList();
     }
 
-    getEnvironment = async (assetId : any, orgId: any) =>{
-        this.setState({
-            isApiCalled: true
-        });
+    getEnvironment = async (id : any, orgId: any) => {
+        // this.setState({
+        //     isApiCalled: true
+        // });
         try {
-            await RestService.getData(config.GET_ACCOUNT_BY_ID+`?envId=${assetId}&orgId=${orgId}`, null, null).then(
+            await RestService.getData(config.GET_ACCOUNT_BY_ID+`?id=${id}`, null, null).then(
                 (response: any) => {
+                    // console.log("Accounts info: ", response);
                     this.setState({
                         // Environment: response,
                         displaygetEnvironmentData: response,       
                     });     
-                    console.log(" response", response);
+                   
             });
         } catch (err) {
-            console.log("Loading catalog failed. Error: ", err);
+            console.log("Loading accounts failed. Error: ", err);
         }
-        this.setState({
-            isApiCalled: false
-        });
+        // this.setState({
+        //     isApiCalled: false
+        // });
     }
 
     // displayList () {
@@ -182,53 +183,53 @@ export class AmazonServices extends React.Component<any, any> {
         
         // for (let i = 0; i < displaygetEnvironmentData.length; i++) {
            
-            let row = displaygetEnvironmentData;
-            if(row.environment.type=="AWS"){
-                row.date = dateFormat(row.environment.createdOn)
-                console.log("date=",row.environment.createdOn);
-
-               
+        let row = displaygetEnvironmentData;
+        console.log("Accounts info : ", row);
+        if(row.cloudType.toLowerCase() === "AWS".toLowerCase()){
+                row.date = dateFormat(row.createdOn)
+                console.log("createdOn: ",row.createdOn);
                 const { display_detail } = this.state;
-            retData.push(
-                <div>
-                <div className="heading"><span><img src={images.awsLogo} alt="" /></span><h2>Amazon Web Services</h2>
-                <div className="icon float-right" onClick={this.showHideDetail}><i className={display_detail ? "fa fa-minus" : "fa fa-plus"} aria-hidden="true"></i></div>
-            </div>
-            <div className="col-lg-12 col-md-12 col-sm-12">
-                    <div className="row">
-                        <div className="col-gl-12 col-md-12 col-sm-12 col-xs-12">
-                        <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-createbtn">
-                            <a onClick={e => this.onClickOrganisationUnit(e, row.organization && row.organization.name)} className="blue-button m-r-0 min-width-inherit width-auto create-btn" style={{ float: 'right',marginTop:'25px' }}>
-                                Organisation Unit
-                            </a>
-                        </Rbac>
+                retData.push(
+                    <div>
+                        <div className="heading">
+                            <span><img src={images.awsLogo} alt="" /></span><h2>Amazon Web Services</h2>
+                            <div className="icon float-right" onClick={this.showHideDetail}><i className={display_detail ? "fa fa-minus" : "fa fa-plus"} aria-hidden="true"></i></div>
+                        </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="row">
+                                <div className="col-gl-12 col-md-12 col-sm-12 col-xs-12">
+                                <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-createbtn">
+                                    <a onClick={e => this.onClickOrganisationUnit(e, row.organization && row.organization.name)} className="blue-button m-r-0 min-width-inherit width-auto create-btn" style={{ float: 'right',marginTop:'25px' }}>
+                                        Organisation Unit
+                                    </a>
+                                </Rbac>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-               </div>
              
              {display_detail && 
                 <div className="service-content">
                 <div className="row">
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                    <div className="row">
-                        <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
-                            <div className="services-added">Account Name</div>
-                        </div>
-                        <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                            <div className="services-added"><span>{row.environment.name}</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                    <div className="row">
-                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                            <div className="services-added">Organisation</div>
-                        </div>
-                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                            <div className="services-added"><span>{ row.organization && row.organization.name}</span></div>
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <div className="row">
+                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                <div className="services-added">Account Holder Name</div>
+                            </div>
+                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                <div className="services-added"><span>{ row.name }</span></div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <div className="row">
+                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                <div className="services-added">Organisation</div>
+                            </div>
+                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                <div className="services-added"><span>{ row.organization && row.organization.name}</span></div>
+                            </div>
+                        </div>
+                    </div>
                 {/* <div className="col-lg-6 col-md-6 col-sm-12">
                     <div className="row">
                         <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
@@ -239,26 +240,33 @@ export class AmazonServices extends React.Component<any, any> {
                         </div>
                     </div>
                 </div> */}
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                    <div className="row">
-                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                            <div className="services-added">Total Online Instances</div>
-                        </div>
-                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                            <div className="services-added">0</div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                    <div className="row">
-                        <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
-                            <div className="services-added">Account Number</div>
-                        </div>
-                        <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                            <div className="services-added"><span>0</span></div>
+                    
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <div className="row">
+                            {/* <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
+                                <div className="services-added">Account Number</div>
+                            </div> */}
+                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                <div className="services-added">Account Number</div>
+                            </div>
+                            {/* <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                                <div className="services-added"><span>AWS ({row.tenantId})</span></div>
+                            </div> */}
+                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                <div className="services-added"><span>{ row.tenantId }</span></div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <div className="row">
+                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                <div className="services-added">Total Online Instances</div>
+                            </div>
+                            <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                <div className="services-added">0</div>
+                            </div>
+                        </div>
+                    </div>
                 <div className="col-lg-6 col-md-6 col-sm-12">
                     <div className="row">
                         <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
@@ -270,11 +278,19 @@ export class AmazonServices extends React.Component<any, any> {
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12">
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
                             <div className="services-added">Cloud Guard ID</div>
                         </div>
                         <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                            <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
+                        </div>
+                    </div> */}
+                    <div className="row">
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added">Cloud Guard ID</div>
+                        </div>
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
                             <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
                         </div>
                     </div>
@@ -290,11 +306,19 @@ export class AmazonServices extends React.Component<any, any> {
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12">
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
                             <div className="services-added">Added At</div>
                         </div>
                         <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                            <div className="services-added">{row.date}</div>
+                        </div>
+                    </div> */}
+                    <div className="row">
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                            <div className="services-added">Added At</div>
+                        </div>
+                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
                             <div className="services-added">{row.date}</div>
                         </div>
                     </div>

@@ -8,7 +8,7 @@ export const config = {
   ADD_ENVIRONMENT: `${assetSrvUrl}/addEnvironment`,
   UPDATE_ENVIRONMENT: `${assetSrvUrl}/updateEnvironment`,
   GET_ALL_ENVIRONMENT: `${assetSrvUrl}/getAllEnvironment`,
-  GET_ALL_ACCOUNT: `${assetSrvUrl}/getAllAccounts`,
+  GET_ALL_ACCOUNT: `${assetSrvUrl}/searchAccounts`,
   GET_ACCOUNT_BY_ID: `${assetSrvUrl}/getAccount`,
   GET_ENVIRONMENT_BY_ID: `${assetSrvUrl}/getEnvironment`,
   INPUT_ACOOUNT: `${assetSrvUrl}/addInput`,

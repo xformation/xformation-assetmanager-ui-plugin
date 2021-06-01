@@ -18,6 +18,11 @@ export class Environments extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
+            awsAccounts:0,
+            azureAccounts:0,
+            gcpAccounts:0,
+            synectiksAccounts:0,
+            kubernatesAccounts:0,
             Environment: [],
             displaygetEnvironmentData: [],
             isApiCalled: false,
@@ -272,7 +277,7 @@ export class Environments extends React.Component<any, any> {
                     this.setState({
                         // Environment: response,
                         displaygetEnvironmentData: response,
-                        result : response.length
+                        // result : response.length
                     });
                     console.log("Loading Asstes : ", response);
             });
@@ -328,20 +333,20 @@ export class Environments extends React.Component<any, any> {
         let retData = [];
         for (let i = 0; i < displaygetEnvironmentData.length; i++) {
             let row = displaygetEnvironmentData[i];
-            if(row.environment.type=="AWS"){
+            if(row.cloudType.toLowerCase() === "AWS".toLowerCase()){
+                console.log("AWS data : ", row);
                 retData.push(
-                    console.log("Loading data11 : ", row),
                     <tr>
                         <td>
-                        <Link to={`${config.basePath}/amazonservices?assetId=${row.environment.id}&orgId=${row.organization ? row.organization.id : null}`}>
-                        {row.environment.name}
+                            <Link to={`${config.basePath}/amazonservices?assetId=${row.id}&orgId=${row.organization ? row.organization.id : null}`}>
+                                AWS ({row.tenantId})
                             </Link>
                         </td>
-                        <td>{row.organization && row.organization.name}</td>
+                        {/* <td>{row.organization && row.organization.name}</td> */}
                         <td>{row.organizationalUnit && row.organizationalUnit.name}</td> 
-                        <td>{row.environment.instance}</td>
+                        <td>{row.accountId}</td>
                         <td>
-                            <div className={row.environment.status ? "status enable" : "status disable"}></div>
+                            <div className={row.status ? "status enable" : "status disable"}></div>
                         </td>
                         <td>
                             <div className="d-block text-center">
@@ -354,9 +359,13 @@ export class Environments extends React.Component<any, any> {
                         </td> 
                     </tr>
                 );
+                // this.setState({
+                //     awsAccounts: i+1
+                // })
             }
       
         }
+        
         return retData;
     }
 
@@ -365,42 +374,48 @@ export class Environments extends React.Component<any, any> {
         let retData = [];
         for (let i = 0; i < displaygetEnvironmentData.length; i++) {
             let row = displaygetEnvironmentData[i];
-            if(row.environment.type=="AZURE"){
-        retData.push(
-                console.log("Loading data333 : ", row),
-                <tr>
-                    <td>
-                        <a href="#">{row.environment.name}</a>
-                    </td>
-                    <td>{row.organization.name}</td>
-                    
-                    <td>{row.instance}</td>
-                    <td>
-                    <td>vfghg</td> 
-                        {/* {row.organizationalUnit.name}  */}
-                      
-                        <td>{row.environment.instance}</td>
-                        <div className={row.status ? "status enable" : "status disable"}></div>
-                    </td>
-                    <td>
-                         <div className="d-block text-center">
-                            <button className="asset-white-button min-width-inherit m-r-0">
-                                <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
-                                 <CreateButtonInput />  
-                                    </Rbac>  
-                            </button>
-                        </div> 
-                    </td> 
-                </tr>
-            );
+            if(row.cloudType.toLowerCase() === "AZURE".toLowerCase()) {
+                retData.push(
+                    console.log("Loading azure data : ", row),
+                    <tr>
+                        <td>
+                            <a href="#">AZURE ({row.accountId})</a>
+                        </td>
+                        <td>{'row.organization.name'}</td>
+                        
+                        <td>{row.accountId}</td>
+                        <td>
+                        <td>vfghg</td> 
+                            {/* {row.organizationalUnit.name}  */}
+                        
+                            <td>{row.accountId}</td>
+                            <div className={row.status ? "status enable" : "status disable"}></div>
+                        </td>
+                        <td>
+                            <div className="d-block text-center">
+                                <button className="asset-white-button min-width-inherit m-r-0">
+                                    <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
+                                    <CreateButtonInput />  
+                                        </Rbac>  
+                                </button>
+                            </div> 
+                        </td> 
+                    </tr>
+                );
+                // this.setState({
+                //     azureAccounts: i+1
+                // })
+            }
         }
-    }
+        
         return retData;
- }
+    }
+
     onClickAddfolder = (link: any) => {
         this.AddfolderRef.current.setLink(link);
         this.AddfolderRef.current.toggle();
     };
+
     _displayEnvironmentBox() {
 
         const EnvironmentBox = this.state.displaygetEnvironmentData.map((val: any, key: any) => {
@@ -486,8 +501,8 @@ export class Environments extends React.Component<any, any> {
     }
     render() {
         const state = this.state;
-        const { displaygetEnvironmentData, showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data, result } = this.state;
-      console.log("gdgdsd",displaygetEnvironmentData);
+        const { displaygetEnvironmentData, showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data } = this.state;
+        console.log("gdgdsd",displaygetEnvironmentData);
         return (
 
             <div className="asset-container">
@@ -520,10 +535,9 @@ export class Environments extends React.Component<any, any> {
                             <div className="heading">
                                 <span><img src={images.awsLogo} alt="" /></span>
                                 <h3>
-                                    <Link to={`${config.basePath}/amazonservices`}>
+                                    {/* <Link to={`${config.basePath}/amazonservices`}> */}
                                         AWS
-                                     
-                                </Link>
+                                    {/* </Link> */}
                                     {/* <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, 'AWS')} >
                                         <i className="fa fa-edit"></i>
                                     </a>
@@ -543,7 +557,7 @@ export class Environments extends React.Component<any, any> {
                                     </a> */}
                                     <tr>
                                         <td>Accounts</td>
-                                        <td>{result}</td>
+                                        <td>{this.displayAWSAccountList().length}</td>
                                     </tr>
                                     <tr>
                                         <td>Assets</td>
@@ -566,9 +580,9 @@ export class Environments extends React.Component<any, any> {
                             <div className="heading">
                                <span><img src={images.microsoftAzureLogo} alt="" /></span>
                                 <h3>
-                                    <Link to={`${config.basePath}/amazonservices`}>
+                                    {/* <Link to={`${config.basePath}/amazonservices`}> */}
                                         Azure
-                                </Link>
+                                    {/* </Link> */}
                                     {/* <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, displaygetEnvironmentData)} >
                                         <i className="fa fa-edit"></i>
                                     </a>
@@ -587,7 +601,7 @@ export class Environments extends React.Component<any, any> {
                                     </a> */}
                                     <tr>
                                         <td>Accounts</td>
-                                        <td>{result}</td>
+                                        <td>{this.displayAzureTableData().length}</td>
                                     </tr>
                                     <tr>
                                         <td>Assets</td>
@@ -610,9 +624,9 @@ export class Environments extends React.Component<any, any> {
                             <div className="heading">
                               <span><img src={images.gcpLogo} alt="" /></span>
                                 <h3>
-                                    <Link to={`${config.basePath}/amazonservices`}>
+                                    {/* <Link to={`${config.basePath}/amazonservices`}> */}
                                         CGP
-                                </Link>
+                                    {/* </Link> */}
                                     {/* <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, displaygetEnvironmentData)} >
                                         <i className="fa fa-edit"></i>
                                     </a>
@@ -655,9 +669,9 @@ export class Environments extends React.Component<any, any> {
                             <div className="heading">
                                 <span><img src={images.KubernetesLogo} alt="" /></span>
                                 <h3>
-                                    <Link to={`${config.basePath}/amazonservices`}>
+                                    {/* <Link to={`${config.basePath}/amazonservices`}> */}
                                         Synectiks
-                                </Link>
+                                    {/* </Link> */}
                                     {/* <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, displaygetEnvironmentData)} >
                                         <i className="fa fa-edit">dsffff</i>
                                     </a>
@@ -790,7 +804,7 @@ export class Environments extends React.Component<any, any> {
                                 <thead>
                                     <tr>
                                         <th><span><img src={images.awsLogo} alt="" /></span> AWS</th>
-                                        <th>Organisation</th>
+                                        {/* <th>Organisation</th> */}
                                         <th>Organisational Unit</th>
                                         <th>Online Instance</th>
                                         <th>Status</th>
@@ -798,7 +812,6 @@ export class Environments extends React.Component<any, any> {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* {this.displayAWSAccountList(aws_table_data)} */}
                                     {this.displayAWSAccountList()}
                                 </tbody>
                             </table>
