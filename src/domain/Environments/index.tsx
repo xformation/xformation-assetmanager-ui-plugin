@@ -342,9 +342,9 @@ export class Environments extends React.Component<any, any> {
                                 AWS ({row.tenantId})
                             </Link>
                         </td>
-                        {/* <td>{row.organization && row.organization.name}</td> */}
+                        <td>{row.organization && row.organization.name}</td>
                         <td>{row.organizationalUnit && row.organizationalUnit.name}</td> 
-                        <td>{row.accountId}</td>
+                        <td>N/A</td>
                         <td>
                             <div className={row.status ? "status enable" : "status disable"}></div>
                         </td>
@@ -359,9 +359,7 @@ export class Environments extends React.Component<any, any> {
                         </td> 
                     </tr>
                 );
-                // this.setState({
-                //     awsAccounts: i+1
-                // })
+                
             }
       
         }
@@ -379,32 +377,28 @@ export class Environments extends React.Component<any, any> {
                     console.log("Loading azure data : ", row),
                     <tr>
                         <td>
-                            <a href="#">AZURE ({row.accountId})</a>
+                            {/* <Link to={`${config.basePath}/amazonservices?assetId=${row.id}&orgId=${row.organization ? row.organization.id : null}`}> */}
+                                AZURE ({row.tenantId})
+                            {/* </Link> */}
                         </td>
-                        <td>{'row.organization.name'}</td>
-                        
-                        <td>{row.accountId}</td>
+                        <td>{row.organization && row.organization.name}</td>
+                        <td>{row.organizationalUnit && row.organizationalUnit.name}</td> 
+                        <td>N/A</td>
                         <td>
-                        <td>vfghg</td> 
-                            {/* {row.organizationalUnit.name}  */}
-                        
-                            <td>{row.accountId}</td>
                             <div className={row.status ? "status enable" : "status disable"}></div>
                         </td>
                         <td>
                             <div className="d-block text-center">
                                 <button className="asset-white-button min-width-inherit m-r-0">
                                     <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
-                                    <CreateButtonInput />  
-                                        </Rbac>  
+                                        <CreateButtonInput detail={row}/>    
+                                    </Rbac>                                  
                                 </button>
                             </div> 
                         </td> 
                     </tr>
                 );
-                // this.setState({
-                //     azureAccounts: i+1
-                // })
+                
             }
         }
         
@@ -564,11 +558,11 @@ export class Environments extends React.Component<any, any> {
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>Log Monitored</td>
+                                        <td>Alerts</td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KPI Monitored</td>
+                                        <td>Total Billing</td>
                                         <td>0</td>
                                     </tr>
                                 </table>
@@ -608,11 +602,11 @@ export class Environments extends React.Component<any, any> {
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>Log Monitored</td>
+                                        <td>Alerts</td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KPI Monitored</td>
+                                        <td>Total Billing</td>
                                         <td>0</td>
                                     </tr>
                                 </table>
@@ -653,11 +647,11 @@ export class Environments extends React.Component<any, any> {
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>Log Monitored</td>
+                                        <td>Alerts</td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KPI Monitored</td>
+                                        <td>Total Billing</td>
                                         <td>0</td>
                                     </tr>
                                 </table>
@@ -670,7 +664,7 @@ export class Environments extends React.Component<any, any> {
                                 <span><img src={images.KubernetesLogo} alt="" /></span>
                                 <h3>
                                     {/* <Link to={`${config.basePath}/amazonservices`}> */}
-                                        Synectiks
+                                        Kubernates
                                     {/* </Link> */}
                                     {/* <a style={{ float: 'right', marginRight: '-15px' }} onClick={e => this.onClickEditAccount(e, displaygetEnvironmentData)} >
                                         <i className="fa fa-edit">dsffff</i>
@@ -698,11 +692,11 @@ export class Environments extends React.Component<any, any> {
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>Log Monitored</td>
+                                        <td>Alerts</td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KPI Monitored</td>
+                                        <td>Total Billing</td>
                                         <td>0</td>
                                     </tr>
                                 </table>
@@ -804,7 +798,7 @@ export class Environments extends React.Component<any, any> {
                                 <thead>
                                     <tr>
                                         <th><span><img src={images.awsLogo} alt="" /></span> AWS</th>
-                                        {/* <th>Organisation</th> */}
+                                        <th>Organisation</th>
                                         <th>Organisational Unit</th>
                                         <th>Online Instance</th>
                                         <th>Status</th>

@@ -35,7 +35,7 @@ export class  OrganisationUnit extends React.Component<any, any> {
             modal: !this.state.modal,
             organizatioName: selectedorganization,
         });
-        console.log("  organizatioName",selectedorganization);
+        console.log("Organizatio name: ",selectedorganization);
     }
     saveOrganisationunit = async (e: any) => {
     e.preventDefault();
@@ -68,8 +68,8 @@ export class  OrganisationUnit extends React.Component<any, any> {
         };
         if (isSubmitted) {
             const { organizatioName,organisationunitName } = this.state;
-            console.log("organisationName111",organizatioName);
-            console.log("organisationunitName 111",organisationunitName );
+            console.log("Organisation name: ",organizatioName);
+            console.log("Organisation unit name: ",organisationunitName );
             if (!organizatioName) {
                 retData. organizatioName = {
                     isValid: false,
