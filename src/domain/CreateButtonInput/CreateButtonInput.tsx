@@ -34,7 +34,7 @@ export class CreateButtonInput extends React.Component<any, any> {
   
     render() {
         const { openCreateMenu, detailObj  } = this.state;
-        console.log("efrfg5rfr",detailObj);
+        console.log("CreateButtonInput: ",detailObj);
         return (
             <div className="col-lg-4 col-md-4 col-sm-12 text-right">
                 <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-createbtn">
@@ -47,7 +47,7 @@ export class CreateButtonInput extends React.Component<any, any> {
                                 <a onClick={e => this.onClickInputAccount(e, detailObj.environment.name)}> Add Input </a>
                         </Rbac>
                         <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-agentbtn">
-                            <Link to={`${config.basePath}/amazonservices?assetId=${detailObj.environment.id}&orgId=${detailObj.organization ? detailObj.organization.id : null}`}>
+                            <Link to={`${config.basePath}/amazonservices?assetId=${detailObj.id}&orgId=${detailObj.organization ? detailObj.organization.id : null}`}>
                                 Details
                             </Link>
                         </Rbac>

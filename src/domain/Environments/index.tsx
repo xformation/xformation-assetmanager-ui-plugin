@@ -346,7 +346,7 @@ export class Environments extends React.Component<any, any> {
                         <td>{row.organizationalUnit && row.organizationalUnit.name}</td> 
                         <td>N/A</td>
                         <td>
-                            <div className={row.status ? "status enable" : "status disable"}></div>
+                            <div className={row.status === 'ACTIVE' ? "status enable" : "status disable"}></div>
                         </td>
                         <td>
                             <div className="d-block text-center">
@@ -493,6 +493,7 @@ export class Environments extends React.Component<any, any> {
         });
         return EnvironmentBox;
     }
+
     render() {
         const state = this.state;
         const { displaygetEnvironmentData, showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data } = this.state;
@@ -740,34 +741,38 @@ export class Environments extends React.Component<any, any> {
                                             <div className="fliter">
                                                 <div className="fliter-toggel" onClick={() => this.setState({ showAddNewFilter: !showAddNewFilter })}>
                                                     <i className="fa fa-plus"></i>
-                                                    <span>Add New</span>
+                                                    <span>Add New Environment</span>
                                                 </div>
                                                 <div className={showAddNewFilter === true ? "fliter-collapse active" : "fliter-collapse"}>
                                                     <ul>
                                                         <li>
-                                                            <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, 'AWS')} >
-                                                            <span><img src={images.awsLogo} alt="" /></span>
-                                                             <i>AWS Environment</i>                                   
+                                                            <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }}  >
+                                                                <i>
+                                                                    <Link to={`${config.basePath}/accountsetup`}><span><img src={images.awsLogo} alt="" /></span> AWS Environment 
+                                                                    </Link> 
+                                                                </i>                                     
                                                             </a>
                                                         </li>
+                                                        
                                                         <li>
-                                                            <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, "Azure")} >
-                                                            <span><img src={images.microsoftAzureLogo} alt="" /></span>
-                                                            <i>Azure Environment</i>
+                                                            <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }}  >
+                                                                <i>
+                                                                    <span><img src={images.microsoftAzureLogo} alt="" /></span> Azure Environment
+                                                                </i>
                                                              </a>
                                           
                                                         </li>
                                                         <li>
-                                                             <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }} onClick={e => this.onClickAddAccount(e,"CGP")} >
-                                                             <span><img src={images.gcpLogo} alt="" /></span>
-                                                            <i>GCP Environment</i>
-                                                                 </a>    
+                                                            <a style={{ float: 'left', marginRight: '-54px', fontSize: "14px" }}  >
+                                                                <i>
+                                                                    <span><img src={images.gcpLogo} alt="" /></span> GCP Environment
+                                                                </i>
+                                                            </a>    
                                                         </li>
                                                         <li>
-                                                              <a style={{ float: 'left',  fontSize: "14px" }} onClick={e => this.onClickAddAccount(e, "Synectiks")} >
-                                                              <span><img src={images.KubernetesLogo} alt="" /></span>
-                                                             <i>Kubernetes </i>
-                                                             </a>
+                                                            <a style={{ float: 'left',  fontSize: "14px" }}  >
+                                                                <i><span><img src={images.KubernetesLogo} alt="" /></span> Kubernetes </i>
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>

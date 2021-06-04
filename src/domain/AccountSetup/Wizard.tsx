@@ -49,7 +49,7 @@ export class Wizard extends React.Component<any, any>{
         const { steps } = this.props;
         return (
             <div className="account-setup-container">
-                <div className="heading">New AWS Account setup</div>
+                <div className="heading">New AWS Account Setup</div>
                 <div className="wizard-step-line-container">
                     {this.createStepLine()}
                 </div>

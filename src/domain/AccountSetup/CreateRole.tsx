@@ -12,14 +12,14 @@ export class CreateRole extends React.Component<any, any>{
     }
 
     componentDidMount() {
-        console.log(this.props.submitted);
+        console.log("componentDidMount submitted : "+this.props.submitted);
         // this.setState({
         //     isSubmitted: this.props.submitted,
         // })
     }
 
     componentDidUpdate() {
-        console.log(this.props.submitted);
+        console.log("componentDidUpdate submitted : "+this.props.submitted);
         // this.setState({
         //     isSubmitted: this.props.submitted,
         // })

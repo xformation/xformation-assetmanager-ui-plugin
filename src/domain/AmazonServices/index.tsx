@@ -5,8 +5,8 @@ import { config } from '../../config';
 import { images } from '../../img';
 import { Collapse } from 'reactstrap';
 import { RestService } from '../_service/RestService';
-import { OrganisationUnit} from '../OrganisationUnit/OrganistaionUnit';
-import Rbac from '../../components/Rbac';
+// import { OrganisationUnit} from '../OrganisationUnit/OrganistaionUnit';
+// import Rbac from '../../components/Rbac';
 import * as dateFormat from 'dateformat'
 // import { Customselectbox } from '../../Components/Customselectbox';
 export class AmazonServices extends React.Component<any, any> {
@@ -188,17 +188,17 @@ export class AmazonServices extends React.Component<any, any> {
                             <span><img src={images.awsLogo} alt="" /></span><h2>Amazon Web Services</h2>
                             <div className="icon float-right" onClick={this.showHideDetail}><i className={display_detail ? "fa fa-minus" : "fa fa-plus"} aria-hidden="true"></i></div>
                         </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12">
+                        {/* <div className="col-lg-12 col-md-12 col-sm-12">
                             <div className="row">
                                 <div className="col-gl-12 col-md-12 col-sm-12 col-xs-12">
-                                <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-createbtn">
-                                    <a onClick={e => this.onClickOrganisationUnit(e, row.organization && row.organization.name)} className="blue-button m-r-0 min-width-inherit width-auto create-btn" style={{ float: 'right',marginTop:'25px' }}>
-                                        Organisation Unit
-                                    </a>
-                                </Rbac>
+                                    <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-createbtn">
+                                        <a onClick={e => this.onClickOrganisationUnit(e, row.organization && row.organization.name)} className="blue-button m-r-0 min-width-inherit width-auto create-btn" style={{ float: 'right',marginTop:'25px' }}>
+                                            Organisation Unit
+                                        </a>
+                                    </Rbac>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> */}
              
              {display_detail && 
                 <div className="service-content">
@@ -438,7 +438,7 @@ export class AmazonServices extends React.Component<any, any> {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12">
                                 <div className="float-right common-right-btn">
-                                    <Link to={`${config.basePath}/`} className="asset-white-button min-width-inherit m-r-0">
+                                    <Link to={`${config.basePath}/environments`} className="asset-white-button min-width-inherit m-r-0">
                                         <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;
                                         Back
                                     </Link>
@@ -449,9 +449,8 @@ export class AmazonServices extends React.Component<any, any> {
                     <div className="common-container border-bottom-0 p-b-0">
                         {this.state.displaygetEnvironmentData && 
                             <div className="service-full-container">
-                                        {this.displayAwsData()}
+                                {this.displayAwsData()}
                             </div>
-                            
                         }              
                     </div>
                     <div className="common-container border-bottom-0">
@@ -509,7 +508,7 @@ export class AmazonServices extends React.Component<any, any> {
                         </div>
                     </div>
                 </div>
-                <OrganisationUnit ref={this.OrganisationunitRef} />   
+                {/* <OrganisationUnit ref={this.OrganisationunitRef} />    */}
             </div>
         );
     }

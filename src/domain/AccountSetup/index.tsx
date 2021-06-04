@@ -70,7 +70,7 @@ export class AccountSetup extends React.Component<any, any> {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12">
                                 <div className="float-right common-right-btn ">
-                                    <Link to={`${config.basePath}/`} className="asset-white-button min-width-inherit">
+                                    <Link to={`${config.basePath}/environments`} className="asset-white-button min-width-inherit">
                                         <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;
                                         Back
                                     </Link>
