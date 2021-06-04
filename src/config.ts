@@ -1,4 +1,4 @@
-const IP = "localhost";
+const IP = "100.64.108.25";
 const securitySrvUrl = `http://${IP}:8094`;
 const assetSrvUrl = `http://${IP}:5057/api`;
 export const config = {
@@ -26,10 +26,10 @@ export const config = {
   TCP_INPUT_ADDED_SUCESS: "TCP INPUT SAVED",
   TCP_INPUT_ADDED_ERROR: "TCP Input can't added",
   INPUT_URL: {
-    KPI_INPUT: "http://127.0.0.1:7035/system/inputs",
-    LOG_INPUT: "http://127.0.0.1:7037/system/inputs",
-    CAMPLIANCE_INPUT: "http://127.0.0.1:7039/system/inputs",
-    NATIVEDS_INPUT: "http://127.0.0.1:7055/system/inputs"
+    KPI_INPUT: "http://100.64.108.25:7035/system/inputs",
+    LOG_INPUT: "http://100.64.108.25:7037/system/inputs",
+    CAMPLIANCE_INPUT: "http://100.64.108.25:7039/system/inputs",
+    NATIVEDS_INPUT: "http://100.64.108.25:7055/system/inputs"
   },
   USERID: "admin",
   PASSWORD: "admin"
