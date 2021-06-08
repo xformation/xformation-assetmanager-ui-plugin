@@ -2,26 +2,73 @@ import * as React from 'react';
 import { CreateNewOU } from './CreateNewOU';
 
 export class Ou extends React.Component<any, any>{
-    CreateNewOURef: any;
+    createNewOURef: any;
     constructor(props: any) {
         super(props);
         this.state = {
-            openouCollapseStatus: false
+            collapsed: [],
+            selectedData: []
         };
-        this.CreateNewOURef = React.createRef();
+        this.createNewOURef = React.createRef();
     }
-    opensubouCollapse = () => {
-        let collapse = !this.state.openouCollapseStatus;
+
+    collapseExpand = (index: any) => {
+        const { collapsed } = this.state;
+        collapsed[index] = !collapsed[index];
         this.setState({
-            openouCollapseStatus: collapse,
+            collapsed,
         });
     }
+
     onClickCreateNewOU = (CreateNewOU: any) => {
-        this.CreateNewOURef.current.toggle(CreateNewOU);
-    }; 
+        this.createNewOURef.current.toggle(CreateNewOU);
+    };
+
+    selectUnit = (id: any, unitId: any) => {
+        this.setState({
+            selectedData: [id, unitId]
+        });
+    };
+
+    renderOrganizations = (organizationList: any) => {
+        const { collapsed, selectedData } = this.state;
+        const retData = [];
+        for (let i = 0; i < organizationList.length; i++) {
+            const units = organizationList[i].organizationalUnitList;
+            const unitsJSX = [];
+            for (let j = 0; j < units.length; j++) {
+                unitsJSX.push(
+                    <li onClick={() => this.selectUnit(organizationList[i].id, units[j].id)} className={`${selectedData[1] === units[j].id ? 'selected' : ''}`} key={`unit-${j}`}>{units[j].name}</li>
+                );
+            }
+            retData.push(
+                <li key={`org-${i}`}>
+                    <div className="text">
+                        <div onClick={() => this.collapseExpand(i)} className={`${collapsed[i] ? 'caret-down' : 'caret-right'}`}></div>
+                        <label onClick={() => this.selectUnit(organizationList[i].id, "")} className={`${selectedData[0] === organizationList[i].id ? 'selected' : ''}`}>{organizationList[i].name}</label>
+                    </div>
+                    {
+                        collapsed[i] &&
+                        <ul className="show">
+                            {unitsJSX}
+                        </ul>
+                    }
+                </li>
+            );
+        }
+        return retData;
+    };
+
+    refresh = () => {
+        this.props.getOrganizationList();
+    };
+
+    getSelection = () => {
+        return this.state.selectedData;
+    };
 
     render() {
-        const { openouCollapseStatus } = this.state;
+        const { organizationList } = this.props;
         return (
             <div className="d-inline-block width-100 account-setup-tab-contents">
                 <div className="contents">
@@ -31,22 +78,11 @@ export class Ou extends React.Component<any, any>{
                     <p>Select the OU from below or <strong><a href="#" onClick={this.onClickCreateNewOU}>create new OU</a></strong></p>
                     <div className="collapse-contents">
                         <ul>
-                            <li>
-                                <div className="text">
-                                    {openouCollapseStatus == false && <div onClick={this.opensubouCollapse} className="caret-right"></div>}
-                                    {openouCollapseStatus == true && <div onClick={this.opensubouCollapse} className="caret-down"></div>}
-                                    Synectiks
-                                </div>
-                                {openouCollapseStatus == true && <ul className="show">
-                                    <li>Finance</li>
-                                    <li>IT Networking</li>
-                                    <li>Monitoring</li>
-                                </ul>}
-                            </li>
+                            {this.renderOrganizations(organizationList)}
                         </ul>
                     </div>
                 </div>
-                <CreateNewOU ref={this.CreateNewOURef} />
+                <CreateNewOU ref={this.createNewOURef} organizationList={organizationList} refresh={this.refresh} />
             </div>
         );
     }

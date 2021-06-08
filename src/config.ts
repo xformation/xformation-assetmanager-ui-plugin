@@ -32,5 +32,8 @@ export const config = {
     NATIVEDS_INPUT: "http://100.64.108.25:7055/system/inputs"
   },
   USERID: "admin",
-  PASSWORD: "admin"
+  PASSWORD: "admin",
+  GET_ALL_ORGANIZATIONS: `${assetSrvUrl}/getAllOrganizations`,
+  ADD_ORGANIZATION_UNIT: `${assetSrvUrl}/addOrganizationUnit`,
+  ADD_ACCOUNT: `${assetSrvUrl}/addAccount`,
 };

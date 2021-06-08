@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+import { RestService } from '../_service/RestService';
+import { config } from '../../config';
+
 export class CreateNewOU extends React.Component<any, any> {
     steps: any;
     constructor(props: any) {
         super(props);
         this.state = {
             modal: false,
-            openouCollapseStatus: false,
+            collapsed: [],
             ouname: '',
             isSubmitted: false,
         };
@@ -26,10 +29,11 @@ export class CreateNewOU extends React.Component<any, any> {
         });
     }
 
-    opensubouCollapse = () => {
-        let collapse = !this.state.openouCollapseStatus;
+    collapseExpand = (index: any) => {
+        const { collapsed } = this.state;
+        collapsed[index] = !collapsed[index];
         this.setState({
-            openouCollapseStatus: collapse,
+            collapsed,
         });
     }
 
@@ -72,14 +76,51 @@ export class CreateNewOU extends React.Component<any, any> {
         const errorData = this.validate(true);
         if (errorData.isValid) {
             const { ouname } = this.state;
-            this.setState({
-                modal: false,
-            });
+            const { organizationList } = this.props;
+            if (organizationList.length > 0) {
+                const id = organizationList[0].id;
+                RestService.add(`${config.ADD_ORGANIZATION_UNIT}/${id}/${ouname}`, {}).then((resp: any) => {
+                    this.props.refresh();
+                    this.setState({
+                        modal: false,
+                    });
+                });
+            }
         }
     }
 
+    renderOrganizations = (organizationList: any) => {
+        const { collapsed } = this.state;
+        const retData = [];
+        for (let i = 0; i < organizationList.length; i++) {
+            const units = organizationList[i].organizationalUnitList;
+            const unitsJSX = [];
+            for (let j = 0; j < units.length; j++) {
+                unitsJSX.push(
+                    <li key={`unit-${i}`}>{units[j].name}</li>
+                );
+            }
+            retData.push(
+                <li key={`org-${i}`}>
+                    <div className="text">
+                        <div onClick={() => this.collapseExpand(i)} className={`${collapsed[i] ? 'caret-down' : 'caret-right'}`}></div>
+                        {organizationList[i].name}
+                    </div>
+                    {
+                        collapsed[i] &&
+                        <ul className="show">
+                            {unitsJSX}
+                        </ul>
+                    }
+                </li>
+            );
+        }
+        return retData;
+    };
+
     render() {
-        const { modal, openouCollapseStatus, ouname, isSubmitted } = this.state;
+        const { modal, ouname, isSubmitted } = this.state;
+        const { organizationList } = this.props;
         const errorData = this.validate(isSubmitted);
         return (
             <Modal isOpen={modal} toggle={this.toggle} className="modal-container servicdesk-modal-container">
@@ -100,18 +141,7 @@ export class CreateNewOU extends React.Component<any, any> {
                                 <label htmlFor="Select">Select the Account or OU below</label>
                                 <div className="collapse-contents">
                                     <ul>
-                                        <li>
-                                            <div className="text">
-                                                {openouCollapseStatus == false && <div onClick={this.opensubouCollapse} className="caret-right"></div>}
-                                                {openouCollapseStatus == true && <div onClick={this.opensubouCollapse} className="caret-down"></div>}
-                                    Synectiks
-                                </div>
-                                            {openouCollapseStatus == true && <ul className="show">
-                                                <li>Finance</li>
-                                                <li>IT Networking</li>
-                                                <li>Monitoring</li>
-                                            </ul>}
-                                        </li>
+                                        {this.renderOrganizations(organizationList)}
                                     </ul>
                                 </div>
                             </div>

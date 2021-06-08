@@ -6,14 +6,18 @@ export class Wizard extends React.Component<any, any>{
         this.state = {
             currentStep: 0
         };
-
     }
 
     onClickStepButton = (activeStep: any) => {
         this.setState({
             currentStep: activeStep
         });
-        this.props.submitPage();
+    };
+
+    setActiveStep = (step: any) => {
+        this.setState({
+            currentStep: step
+        })
     };
 
     createStepLine = () => {
@@ -38,7 +42,7 @@ export class Wizard extends React.Component<any, any>{
             const totalSteps = steps.length;
             for (let i = 0; i < totalSteps; i++) {
                 const step = steps[i];
-                retData.push(<div className={`wizard-step-component ${currentStep === i ? '' : 'd-none'}`}>{step.component}</div>);
+                retData.push(<div className={`wizard-step-component ${currentStep === i ? '' : 'd-none'}`}>{step.component()}</div>);
             }
         }
         return retData;
@@ -59,7 +63,7 @@ export class Wizard extends React.Component<any, any>{
                         {currentStep < steps.length - 1 && <button onClick={e => this.onClickStepButton(currentStep - 1)} className="blue-button m-b-0">Previous</button>}
                         {currentStep >= steps.length + 1 && <button className="blue-button m-b-0">Previous</button>}
                         {currentStep < steps.length - 1 && <button onClick={e => this.onClickStepButton(currentStep + 1)} className="blue-button m-r-0 m-b-0">Next</button>}
-                        {currentStep >= steps.length - 1 && <button className="blue-button m-r-0 m-b-0">Next</button>}
+                        {currentStep >= steps.length - 1 && <button onClick={this.props.submitPage} className="blue-button m-r-0 m-b-0">Submit</button>}
                     </div>
                 </div>
             </div>
