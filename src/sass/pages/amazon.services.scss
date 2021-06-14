@@ -104,11 +104,13 @@
             }
           }
 
-          .active {
-            background-color: #FFFFFF;
-            color: #2662F0;
-            border-top-right-radius: 5px;
-            border-top-left-radius: 5px;
+          &.active {
+            a{
+              background-color: #FFFFFF;
+              color: #2662F0;
+              border-top-right-radius: 5px;
+              border-top-left-radius: 5px;
+            }
           }
         }
 
@@ -502,6 +504,114 @@
       }
     }
   }
+
+  .displayed-here{
+    display: block;
+    width: 100%;
+    text-align: center;
+    p{
+      display: inline-block;
+      margin: 0;
+      padding: 100px 0;
+      color: #3B4859;
+      font-size: 20px;
+      line-height: 24px;
+      font-weight: 500;
+    }
+  }
+
+  .table-container{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    .table{
+      thead{
+        th{
+          color: #414D55;
+          font-size: 14px;
+          line-height: 22px;
+          font-weight: 500;
+          padding: 8px 15px;
+          background-color: #D9E4F2;
+          &:last-child{
+            border-top-right-radius: 10px;
+          }
+          &:first-child{
+            border-top-left-radius: 10px;
+          }
+        }
+      }
+      tbody{
+        tr{
+          background-color: #ffffff;
+          &:nth-child(odd){
+            background-color: #F8F9FB;
+          }
+          td{
+            color: #414D55;
+            font-size: 13px;
+            line-height: 22px;
+            font-weight: 500;
+            padding: 8px 15px;
+            min-height: 30px;
+          }
+        }
+      }
+    }
+  }
+
+  .framework-table-container{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    .heading{
+      display: block;
+      padding-bottom: 5px;
+      a{
+        color: #2662F0;
+        font-size: 16px;
+        line-height: 28px;
+        font-weight: 500;
+      }
+    }
+    .table{
+      thead{
+        th{
+          color: #414D55;
+          font-size: 14px;
+          line-height: 22px;
+          font-weight: 500;
+          padding: 8px 15px;
+          background-color: #F8F9FB;
+          text-align: center;
+          &:first-child{
+            text-align: left;
+          }
+        }
+      }
+      tbody{
+        tr{
+          background-color: #F8F9FB;
+          &:nth-child(odd){
+            background-color: #ffffff;
+          }
+          td{
+            color: #414D55;
+            font-size: 13px;
+            line-height: 22px;
+            font-weight: 500;
+            padding: 8px 15px;
+            min-height: 30px;
+            text-align: center;
+            &:first-child{
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+  }
+
 }
 
 @media only screen and (max-width: 992px) {

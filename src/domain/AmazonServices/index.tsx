@@ -3,86 +3,27 @@ import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { config } from '../../config';
 import { images } from '../../img';
-import { Collapse } from 'reactstrap';
 import { RestService } from '../_service/RestService';
-// import { OrganisationUnit} from '../OrganisationUnit/OrganistaionUnit';
-// import Rbac from '../../components/Rbac';
 import * as dateFormat from 'dateformat'
-// import { Customselectbox } from '../../Components/Customselectbox';
+import { Wizard } from './Wizard';
+import { DiscoveredAssets } from './DiscoveredAssets';
+import { Billing } from './Billing';
+import { ThreatAndSecurityEvents } from './ThreatAndSecurityEvents';
+import { CompliancePolicies } from './CompliancePolicies';
+import { Alerts } from './Alerts';
+import { Inputs } from './Inputs';
+
+
 export class AmazonServices extends React.Component<any, any> {
     breadCrumbs: any;
-    dateFormat: any
-    OrganisationunitRef:any;
+    dateFormat: any;
+    steps: any;
+    OrganisationunitRef: any;
     constructor(props: any) {
         super(props);
         this.state = {
             display_detail: true,
-            displaygetEnvironmentData:null,
-            tableData:[],
-            // tableData: [
-            //     {
-            //         title: 'VPC 1', unit: '', instance: 'N/A',
-            //         status: true,
-            //         isOpened: false,
-            //         subData: [
-            //             {
-            //                 title: 'EC2', unit: '', instance: 'N/A', status: true, isOpened: false,
-            //                 subData: [
-            //                     { title: 'Node1', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node2', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node3', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node4', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node5', unit: '', instance: 'N/A', status: true }
-            //                 ]
-            //             },
-            //             { title: 'RDS', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //             { title: 'Load Balancer', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //             { title: 'Firewall', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //             { title: 'CDN', unit: '', instance: 'N/A', status: true, isOpened: false }
-            //         ]
-            //     },
-            //     {
-            //         title: 'Node', unit: '', instance: 'N/A', status: true, isOpened: false,
-            //         subData: [
-            //             {
-            //                 title: 'EC2', unit: '', instance: 'N/A', status: true, isOpened: false,
-            //                 subData: [
-            //                     { title: 'Node1', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node2', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node3', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node4', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node5', unit: '', instance: 'N/A', status: true }
-            //                 ]
-            //             },
-            //             { title: 'RDS', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //             { title: 'Load Balancer', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //             { title: 'Firewall', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //             { title: 'CDN', unit: '', instance: 'N/A', status: true, isOpened: false }
-            //         ]
-            //     },
-            //     {
-            //         title: 'VPC 2', unit: '', instance: 'N/A', status: true, isOpened: false,
-            //         subData: [
-            //             {
-            //                 title: 'EC2', unit: '', instance: 'N/A', status: true, isOpened: false,
-            //                 subData: [
-            //                     { title: 'Node1', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node2', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node3', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node4', unit: '', instance: 'N/A', status: true },
-            //                     { title: 'Node5', unit: '', instance: 'N/A', status: true }
-            //                 ]
-            //             },
-            //             { title: 'RDS', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //             { title: 'Load Balancer', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //             { title: 'Firewall', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //             { title: 'CDN', unit: '', instance: 'N/A', status: true, isOpened: false }
-            //         ]
-            //     },
-            //     { title: 'RDS', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //     { title: 'Database', unit: '', instance: 'N/A', status: true, isOpened: false },
-            //     { title: 'VPC 3', unit: '', instance: 'N/A', status: true, isOpened: false }
-            // ],
+            displaygetEnvironmentData: null,
         };
         this.breadCrumbs = [
             {
@@ -95,6 +36,32 @@ export class AmazonServices extends React.Component<any, any> {
             }
         ];
         this.OrganisationunitRef = React.createRef();
+        this.steps = [
+            {
+                name: "Discovered Assets",
+                component: <DiscoveredAssets />
+            },
+            {
+                name: "Billing",
+                component: <Billing />
+            },
+            {
+                name: "Threat and Security Events",
+                component: <ThreatAndSecurityEvents />
+            },
+            {
+                name: "Compliance Policies",
+                component: <CompliancePolicies />
+            },
+            {
+                name: "Alerts",
+                component: <Alerts />
+            },
+            {
+                name: "Inputs",
+                component: <Inputs />
+            }
+        ];
     }
 
     showHideDetail = () => {
@@ -104,91 +71,47 @@ export class AmazonServices extends React.Component<any, any> {
         })
     }
 
-    displayTable = () => {
-        // const { displaygetEnvironmentData } = this.state;
-        const retData = [];
-        
-        const { tableData } = this.state;
-        const length = tableData.length;
-        for (let i = 0; i < length; i++) {
-            const folder = tableData[i];
-            retData.push(this.renderTree(folder, [i]));
-        }
-        return retData;
-    }
-
     async componentDidMount() {
         const queryPrm = new URLSearchParams(this.props.location.search);
         const assetId = queryPrm.get('assetId')
         const orgId = queryPrm.get('orgId')
-        console.log("asset id: "+assetId);
+        console.log("asset id: " + assetId);
         await this.getAccounts(assetId, orgId);
-        // this.displayList();
     }
 
-    getAccounts = async (id : any, orgId: any) => {
+    getAccounts = async (id: any, orgId: any) => {
         try {
-            await RestService.getData(config.GET_ACCOUNT_BY_ID+`?id=${id}`, null, null).then(
+            await RestService.getData(config.GET_ACCOUNT_BY_ID + `?id=${id}`, null, null).then(
                 (response: any) => {
                     this.setState({
-                        displaygetEnvironmentData: response,   
-                        tableData: response.assetList,    
-                    });     
+                        displaygetEnvironmentData: response,
+                        tableData: response.assetList,
+                    });
                 });
         } catch (err) {
             console.log("Loading accounts failed. Error: ", err);
         }
     }
 
-    // displayList () {
-    //     const { displaygetEnvironmentData } = this.state;
-    //      let retData = [];
-    //     //  for (let i = 0; i < displaygetEnvironmentData.length; i++) {
-    //         console.log("i am hare ",displaygetEnvironmentData.environment);
-    //         let row = displaygetEnvironmentData.environment;
-    //         console.log("i am",row);
-    //          if(row.type==="AWS"){
-    //             console.log("i am",row.environment.type);
-    //              retData.push(
-    //                  console.log("Loading data11 : ", row),
-    //         <tr>
-    //             <td>
-    //             <td> {row.environment.name}</td>
-                           
-    //             </td>
-    //             <td>{row.organization && row.organization.name}</td>
-    //             <td>{row.organizationalUnit && row.organizationalUnit.name}</td> 
-    //             <td>{row.environment.instance}</td>
-    //             <td>
-    //                 <div className={row.environment.status ? "status enable" : "status disable"}></div>
-    //             </td>
-    //         </tr>
-    //             );
-    //          }
-      
-    //     //  }
-    //       return retData;
-    // }
-
     displayAwsData() {
         const { displaygetEnvironmentData } = this.state;
         let retData = [];
-        
+
         // for (let i = 0; i < displaygetEnvironmentData.length; i++) {
-           
+
         let row = displaygetEnvironmentData;
         // console.log("Accounts info : ", row);
-        if(row.cloudType.toLowerCase() === "AWS".toLowerCase()){
-                row.date = dateFormat(row.createdOn)
-                console.log("createdOn: ",row.createdOn);
-                const { display_detail } = this.state;
-                retData.push(
-                    <div>
-                        <div className="heading">
-                            <span><img src={images.awsLogo} alt="" /></span><h2>Amazon Web Services</h2>
-                            <div className="icon float-right" onClick={this.showHideDetail}><i className={display_detail ? "fa fa-minus" : "fa fa-plus"} aria-hidden="true"></i></div>
-                        </div>
-                        {/* <div className="col-lg-12 col-md-12 col-sm-12">
+        if (row.cloudType.toLowerCase() === "AWS".toLowerCase()) {
+            row.date = dateFormat(row.createdOn)
+            console.log("createdOn: ", row.createdOn);
+            const { display_detail } = this.state;
+            retData.push(
+                <div>
+                    <div className="heading">
+                        <span><img src={images.awsLogo} alt="" /></span><h2>Amazon Web Services</h2>
+                        <div className="icon float-right" onClick={this.showHideDetail}><i className={display_detail ? "fa fa-minus" : "fa fa-plus"} aria-hidden="true"></i></div>
+                    </div>
+                    {/* <div className="col-lg-12 col-md-12 col-sm-12">
                             <div className="row">
                                 <div className="col-gl-12 col-md-12 col-sm-12 col-xs-12">
                                     <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-createbtn">
@@ -199,232 +122,142 @@ export class AmazonServices extends React.Component<any, any> {
                                 </div>
                             </div>
                         </div> */}
-             
-             {display_detail && 
-                <div className="service-content">
-                    <div className="row">
-                        <div className="col-lg-6 col-md-6 col-sm-12">
-                            <div className="row">
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">Account Holder Name</div>
-                                </div>
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added"><span>{ row.name }</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12">
-                            <div className="row">
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">Organisation</div>
-                                </div>
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added"><span>{ row.organization && row.organization.name}</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12">
-                            <div className="row">
-                                {/* <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
-                                    <div className="services-added">Account Number</div>
-                                </div> */}
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">Account Number</div>
-                                </div>
-                                {/* <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                                    <div className="services-added"><span>AWS ({row.tenantId})</span></div>
-                                </div> */}
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added"><span>{ row.tenantId }</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12">
-                            <div className="row">
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">Organisation Unit</div>
-                                </div>
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added"><span>{ row.organizationalUnit && row.organizationalUnit.name}</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12">
-                            <div className="row">
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">Total Online Instances</div>
-                                </div>
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">0</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12">
-                            <div className="row">
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">Full Protection Security Group</div>
-                                </div>
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">0</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12">
-                            {/* <div className="row">
-                                <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
-                                    <div className="services-added">Cloud Guard ID</div>
-                                </div>
-                                <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                                    <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
-                                </div>
-                            </div> */}
-                            <div className="row">
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">Cloud Guard ID</div>
-                                </div>
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12">
-                            <div className="row">
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">Read Only Security Group</div>
-                                </div>
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">0</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12">
-                            {/* <div className="row">
-                                <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
-                                    <div className="services-added">Added At</div>
-                                </div>
-                                <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
-                                    <div className="services-added">{row.date}</div>
-                                </div>
-                            </div> */}
-                            <div className="row">
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">Added At</div>
-                                </div>
-                                <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                    <div className="services-added">{row.date}</div>
-                                </div>
-                            </div>
-                        </div>
 
-                </div>
-            </div>
-            }
-            </div>
-             
-            );
-            
-        }
-      
-    // }
-        return retData;
- 
-    }
-
-    renderTree = (folder: any, indexArr: any): any => {
-        const retData = [];
-        const subFolders = folder.subData;
-        const subFolderJSX = [];
-        if (subFolders != undefined) {
-            for (let j = 0; j < subFolders.length; j++) {
-                const subFolder = subFolders[j];
-                let subIndexArr: any = [];
-                subIndexArr = [...indexArr, j];
-                subFolderJSX.push(
-                    <>
-                        {(subFolder.subData == undefined) &&
-                            <div className="tbody">
-                                <div className="tbody-inner">
-                                    <div className="tbody-td first">
-                                        <div className="caret-right"></div>
-                                        {subFolder.title}
-                                    </div>
-                                    <div className="tbody-td">{subFolder.unit}</div>
-                                    <div className="tbody-td">{subFolder.instance}</div>
-                                    <div className="tbody-td">
-                                        <div className={subFolder.status ? "status-icon enable" : "status-icon disable"}></div>
-                                    </div>
-                                    <div className="tbody-td">
-                                        <div className="d-flex">
-                                            <button className="btn btn-link" id="PopoverFocus">
-                                                <i className="fa fa-ellipsis-h"></i>
-                                            </button>
+                    {display_detail &&
+                        <div className="service-content">
+                            <div className="row">
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    <div className="row">
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">Account Holder Name</div>
+                                        </div>
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added"><span>{row.name}</span></div>
                                         </div>
                                     </div>
                                 </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    <div className="row">
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">Organisation</div>
+                                        </div>
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added"><span>{row.organization && row.organization.name}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    <div className="row">
+                                        {/* <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
+                                    <div className="services-added">Account Number</div>
+                                </div> */}
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">Account Number</div>
+                                        </div>
+                                        {/* <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                                    <div className="services-added"><span>AWS ({row.tenantId})</span></div>
+                                </div> */}
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added"><span>{row.tenantId}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    <div className="row">
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">Organisation Unit</div>
+                                        </div>
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added"><span>{row.organizationalUnit && row.organizationalUnit.name}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    <div className="row">
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">Total Online Instances</div>
+                                        </div>
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    <div className="row">
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">Full Protection Security Group</div>
+                                        </div>
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    {/* <div className="row">
+                                <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
+                                    <div className="services-added">Cloud Guard ID</div>
+                                </div>
+                                <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                                    <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
+                                </div>
+                            </div> */}
+                                    <div className="row">
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">Cloud Guard ID</div>
+                                        </div>
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">e5b82995-c0fc-729d-a67b-926r81a5963d</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    <div className="row">
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">Read Only Security Group</div>
+                                        </div>
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    {/* <div className="row">
+                                <div className="col-gl-4 col-md-4 col-sm-6 col-xs-12">
+                                    <div className="services-added">Added At</div>
+                                </div>
+                                <div className="col-gl-8 col-md-8 col-sm-6 col-xs-12">
+                                    <div className="services-added">{row.date}</div>
+                                </div>
+                            </div> */}
+                                    <div className="row">
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">Added At</div>
+                                        </div>
+                                        <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="services-added">{row.date}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                        }
-                        {
-                            subFolder.subData &&
-                            this.renderTree(subFolder, subIndexArr)
-                        }
-
-                    </>
-                );
-            }
-        }
-
-        retData.push(
-            <div className="tbody">
-                <div className="tbody-inner">
-                    <div className="tbody-td first">
-                        {!folder.subData && <div className={folder.isOpened ? "caret-down" : "caret-right"} onClick={() => this.onClickOpenSubTreeArr([...indexArr])}></div>}
-                        {folder.subData && <div className={folder.isOpened ? "caret-down" : "caret-right"} onClick={() => this.onClickOpenSubTreeArr([...indexArr])}></div>}
-                        {folder.title}
-                    </div>
-                    <div className="tbody-td">{folder.unit}</div>
-                    <div className="tbody-td">{folder.instance}</div>
-                    <div className="tbody-td">
-                        <div className={folder.status ? "status-icon enable" : "status-icon disable"}></div>
-                    </div>
-                    <div className="tbody-td">
-                        <div className="d-flex">
-                            <button className="btn btn-link" id="PopoverFocus">
-                                <i className="fa fa-ellipsis-h"></i>
-                            </button>
                         </div>
-                    </div>
+                    }
                 </div>
-                <Collapse className="collapse-content" isOpen={folder.isOpened}>
-                    {subFolderJSX}
-                </Collapse>
-            </div>
-        );
-        return retData;
-    }
 
-    onClickOpenSubTreeArr = (indexArr: any) => {
-        const { tableData } = this.state;
-        const folder = this.findChild(tableData, [...indexArr]);
-        folder.isOpened = !folder.isOpened;
-        this.setState({
-            tableData
-        });
-    }
+            );
 
-    findChild = (folderList: any, indexArr: any): any => {
-        const index = indexArr.splice(0, 1)[0];
-        if (indexArr.length === 0) {
-            return folderList[index];
-        } else {
-            return this.findChild(folderList[index].subData, indexArr);
         }
-    };
-    onClickOrganisationUnit = (e: any, selectedorganization: any) => {
-        console.log("selectedEnviornment",selectedorganization);
-         this.OrganisationunitRef.current.toggle(selectedorganization);
+
+        // }
+        return retData;
+
     } 
+    
+    onClickOrganisationUnit = (e: any, selectedorganization: any) => {
+        console.log("selectedEnviornment", selectedorganization);
+        this.OrganisationunitRef.current.toggle(selectedorganization);
+    }
     render() {
-       
         return (
             <div className="asset-container">
                 <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="PERFORMANCE MANAGEMENT" />
@@ -447,68 +280,16 @@ export class AmazonServices extends React.Component<any, any> {
                         </div>
                     </div>
                     <div className="common-container border-bottom-0 p-b-0">
-                        {this.state.displaygetEnvironmentData && 
+                        {this.state.displaygetEnvironmentData &&
                             <div className="service-full-container">
                                 {this.displayAwsData()}
                             </div>
-                        }              
+                        }
                     </div>
                     <div className="common-container border-bottom-0">
-                        <div className="urganisational-unit-container">
-                            <div className="unit-tabs">
-                                <ul>
-                                    <li><a href="#" className="active">Discovered Assets</a></li>
-                                    <li><a href="#">Billing</a></li>
-                                    <li><a href="#">Threat and Security Events</a></li>
-                                    <li><a href="#">Compliance Policies</a></li>
-                                    <li><a href="#">Alerts</a></li>
-                                    <li><a href="#">Inputs</a></li>
-                                    
-                                </ul>
-                            </div>
-                            <div className="Filters-box">
-                                <p>Select and add Filters</p>
-                                <span><i className="fa fa-angle-down" aria-hidden="true"></i></span>
-                            </div>
-                            <div className="showing-export">
-                                <div className="row d-flex justify-content-center">
-                                    <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                        <div className="showing-heading">
-                                            {/* Showing results 81 of 81 */}
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                        <div className="export-files">
-                                            <span><i className="fa fa-sign-out"></i></span>
-                                            <p>Expport</p>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                        <div className="search-box form-group">
-                                            <input type="text" className="control-form" placeholder="Search" value="" /><button><i className="fa fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="organisational-details">
-                                <div className="container-inner">
-                                    <div className="organisational-data-table">
-                                        <div className="thead">
-                                            <div className="thead-th organisational-heading"><span><img src={images.awsLogo} alt="" /></span></div>
-                                            <div className="thead-th">Organisational Unit</div>
-                                            <div className="thead-th">Online Instance</div>
-                                            <div className="thead-th">Status</div>
-                                            <div className="thead-th">Action</div>
-                                        </div>
-                                        {this.displayTable()}
-                                    </div>
-                                </div>
-                            
-                            </div>
-                        </div>
+                        <Wizard steps={this.steps} />
                     </div>
                 </div>
-                {/* <OrganisationUnit ref={this.OrganisationunitRef} />    */}
             </div>
         );
     }
