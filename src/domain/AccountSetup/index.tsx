@@ -18,7 +18,7 @@ export class AccountSetup extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            organizationList: [],
+            organizationList: null ,
             selection: [],
             name: "",
             accessKey: "",
@@ -95,23 +95,39 @@ export class AccountSetup extends React.Component<any, any> {
     }
     async componentDidMount() {
         try {
-            await RestService.getData(config.GET_ALL_ORGANIZATIONS, null, null).then(
+            var usr = localStorage.getItem(`userInfo`); 
+            if(usr !== null){
+                const user = JSON.parse(usr);
+                await RestService.getData(config.GET_USER_ORGANIZATION+'/'+user.info.credentials.name, null, null).then(
                 (response: any) => {
                     this.setState({
                         organizationList: response,
                     });
-                });
+                });    
+            }
+            
         } catch (err) {
             console.log("Error: ", err);
         }
     }
     getOrganizationList = () => {
-        RestService.getData(config.GET_ALL_ORGANIZATIONS, null, null).then(
+        var usr = localStorage.getItem(`userInfo`); 
+        
+        if(usr !== null){
+            const user = JSON.parse(usr);
+            RestService.getData(config.GET_USER_ORGANIZATION+'/'+user.info.credentials.name, null, null).then(
             (response: any) => {
                 this.setState({
                     organizationList: response,
                 });
-            });
+            });    
+        }
+        // RestService.getData(config.GET_ALL_ORGANIZATIONS, null, null).then(
+        //     (response: any) => {
+        //         this.setState({
+        //             organizationList: response,
+        //         });
+        //     });
     }
     render() {
         return (

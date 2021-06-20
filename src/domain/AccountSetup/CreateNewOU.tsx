@@ -77,44 +77,54 @@ export class CreateNewOU extends React.Component<any, any> {
         if (errorData.isValid) {
             const { ouname } = this.state;
             const { organizationList } = this.props;
-            if (organizationList.length > 0) {
-                const id = organizationList[0].id;
+            // if (organizationList.length > 0) {
+                const id = organizationList.id;
                 RestService.add(`${config.ADD_ORGANIZATION_UNIT}/${id}/${ouname}`, {}).then((resp: any) => {
                     this.props.refresh();
                     this.setState({
                         modal: false,
                     });
                 });
-            }
+            // }
         }
     }
 
     renderOrganizations = (organizationList: any) => {
         const { collapsed } = this.state;
         const retData = [];
-        for (let i = 0; i < organizationList.length; i++) {
-            const units = organizationList[i].organizationalUnitList;
+        
+        if(organizationList === null || organizationList === undefined){
+            return;
+        }
+
+        // for (let i = 0; i < organizationList.length; i++) {
+            
+            const units = organizationList.organizationalUnitList;
+            console.log("PPPPPPPPP ",units);
             const unitsJSX = [];
-            for (let j = 0; j < units.length; j++) {
-                unitsJSX.push(
-                    <li key={`unit-${i}`}>{units[j].name}</li>
-                );
+            if(units){
+                for (let j = 0; j < units.length; j++) {
+                    unitsJSX.push(
+                        <li key={`unit-0`}>{units[j].name}</li>
+                    );
+                }
             }
+            
             retData.push(
-                <li key={`org-${i}`}>
+                <li key={`org-0`}>
                     <div className="text">
-                        <div onClick={() => this.collapseExpand(i)} className={`${collapsed[i] ? 'caret-down' : 'caret-right'}`}></div>
-                        {organizationList[i].name}
+                        <div onClick={() => this.collapseExpand(0)} className={`${collapsed[0] ? 'caret-down' : 'caret-right'}`}></div>
+                        {organizationList.name}
                     </div>
                     {
-                        collapsed[i] &&
+                        collapsed[0] &&
                         <ul className="show">
                             {unitsJSX}
                         </ul>
                     }
                 </li>
             );
-        }
+        // }
         return retData;
     };
 
@@ -141,7 +151,7 @@ export class CreateNewOU extends React.Component<any, any> {
                                 <label htmlFor="Select">Select the Account or OU below</label>
                                 <div className="collapse-contents">
                                     <ul>
-                                        {this.renderOrganizations(organizationList)}
+                                        {organizationList !== null && this.renderOrganizations(organizationList)}
                                     </ul>
                                 </div>
                             </div>

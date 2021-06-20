@@ -1,9 +1,9 @@
-const IP = "100.64.108.25";
+const IP = "localhost";
 const securitySrvUrl = `http://${IP}:8094`;
 const assetSrvUrl = `http://${IP}:5057/api`;
 export const config = {
   basePath: "/plugins/xformation-assetmanager-ui-plugin/page",
-  octantURL: "http://100.64.108.25:7777/#/",
+  octantURL: "http://localhost:7777/#/",
   SEVERITY_ERROR: "error",
   ADD_ENVIRONMENT: `${assetSrvUrl}/addEnvironment`,
   UPDATE_ENVIRONMENT: `${assetSrvUrl}/updateEnvironment`,
@@ -26,14 +26,16 @@ export const config = {
   TCP_INPUT_ADDED_SUCESS: "TCP INPUT SAVED",
   TCP_INPUT_ADDED_ERROR: "TCP Input can't added",
   INPUT_URL: {
-    KPI_INPUT: "http://100.64.108.25:7035/system/inputs",
-    LOG_INPUT: "http://100.64.108.25:7037/system/inputs",
-    CAMPLIANCE_INPUT: "http://100.64.108.25:7039/system/inputs",
-    NATIVEDS_INPUT: "http://100.64.108.25:7055/system/inputs"
+    KPI_INPUT: "http://localhost:7035/system/inputs",
+    LOG_INPUT: "http://localhost:7037/system/inputs",
+    CAMPLIANCE_INPUT: "http://localhost:7039/system/inputs",
+    NATIVEDS_INPUT: "http://localhost:7055/system/inputs"
   },
   USERID: "admin",
   PASSWORD: "admin",
-  GET_ALL_ORGANIZATIONS: `${assetSrvUrl}/getAllOrganizations`,
+  // GET_ALL_ORGANIZATIONS: `${assetSrvUrl}/getAllOrganizations`,
   ADD_ORGANIZATION_UNIT: `${assetSrvUrl}/addOrganizationUnit`,
   ADD_ACCOUNT: `${assetSrvUrl}/addAccount`,
+
+  GET_USER_ORGANIZATION: `${assetSrvUrl}/getAllOrgUnits`
 };

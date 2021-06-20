@@ -33,29 +33,33 @@ export class Ou extends React.Component<any, any>{
     renderOrganizations = (organizationList: any) => {
         const { collapsed, selectedData } = this.state;
         const retData = [];
-        for (let i = 0; i < organizationList.length; i++) {
-            const units = organizationList[i].organizationalUnitList;
+        // for (let i = 0; i < organizationList.length; i++) {
+            // const units = organizationList[i].organizationalUnitList;
+            const units = organizationList.organizationalUnitList;
             const unitsJSX = [];
-            for (let j = 0; j < units.length; j++) {
-                unitsJSX.push(
-                    <li onClick={() => this.selectUnit(organizationList[i].id, units[j].id)} className={`${selectedData[1] === units[j].id ? 'selected' : ''}`} key={`unit-${j}`}>{units[j].name}</li>
-                );
+            if(units){
+                for (let j = 0; j < units.length; j++) {
+                    unitsJSX.push(
+                        <li onClick={() => this.selectUnit(organizationList.id, units[j].id)} className={`${selectedData[1] === units[j].id ? 'selected' : ''}`} key={`unit-${j}`}>{units[j].name}</li>
+                    );
+                }
             }
+            
             retData.push(
-                <li key={`org-${i}`}>
+                <li key={`org-0`}>
                     <div className="text">
-                        <div onClick={() => this.collapseExpand(i)} className={`${collapsed[i] ? 'caret-down' : 'caret-right'}`}></div>
-                        <label onClick={() => this.selectUnit(organizationList[i].id, "")} className={`${selectedData[0] === organizationList[i].id ? 'selected' : ''}`}>{organizationList[i].name}</label>
+                        <div onClick={() => this.collapseExpand(0)} className={`${collapsed[0] ? 'caret-down' : 'caret-right'}`}></div>
+                        <label onClick={() => this.selectUnit(organizationList.id, "")} className={`${selectedData[0] === organizationList.id ? 'selected' : ''}`}>{organizationList.name}</label>
                     </div>
                     {
-                        collapsed[i] &&
+                        collapsed[0] &&
                         <ul className="show">
                             {unitsJSX}
                         </ul>
                     }
                 </li>
             );
-        }
+        // }
         return retData;
     };
 
@@ -78,7 +82,7 @@ export class Ou extends React.Component<any, any>{
                     <p>Select the OU from below or <strong><a href="#" onClick={this.onClickCreateNewOU}>create new OU</a></strong></p>
                     <div className="collapse-contents">
                         <ul>
-                            {this.renderOrganizations(organizationList)}
+                            {organizationList !== null && this.renderOrganizations(organizationList)}
                         </ul>
                     </div>
                 </div>
