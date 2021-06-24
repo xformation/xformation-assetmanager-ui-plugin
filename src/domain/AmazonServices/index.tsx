@@ -24,6 +24,7 @@ export class AmazonServices extends React.Component<any, any> {
         this.state = {
             display_detail: true,
             displaygetEnvironmentData: null,
+            cloudAssets: [],
         };
         this.breadCrumbs = [
             {
@@ -81,7 +82,7 @@ export class AmazonServices extends React.Component<any, any> {
 
     getAccounts = async (id: any, orgId: any) => {
         try {
-            await RestService.getData(config.GET_ACCOUNT_BY_ID + `?id=${id}`, null, null).then(
+            await RestService.getData(`${config.GET_ACCOUNT_BY_ID}/${id}`, null, null).then(
                 (response: any) => {
                     this.setState({
                         displaygetEnvironmentData: response,
@@ -142,7 +143,7 @@ export class AmazonServices extends React.Component<any, any> {
                                             <div className="services-added">Organisation</div>
                                         </div>
                                         <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                            <div className="services-added"><span>{row.organization && row.organization.name}</span></div>
+                                            <div className="services-added"><span>{row.organizationName && row.organizationName}</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -234,7 +235,7 @@ export class AmazonServices extends React.Component<any, any> {
                                             <div className="services-added">Added At</div>
                                         </div>
                                         <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                            <div className="services-added">{row.date}</div>
+                                            <div className="services-added">{row.createdOn}</div>
                                         </div>
                                     </div>
                                 </div>
