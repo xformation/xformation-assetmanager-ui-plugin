@@ -12,6 +12,102 @@ export class StorageDetails extends React.Component<any, any> {
         super(props);
         this.state = {
             activeTab: 0,
+            storageData: [
+                {
+                    nodeTitle: 'VPC1 - EC2 - Node 2',
+                    nodeDetail: {
+                        title: 'Amazon Web Services',
+                        acNo: 'AWS-(657907747545)',
+                        pagelink: [
+                            {
+                                name: 'VPC 1'
+                            },
+                            {
+                                name: 'EC2'
+                            },
+                            {
+                                name: 'VPC 1'
+                            }
+                        ],
+                        steps: [
+                            {
+                                name: "Entity",
+                                component: <div>Entity</div>,
+                                nodeTree: [
+                                    { name: 'storage' },
+                                    { name: 'Network' },
+                                    { name: 'Configuration' },
+                                    { name: 'External Storage' },
+                                ]
+                            },
+                            {
+                                name: "Performance",
+                                component: <div>Performance</div>
+                            },
+                            {
+                                name: "Availability",
+                                component: <div>Availability</div>
+                            },
+                            {
+                                name: "Reliability",
+                                component: <div>Reliability</div>
+                            },
+                            {
+                                name: "End Usage",
+                                component: <div>End Usage</div>
+                            },
+                            {
+                                name: "Security",
+                                component: <div>Security</div>
+                            },
+                            {
+                                name: "Compliance",
+                                component: <div>Compliance</div>
+                            },
+                            {
+                                name: "Alerts",
+                                component: <div>Alerts</div>
+                            }
+                        ]
+                    }
+                },
+                {
+                    nodeTitle: 'VPC1 - EC2 - Node 5',
+                    nodeDetail: {
+                        title: 'Amazon Web Services',
+                        acNo: 'AWS-(657907747545)',
+                        pagelink: [
+                            {
+                                name: 'VPC 1'
+                            },
+                            {
+                                name: 'EC2'
+                            },
+                            {
+                                name: 'VPC 1'
+                            }
+                        ]
+                    }
+                },
+                {
+                    nodeTitle: 'VPC1 - EC2 - Node 4',
+                    nodeDetail: {
+                        title: 'Amazon Web Services',
+                        acNo: 'AWS-(657907747545)',
+                        pagelink: [
+                            {
+                                name: 'VPC 1'
+                            },
+                            {
+                                name: 'EC2'
+                            },
+                            {
+                                name: 'VPC 1'
+                            }
+                        ]
+                    }
+                }
+            ]
         };
         this.breadCrumbs = [
             {
@@ -23,7 +119,7 @@ export class StorageDetails extends React.Component<any, any> {
                 isCurrentPage: true
             }
         ];
-        
+
     }
     setActiveTab = (activeTab: any) => {
         this.setState({
@@ -31,8 +127,22 @@ export class StorageDetails extends React.Component<any, any> {
         });
     };
 
+    displayTabs = () => {
+        const { activeTab, storageData } = this.state;
+        let retData = [];
+        for (let i = 0; i < storageData.length; i++) {
+            let node = storageData[i];
+            retData.push(
+                <li className={activeTab === i ? 'active' : ''} onClick={e => this.setActiveTab(i)}>
+                    <a>{node.nodeTitle}<i className="fa fa-times" aria-hidden="true"></i></a>
+                </li>
+            );
+        }
+        return retData;
+    }
+
     render() {
-        const { activeTab } = this.state;
+        const { activeTab, storageData } = this.state;
         return (
             <div className="asset-container">
                 <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="PERFORMANCE MANAGEMENT" />
@@ -58,7 +168,8 @@ export class StorageDetails extends React.Component<any, any> {
                         <div className="service-account-container">
                             <div className="account-tabs">
                                 <ul>
-                                    <li className={activeTab === 0 ? 'active' : ''} onClick={e => this.setActiveTab(0)}>
+                                    {this.displayTabs()}
+                                    {/* <li className={activeTab === 0 ? 'active' : ''} onClick={e => this.setActiveTab(0)}>
                                         <a href="#">VPC1 - EC2 - Node 2 <i className="fa fa-times" aria-hidden="true"></i></a>
                                     </li>
                                     <li className={activeTab === 1 ? 'active' : ''} onClick={e => this.setActiveTab(1)}>
@@ -66,13 +177,14 @@ export class StorageDetails extends React.Component<any, any> {
                                     </li>
                                     <li className={activeTab === 2 ? 'active' : ''} onClick={e => this.setActiveTab(2)}>
                                         <a href="#">VPC1 - EC2 - Node 4 <i className="fa fa-times" aria-hidden="true"></i></a>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                             <div className="webservice-container">
-                                {activeTab === 0 && <Node2 />}
+                                <Node2 data={storageData[activeTab]} />
+                                {/* {activeTab === 0 && <Node2 />}
                                 {activeTab === 1 && <Node5 />}
-                                {activeTab === 2 && <Node4 />}
+                                {activeTab === 2 && <Node4 />} */}
                             </div>
                         </div>
                     </div>

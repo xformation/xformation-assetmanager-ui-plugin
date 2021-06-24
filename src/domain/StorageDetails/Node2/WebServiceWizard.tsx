@@ -35,10 +35,23 @@ export class WebServiceWizard extends React.Component<any, any>{
         const { currentStep } = this.state;
         const retData = [];
         if (steps && steps.length > 0) {
-            const totalSteps = steps.length;
-            for (let i = 0; i < totalSteps; i++) {
-                const step = steps[i];
-                retData.push(<div className={`webservice-step-component ${currentStep === i ? '' : 'd-none'}`}>{step.component}</div>);
+            if (steps[currentStep].nodeTree) {
+                const totalSteps = steps[currentStep].nodeTree;
+                for (let i = 0; i < totalSteps.length; i++) {
+                    const step = totalSteps[i];
+                    retData.push(
+                        <li>
+                            <a href="#">
+                                <i className="fa fa-caret-right" aria-hidden="true"></i>
+                                {step.name}
+                            </a>
+                        </li>
+                    );
+                }
+            } else {
+                retData.push(
+                    <div className={`webservice-step-component`}>{steps[currentStep].component}</div>
+                )
             }
         }
         return retData;
@@ -55,7 +68,22 @@ export class WebServiceWizard extends React.Component<any, any>{
                     </ul>
                 </div>
                 <div className="tabs-container">
-                    {this.createStepContainer()}
+                    <div className="storage-section">
+                        <div className="row">
+                            <div className="col-lg-3 col-md-3 col-sm-12">
+                                <div className="network-boxs">
+                                    <ul>
+                                        {this.createStepContainer()}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="col-lg-9 col-md-9 col-sm-12">
+                                <div className="storage-details text-center">
+                                    <h4>Storage details will be displayed here</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
