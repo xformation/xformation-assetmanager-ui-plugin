@@ -7,6 +7,7 @@ export class CreateRole extends React.Component<any, any>{
             displayName: '',
             accessKey: '',
             secretKey: '',
+            accountId: '',
             isSubmitted: false,
         };
     }
@@ -21,10 +22,11 @@ export class CreateRole extends React.Component<any, any>{
             displayName: validObj,
             accessKey: validObj,
             secretKey: validObj,
+            accountId: validObj,
             isValid
         };
         if (submitted) {
-            const { displayName, accessKey, secretKey } = this.state;
+            const { displayName, accessKey, secretKey, accountId } = this.state;
             if (!displayName) {
                 retData.displayName = {
                     isValid: false,
@@ -46,6 +48,13 @@ export class CreateRole extends React.Component<any, any>{
                 };
                 isValid = false;
             }
+            if (!accountId) {
+                retData.accountId = {
+                    isValid: false,
+                    message: ("Account Id is required")
+                };
+                isValid = false;
+            }
         }
         retData.isValid = isValid;
         return retData;
@@ -63,17 +72,18 @@ export class CreateRole extends React.Component<any, any>{
             isSubmitted: true
         });
         const errorData = this.validate(true);
-        const {displayName, accessKey, secretKey} = this.state;
+        const {displayName, accessKey, secretKey, accountId} = this.state;
         return {
             displayName,
             accessKey,
             secretKey,
+            accountId,
             isValid: errorData.isValid
         };
     };
 
     render() {
-        const { displayName, accessKey, secretKey, isSubmitted } = this.state;
+        const { displayName, accessKey, secretKey, isSubmitted, accountId } = this.state;
         const errorData = this.validate(isSubmitted);
         return (
             <div className="d-inline-block width-100 account-setup-tab-contents">
@@ -110,17 +120,21 @@ export class CreateRole extends React.Component<any, any>{
                         <div className="account-setup-right-contents">
                             <div className="form-group">
                                 <label>Display Name</label>
-                                <input className="form-control" type="text" name="displayName" value={displayName} placeholder="Normal" onChange={this.handleStateChange}></input>
+                                <input className="form-control" type="text" name="displayName" value={displayName} placeholder="Account Name" onChange={this.handleStateChange}></input>
                             </div>
                             <span>{errorData.displayName.message}</span>
                             <div className="form-group">
                                 <label>Access Key Id</label>
-                                <input className="form-control" type="text" name="accessKey" value={accessKey} placeholder="Normal" onChange={this.handleStateChange}></input>
+                                <input className="form-control" type="text" name="accessKey" value={accessKey} placeholder="AWS Access Key" onChange={this.handleStateChange}></input>
                             </div>
                             <span>{errorData.accessKey.message}</span>
                             <div className="form-group">
                                 <label>Secrete Key</label>
-                                <input className="form-control" type="text" name="secretKey" value={secretKey} placeholder="Normal" onChange={this.handleStateChange}></input>
+                                <input className="form-control" type="text" name="secretKey" value={secretKey} placeholder="AWS Secret Key" onChange={this.handleStateChange}></input>
+                            </div>
+                            <div className="form-group">
+                                <label>Account Id</label>
+                                <input className="form-control" type="text" name="accountId" value={accountId} placeholder="AWS Account Id" onChange={this.handleStateChange}></input>
                             </div>
                             <span>{errorData.secretKey.message}</span>
                         </div>

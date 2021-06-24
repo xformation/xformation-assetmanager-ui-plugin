@@ -7,6 +7,7 @@ import { OperationMode } from './OperationMode';
 import { PreparePolicy } from './PreparePolicy';
 import { CreateRole } from './CreateRole';
 import { Ou } from './Ou';
+import { Review } from './Review';
 import { RestService } from '../_service/RestService';
 
 export class AccountSetup extends React.Component<any, any> {
@@ -14,6 +15,7 @@ export class AccountSetup extends React.Component<any, any> {
     steps: any;
     roleRef: any;
     ouRef: any;
+    reviewRef: any;
     wizardRef: any;
     constructor(props: any) {
         super(props);
@@ -27,6 +29,7 @@ export class AccountSetup extends React.Component<any, any> {
         this.roleRef = React.createRef();
         this.ouRef = React.createRef();
         this.wizardRef = React.createRef();
+        this.reviewRef = React.createRef();
         this.steps = [
             {
                 name: "Operation Mode",
@@ -46,7 +49,8 @@ export class AccountSetup extends React.Component<any, any> {
             },
             {
                 name: "Review",
-                component: () => <div>Review</div>
+                // component: () => <div>Review</div>
+                component: () => <Review ref={this.reviewRef} selectedOrg={this.ouRef.current !== null ? this.ouRef.current.getSelection() : null} selectedData={this.roleRef.current !== null ? this.roleRef.current.getRoleData() : null}/>
             }
         ];
         this.breadCrumbs = [
@@ -72,6 +76,15 @@ export class AccountSetup extends React.Component<any, any> {
             secretKey
         });
     };
+
+    getSelectedData = () =>{
+        return {
+            name: this.state.name,
+            accessKey: this.state.accessKey,
+            secretKey: this.state.secretKey,
+        }
+    }
+
     onSubmit = () => {
         const selectionData = this.ouRef.current.getSelection();
         const roleData = this.roleRef.current.getRoleData();
@@ -84,6 +97,7 @@ export class AccountSetup extends React.Component<any, any> {
                 "name": roleData.displayName,
                 "accessKey": roleData.accessKey,
                 "secretKey": roleData.secretKey,
+                "accountId": roleData.accountId,
                 "orgId": selectionData[0],
                 "ouId": selectionData[1]
             };
