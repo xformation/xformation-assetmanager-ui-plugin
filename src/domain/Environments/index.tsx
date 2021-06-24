@@ -9,7 +9,7 @@ import { AddAccount } from '../Account/AddAccount';
 // import { AddEnviornment } from './AddEnviornment';
 // import { EditEnviornment } from './EditEnviornment';
 import { CreateButtonInput } from "../CreateButtonInput/CreateButtonInput";
-import Rbac from '../../components/Rbac';
+// import Rbac from '../../components/Rbac';
 export class Environments extends React.Component<any, any> {
     breadCrumbs: any;
     AddAccountRef: any;
@@ -351,9 +351,9 @@ export class Environments extends React.Component<any, any> {
                         <td>
                             <div className="d-block text-center">
                                 <button className="asset-white-button min-width-inherit m-r-0">
-                                    <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
+                                    {/* <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn"> */}
                                         <CreateButtonInput detail={row}/>    
-                                    </Rbac>                                  
+                                    {/* </Rbac>                                   */}
                                 </button>
                             </div> 
                         </td> 
@@ -390,9 +390,9 @@ export class Environments extends React.Component<any, any> {
                         <td>
                             <div className="d-block text-center">
                                 <button className="asset-white-button min-width-inherit m-r-0">
-                                    <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn">
+                                    {/* <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn"> */}
                                         <CreateButtonInput detail={row}/>    
-                                    </Rbac>                                  
+                                    {/* </Rbac>                                   */}
                                 </button>
                             </div> 
                         </td> 
