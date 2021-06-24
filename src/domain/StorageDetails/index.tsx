@@ -15,97 +15,12 @@ export class StorageDetails extends React.Component<any, any> {
             storageData: [
                 {
                     nodeTitle: 'VPC1 - EC2 - Node 2',
-                    nodeDetail: {
-                        title: 'Amazon Web Services',
-                        acNo: 'AWS-(657907747545)',
-                        pagelink: [
-                            {
-                                name: 'VPC 1'
-                            },
-                            {
-                                name: 'EC2'
-                            },
-                            {
-                                name: 'VPC 1'
-                            }
-                        ],
-                        steps: [
-                            {
-                                name: "Entity",
-                                component: <div>Entity</div>,
-                                nodeTree: [
-                                    { name: 'storage' },
-                                    { name: 'Network' },
-                                    { name: 'Configuration' },
-                                    { name: 'External Storage' },
-                                ]
-                            },
-                            {
-                                name: "Performance",
-                                component: <div>Performance</div>
-                            },
-                            {
-                                name: "Availability",
-                                component: <div>Availability</div>
-                            },
-                            {
-                                name: "Reliability",
-                                component: <div>Reliability</div>
-                            },
-                            {
-                                name: "End Usage",
-                                component: <div>End Usage</div>
-                            },
-                            {
-                                name: "Security",
-                                component: <div>Security</div>
-                            },
-                            {
-                                name: "Compliance",
-                                component: <div>Compliance</div>
-                            },
-                            {
-                                name: "Alerts",
-                                component: <div>Alerts</div>
-                            }
-                        ]
-                    }
                 },
                 {
                     nodeTitle: 'VPC1 - EC2 - Node 5',
-                    nodeDetail: {
-                        title: 'Amazon Web Services',
-                        acNo: 'AWS-(657907747545)',
-                        pagelink: [
-                            {
-                                name: 'VPC 1'
-                            },
-                            {
-                                name: 'EC2'
-                            },
-                            {
-                                name: 'VPC 1'
-                            }
-                        ]
-                    }
                 },
                 {
                     nodeTitle: 'VPC1 - EC2 - Node 4',
-                    nodeDetail: {
-                        title: 'Amazon Web Services',
-                        acNo: 'AWS-(657907747545)',
-                        pagelink: [
-                            {
-                                name: 'VPC 1'
-                            },
-                            {
-                                name: 'EC2'
-                            },
-                            {
-                                name: 'VPC 1'
-                            }
-                        ]
-                    }
                 }
             ]
         };

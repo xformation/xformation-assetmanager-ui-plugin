@@ -13,7 +13,7 @@ export class WebServiceWizard extends React.Component<any, any>{
         this.setState({
             currentStep: activeStep
         });
-        this.props.submitPage();
+        // this.props.submitPage();
     };
 
     createStepLine = () => {

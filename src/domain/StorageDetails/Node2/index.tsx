@@ -10,7 +10,68 @@ export class Node2 extends React.Component<any, any>{
         super(props);
         this.state = {
             currentStep: 0,
-            storageDetail: {},
+            // storageDetail: {},
+            storageDetail: {
+                title: 'Amazon Web Services',
+                acNo: 'AWS-(657907747545)',
+                pagelink: [
+                    {
+                        name: 'VPC 1'
+                    },
+                    {
+                        name: 'EC2'
+                    },
+                    {
+                        name: 'VPC 1'
+                    }
+                ],
+                steps: [
+                    {
+                        name: "Entity",
+                        component: <div>Entity</div>,
+                        nodeTree: [
+                            { name: 'storage' },
+                            { name: 'Network' },
+                            { name: 'Configuration' },
+                            { name: 'External Storage' },
+                        ]
+                    },
+                    {
+                        name: "Performance",
+                        component: <div>Performance</div>,
+                        nodeTree: [
+                            { name: 'storage' },
+                            { name: 'Network' },
+                            { name: 'Configuration' },
+                            { name: 'External Storage' },
+                        ]
+                    },
+                    {
+                        name: "Availability",
+                        component: <div>Availability</div>
+                    },
+                    {
+                        name: "Reliability",
+                        component: <div>Reliability</div>
+                    },
+                    {
+                        name: "End Usage",
+                        component: <div>End Usage</div>
+                    },
+                    {
+                        name: "Security",
+                        component: <div>Security</div>
+                    },
+                    {
+                        name: "Compliance",
+                        component: <div>Compliance</div>
+                    },
+                    {
+                        name: "Alerts",
+                        component: <div>Alerts</div>
+                    }
+                ]
+            }
         };
         // this.steps = [
         //     {
@@ -49,13 +110,13 @@ export class Node2 extends React.Component<any, any>{
     }
 
     componentDidMount() {
-        const { data } = this.props;
-        console.log(data);
-        if (data) {
-            this.setState({
-                StorageDetail: data,
-            });
-        }
+        // const { data } = this.props;
+        // console.log(data);
+        // if (data) {
+        //     this.setState({
+        //         StorageDetail: data,
+        //     });
+        // }
     }
 
     displaylist = (list: any) => {
@@ -69,18 +130,18 @@ export class Node2 extends React.Component<any, any>{
     }
 
     render() {
-        const { data } = this.props;
+        const { storageDetail } = this.state;
         console.log(this.state.storageDetail);
         return (
             <div className="inner">
                 <div className="heading">
                     <h3>
                         <span><img src={images.awsLogo} alt="" /></span>
-                        {data.nodeDetail.title}
+                        {storageDetail.title}
                     </h3>
                     <div className="breadcrumbs">
                         <ul>
-                            <li>Account Number - <span>{data.nodeDetail.acNo}</span></li>
+                            <li>Account Number - <span>{storageDetail.acNo}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -89,8 +150,8 @@ export class Node2 extends React.Component<any, any>{
                         <div className="col-lg-7 col-md-7 col-sm-12">
                             <div className="breadcrumbs">
                                 <ul>
-                                    <li>Account Number - <span>{data.nodeDetail.acNo}</span></li>
-                                    {this.displaylist(data.nodeDetail.pagelink)}
+                                    <li>Account Number - <span>{storageDetail.acNo}</span></li>
+                                    {this.displaylist(storageDetail.pagelink)}
                                 </ul>
                             </div>
                         </div>
@@ -105,7 +166,7 @@ export class Node2 extends React.Component<any, any>{
                 <div className="displayed-here">
                     <p>Node details will be displayed here</p>
                 </div>
-                <WebServiceWizard steps={data.nodeDetail.steps} />
+                <WebServiceWizard steps={storageDetail.steps} />
             </div>
         );
     }
