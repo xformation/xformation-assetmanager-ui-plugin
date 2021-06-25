@@ -339,10 +339,10 @@ export class Environments extends React.Component<any, any> {
                     <tr>
                         <td>
                             <Link to={`${config.basePath}/amazonservices?assetId=${row.id}&orgId=${row.organization ? row.organization.id : null}`}>
-                                AWS ({row.tenantId})
+                                AWS ({row.accountId})
                             </Link>
                         </td>
-                        <td>{row.organization && row.organization.name}</td>
+                        <td>{row.organizationName}</td>
                         <td>{row.organizationalUnit && row.organizationalUnit.name}</td> 
                         <td>N/A</td>
                         <td>

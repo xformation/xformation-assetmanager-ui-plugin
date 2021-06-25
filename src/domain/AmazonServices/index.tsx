@@ -159,7 +159,7 @@ export class AmazonServices extends React.Component<any, any> {
                                     <div className="services-added"><span>AWS ({row.tenantId})</span></div>
                                 </div> */}
                                         <div className="col-gl-4 col-md-6 col-sm-6 col-xs-12">
-                                            <div className="services-added"><span>{row.tenantId}</span></div>
+                                            <div className="services-added"><span>{row.accountId}</span></div>
                                         </div>
                                     </div>
                                 </div>
