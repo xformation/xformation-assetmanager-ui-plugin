@@ -2,9 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { config } from '../../config';
-import { Node2 } from './Node2';
-import { Node4 } from './Node4';
-import { Node5 } from './Node5';
+import { Node } from './Node';
 
 export class StorageDetails extends React.Component<any, any> {
     breadCrumbs: any;
@@ -96,8 +94,8 @@ export class StorageDetails extends React.Component<any, any> {
                                 </ul>
                             </div>
                             <div className="webservice-container">
-                                <Node2 data={storageData[activeTab]} />
-                                {/* {activeTab === 0 && <Node2 />}
+                                <Node data={storageData[activeTab]} />
+                                {/* {activeTab === 0 && <Node />}
                                 {activeTab === 1 && <Node5 />}
                                 {activeTab === 2 && <Node4 />} */}
                             </div>
