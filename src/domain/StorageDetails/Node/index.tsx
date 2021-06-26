@@ -4,7 +4,7 @@ import { WebServiceWizard } from './WebServiceWizard';
 import { Entity } from './Entity';
 import { Performance } from './Performance';
 
-export class Node2 extends React.Component<any, any>{
+export class Node extends React.Component<any, any>{
     steps: any;
     constructor(props: any) {
         super(props);
