@@ -13,7 +13,6 @@ import { CompliancePolicies } from './CompliancePolicies';
 import { Alerts } from './Alerts';
 import { Inputs } from './Inputs';
 
-
 export class AmazonServices extends React.Component<any, any> {
     breadCrumbs: any;
     dateFormat: any;

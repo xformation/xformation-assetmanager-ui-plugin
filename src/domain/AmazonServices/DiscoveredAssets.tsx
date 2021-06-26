@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { images } from '../../img';
 import { Collapse } from 'reactstrap';
+import { RestService } from '../_service/RestService';
+import { config } from '../../config';
 
 export class DiscoveredAssets extends React.Component<any, any>{
     CreateNewOURef: any;
@@ -11,10 +13,23 @@ export class DiscoveredAssets extends React.Component<any, any>{
         };
     }
 
+    async componentDidMount() {
+        let id=1;
+        try {
+            await RestService.getData(`http://localhost:5057/api/getDiscoveredAsset/${id}`, null, null).then(
+                (response: any) => {
+                    this.setState({
+                        tableData: response,
+                    });
+                });
+        } catch (err) {
+            console.log("Error: ", err);
+        }
+    }
+
     displayTable = () => {
         // const { displaygetEnvironmentData } = this.state;
         const retData = [];
-
         const { tableData } = this.state;
         const length = tableData.length;
         for (let i = 0; i < length; i++) {
@@ -61,7 +76,6 @@ export class DiscoveredAssets extends React.Component<any, any>{
                             subFolder.subData &&
                             this.renderTree(subFolder, subIndexArr)
                         }
-
                     </>
                 );
             }
