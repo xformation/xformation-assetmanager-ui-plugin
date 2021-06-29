@@ -13,23 +13,40 @@ export class DiscoveredAssets extends React.Component<any, any>{
         };
     }
 
-    async componentDidMount() {
-        let id=1;
-        try {
-            await RestService.getData(`http://localhost:5057/api/getDiscoveredAsset/${id}`, null, null).then(
-                (response: any) => {
-                    this.setState({
-                        tableData: response,
+    getParameterByName = (name: any, url: any) => {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+
+    componentDidMount() {
+        const assetId = this.getParameterByName("assetId", window.location.href);
+        if (assetId) {
+            try {
+                RestService.getData(`${config.GET_DISCOVERED_ASSETS}/${assetId}`, null, null).then(
+                    (response: any) => {
+                        this.setState({
+                            tableData: response,
+                        });
+                    }, (error: any) => {
+                        console.log("Error: ", error);
                     });
-                });
-        } catch (err) {
-            console.log("Error: ", err);
+            } catch (err) {
+                console.log("Error: ", err);
+            }
+        } else {
+            alert("Asset id is not present");
         }
     }
 
     displayTable = () => {
         // const { displaygetEnvironmentData } = this.state;
         const retData = [];
+
         const { tableData } = this.state;
         const length = tableData.length;
         for (let i = 0; i < length; i++) {
@@ -76,6 +93,7 @@ export class DiscoveredAssets extends React.Component<any, any>{
                             subFolder.subData &&
                             this.renderTree(subFolder, subIndexArr)
                         }
+
                     </>
                 );
             }

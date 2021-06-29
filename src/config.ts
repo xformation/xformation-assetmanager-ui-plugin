@@ -1,4 +1,4 @@
-const IP = "localhost";
+const IP = "100.64.107.25";
 const securitySrvUrl = `http://${IP}:8094`;
 const assetSrvUrl = `http://${IP}:5057/api`;
 export const config = {
@@ -37,5 +37,6 @@ export const config = {
   ADD_ORGANIZATION_UNIT: `${assetSrvUrl}/addOrganizationUnit`,
   ADD_ACCOUNT: `${assetSrvUrl}/addAccount`,
 
-  GET_USER_ORGANIZATION: `${assetSrvUrl}/getAllOrgUnits`
+  GET_USER_ORGANIZATION: `${assetSrvUrl}/getAllOrgUnits`,
+  GET_DISCOVERED_ASSETS: `${assetSrvUrl}/getDiscoveredAsset`,
 };
