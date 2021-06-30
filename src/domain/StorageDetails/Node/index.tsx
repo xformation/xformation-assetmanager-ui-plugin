@@ -28,23 +28,12 @@ export class Node extends React.Component<any, any>{
                 steps: [
                     {
                         name: "Entity",
-                        component: <div>Entity</div>,
-                        nodeTree: [
-                            { name: 'storage' },
-                            { name: 'Network' },
-                            { name: 'Configuration' },
-                            { name: 'External Storage' },
-                        ]
+                        component: <Entity />,
                     },
                     {
                         name: "Performance",
-                        component: <div>Performance</div>,
-                        nodeTree: [
-                            { name: 'storage' },
-                            { name: 'Network' },
-                            { name: 'Configuration' },
-                            { name: 'External Storage' },
-                        ]
+                        component: <Performance />,
+                        
                     },
                     {
                         name: "Availability",
@@ -73,50 +62,9 @@ export class Node extends React.Component<any, any>{
                 ]
             }
         };
-        // this.steps = [
-        //     {
-        //         name: "Entity",
-        //         component: <Entity />
-        //     },
-        //     {
-        //         name: "Performance",
-        //         component: <Performance />
-        //     },
-        //     {
-        //         name: "Availability",
-        //         component: <div>Availability</div>
-        //     },
-        //     {
-        //         name: "Reliability",
-        //         component: <div>Reliability</div>
-        //     },
-        //     {
-        //         name: "End Usage",
-        //         component: <div>End Usage</div>
-        //     },
-        //     {
-        //         name: "Security",
-        //         component: <div>Security</div>
-        //     },
-        //     {
-        //         name: "Compliance",
-        //         component: <div>Compliance</div>
-        //     },
-        //     {
-        //         name: "Alerts",
-        //         component: <div>Alerts</div>
-        //     }
-        // ];
     }
 
     componentDidMount() {
-        // const { data } = this.props;
-        // console.log(data);
-        // if (data) {
-        //     this.setState({
-        //         StorageDetail: data,
-        //     });
-        // }
     }
 
     displaylist = (list: any) => {

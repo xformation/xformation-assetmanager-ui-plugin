@@ -10,17 +10,7 @@ export class StorageDetails extends React.Component<any, any> {
         super(props);
         this.state = {
             activeTab: 0,
-            storageData: [
-                {
-                    nodeTitle: 'VPC1 - EC2 - Node 2',
-                },
-                {
-                    nodeTitle: 'VPC1 - EC2 - Node 5',
-                },
-                {
-                    nodeTitle: 'VPC1 - EC2 - Node 4',
-                }
-            ]
+            storageData: []
         };
         this.breadCrumbs = [
             {
@@ -32,8 +22,32 @@ export class StorageDetails extends React.Component<any, any> {
                 isCurrentPage: true
             }
         ];
-
     }
+
+    componentDidMount() {
+        const name = this.getParameterByName("name", window.location.href);
+        if (name) {
+            const { storageData } = this.state;
+            storageData.push({
+                nodeTitle: name
+            });
+            this.setState({
+                storageData
+            });
+        } else {
+            
+        }
+    }
+
+    getParameterByName = (name: any, url: any) => {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
     setActiveTab = (activeTab: any) => {
         this.setState({
             activeTab,
@@ -82,22 +96,10 @@ export class StorageDetails extends React.Component<any, any> {
                             <div className="account-tabs">
                                 <ul>
                                     {this.displayTabs()}
-                                    {/* <li className={activeTab === 0 ? 'active' : ''} onClick={e => this.setActiveTab(0)}>
-                                        <a href="#">VPC1 - EC2 - Node 2 <i className="fa fa-times" aria-hidden="true"></i></a>
-                                    </li>
-                                    <li className={activeTab === 1 ? 'active' : ''} onClick={e => this.setActiveTab(1)}>
-                                        <a href="#">VPC1 - EC2 - Node 5 <i className="fa fa-times" aria-hidden="true"></i></a>
-                                    </li>
-                                    <li className={activeTab === 2 ? 'active' : ''} onClick={e => this.setActiveTab(2)}>
-                                        <a href="#">VPC1 - EC2 - Node 4 <i className="fa fa-times" aria-hidden="true"></i></a>
-                                    </li> */}
                                 </ul>
                             </div>
                             <div className="webservice-container">
                                 <Node data={storageData[activeTab]} />
-                                {/* {activeTab === 0 && <Node />}
-                                {activeTab === 1 && <Node5 />}
-                                {activeTab === 2 && <Node4 />} */}
                             </div>
                         </div>
                     </div>
