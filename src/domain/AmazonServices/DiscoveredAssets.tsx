@@ -3,6 +3,7 @@ import { images } from '../../img';
 import { Collapse } from 'reactstrap';
 import { RestService } from '../_service/RestService';
 import { config } from '../../config';
+import { Link } from 'react-router-dom';
 
 export class DiscoveredAssets extends React.Component<any, any>{
     CreateNewOURef: any;
@@ -29,6 +30,7 @@ export class DiscoveredAssets extends React.Component<any, any>{
             try {
                 RestService.getData(`${config.GET_DISCOVERED_ASSETS}/${assetId}`, null, null).then(
                     (response: any) => {
+                        console.log("Discovered assets: ",response);
                         this.setState({
                             tableData: response,
                         });
@@ -74,7 +76,7 @@ export class DiscoveredAssets extends React.Component<any, any>{
                                         <div className="caret-right"></div>
                                         {subFolder.title}
                                     </div>
-                                    <div className="tbody-td">{subFolder.unit}</div>
+                                    <div className="tbody-td">{subFolder.organizationalUnit}</div>
                                     <div className="tbody-td">{subFolder.instance}</div>
                                     <div className="tbody-td">
                                         <div className={subFolder.status ? "status-icon enable" : "status-icon disable"}></div>
@@ -103,11 +105,11 @@ export class DiscoveredAssets extends React.Component<any, any>{
             <div className="tbody">
                 <div className="tbody-inner">
                     <div className="tbody-td first">
-                        {!folder.subData && <div className={folder.isOpened ? "caret-down" : "caret-right"} onClick={() => this.onClickOpenSubTreeArr([...indexArr])}></div>}
+                        {/* {!folder.subData && <div className={folder.isOpened ? "caret-down" : "caret-right"} onClick={() => this.onClickOpenSubTreeArr([...indexArr])}></div>} */}
                         {folder.subData && <div className={folder.isOpened ? "caret-down" : "caret-right"} onClick={() => this.onClickOpenSubTreeArr([...indexArr])}></div>}
-                        {folder.title}
+                        <Link to={`${config.basePath}/storagedetails`}>{folder.title}</Link>
                     </div>
-                    <div className="tbody-td">{folder.unit}</div>
+                    <div className="tbody-td">{folder.organizationalUnit}</div>
                     <div className="tbody-td">{folder.instance}</div>
                     <div className="tbody-td">
                         <div className={folder.status ? "status-icon enable" : "status-icon disable"}></div>
