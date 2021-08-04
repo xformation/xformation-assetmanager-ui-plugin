@@ -3,23 +3,34 @@ import { Wizard } from './Wizard';
 import { VerifyInputs } from './VerifyInputs';
 import { EnableDashboard } from './EnableDashboard';
 import { VerifyAndSave } from './VerifyAndSave';
-
+import { RestService } from '../../_service/RestService';
+import { config } from '../../../config';
 
 export class Performance extends React.Component<any, any>{
     steps: any;
+    verifyInputsRef: any;
+    enableDashboardRef: any;
+    verifyAndSaveRef: any;
+    wizardRef: any;
     constructor(props: any) {
         super(props);
         this.state = {
             enablePerformanceMonitoring: false,
+            inputName: "Performance",
+            updatedDashboards:[],
         };
+        this.verifyInputsRef = React.createRef();
+        this.enableDashboardRef = React.createRef();
+        this.wizardRef = React.createRef();
+        this.verifyAndSaveRef = React.createRef();
         this.steps = [
             {
                 name: "Verify Inputs",
-                component: () => <VerifyInputs />
+                component: () => <VerifyInputs ref={this.verifyInputsRef}  inputName={this.state.inputName} />
             },
             {
                 name: "Enable Dashboard",
-                component: () => <EnableDashboard />
+                component: () => <EnableDashboard ref={this.enableDashboardRef} inputName={this.state.inputName} selectedData={this.verifyInputsRef.current !== null ? this.verifyInputsRef.current.getSelection() : null}/>
             },
             {
                 name: "Preview",
@@ -27,9 +38,27 @@ export class Performance extends React.Component<any, any>{
             },
             {
                 name: "Verify and save",
-                component: () => <VerifyAndSave />
+                component: () => <VerifyAndSave ref={this.verifyAndSaveRef} inputName={this.state.inputName} selectedData={this.enableDashboardRef.current !== null ? this.enableDashboardRef.current.getSelection() : null}/>
             }
         ]
+    }
+
+    componentDidMount(){
+        try {
+            const tenantId = this.getParameterByName("tenantId", window.location.href);
+            const accountId = this.getParameterByName("accountId", window.location.href);
+            RestService.getData(`${config.SEARCH_INPUT}?name=Performance&tenantId=${tenantId}&accountId=${accountId}`, null, null).then(
+                (response: any) => {
+                    console.log("Performance Input: ",response);
+                    this.setState({
+                        tableData: response,
+                    });
+                }, (error: any) => {
+                    console.log("1. Performance componentDidMount. Error: ", error);
+                });
+        } catch (err) {
+            console.log("2. Performance componentDidMount. Error: ", err);
+        }
     }
 
     enablePerformanceMonitoring = () => {
@@ -37,6 +66,92 @@ export class Performance extends React.Component<any, any>{
             enablePerformanceMonitoring: !this.state.enablePerformanceMonitoring,
         });
     };
+    
+    getParameterByName = (name: any, url: any) => {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    onSubmit = async () => {
+        await this.enableInput();
+        await this.exportDashboardsInGrafana();
+        await this.updateDashboardsStatusInAppAsset();
+        console.log("Assets enabled");
+        alert ('Input enabled');
+    };
+    
+    enableInput() {
+        const tenantId = this.getParameterByName("tenantId", window.location.href);
+        const accountId = this.getParameterByName("accountId", window.location.href);
+        let inp = {
+            accountId: accountId,
+            tenantId: tenantId,
+            name: this.state.inputName,
+            description: 'Performance input',
+            status: 'ACTIVE',
+        }
+        RestService.add(`${config.ADD_INPUT}`, inp)
+        .then((response: any) => {
+                console.log("Enable input response : ", response);
+            }
+        );
+    }
+
+    updateDashboardsStatusInAppAsset() {
+        const {updatedDashboards} = this.state;
+        RestService.add(`${config.UPDATE_APPLICATION_ASSETS}`, updatedDashboards)
+        .then((response: any) => {
+                console.log("Update assets response : ", response);
+            }
+        );
+    }
+
+    async exportDashboardsInGrafana() {
+        const obj = this.verifyAndSaveRef.current.getSelection();
+        const {updatedDashboards} = this.state;
+        for( let i=0; i<obj.length; i++){
+            const selectionData = obj[i];
+            var dashboard = config.DASHBOARD_JSON;
+            dashboard.Uid =`${selectionData.dashboardUuid}`;
+            dashboard.Uuid = `${selectionData.dashboardUuid}`;
+            dashboard.Slug = `${selectionData.title}`;
+            dashboard.Title =`${selectionData.title}`;
+            dashboard.SourceJsonRef = `https://s3.amazonaws.com/xformation.synectiks.com/${selectionData.title}`;
+            dashboard.AccountId = `${selectionData.accountId}`;
+            dashboard.TenantId = `${selectionData.tenantId}`;
+             var raw = config.RAW;
+            raw.Dashboard = dashboard;
+            raw.Message = `${selectionData.dashboardNature}`;
+
+            var json = JSON.stringify(raw);
+            // console.log("Object to post : ", json);
+            var reqOpt = RestService.postOptionWithAuthentication(json);
+            await fetch(config.ADD_DASHBOARDS_TO_GRAFANA, reqOpt)
+                .then(response => response.json())
+                .then(result => {
+                    // console.log("1. Dashboard import in grafana. Response: ",result);
+                    var usr = localStorage.getItem(`userInfo`);
+                    var userName = '';
+                    if(usr){
+                        var user = JSON.parse(usr);
+                        userName = user.username;
+                    }
+                    if(result.status === 'success'){
+                        var assetStatus = {"user":userName,"id":selectionData.id,"status":"active","appAsset":raw,"grafanaAsset":result};
+                        // console.log("2. in if condition", assetStatus);
+                        updatedDashboards[i] = assetStatus;
+                    }
+                })
+                .catch(error => console.log('Dashboard import in grafana failed. Error', error));
+        }
+        this.setState({
+            updatedDashboards: updatedDashboards
+        })    
+    }
 
     render() {
         const { enablePerformanceMonitoring } = this.state;
@@ -59,7 +174,7 @@ export class Performance extends React.Component<any, any>{
                     </>
                 )}
                 {enablePerformanceMonitoring && (
-                    <Wizard steps={this.steps} />
+                    <Wizard ref={this.wizardRef} steps={this.steps} submitPage={this.onSubmit}/>
                 )}
             </>
         );

@@ -5,7 +5,7 @@ import { config } from '../../config';
 import { images } from '../../img';
 import { SelectCloudFilter } from '../../Components/SelectCloudFilter';
 import { RestService } from '../_service/RestService';
-import { AddAccount } from '../Account/AddAccount';
+// import { AddAccount } from '../Account/AddAccount';
 // import { AddEnviornment } from './AddEnviornment';
 // import { EditEnviornment } from './EditEnviornment';
 import { CreateButtonInput } from "../CreateButtonInput/CreateButtonInput";
@@ -317,12 +317,12 @@ export class Environments extends React.Component<any, any> {
         this.EditEnviornmentRef.current.toggle(selectedEnviornment);
 
     };
-    onClickDeleteAccount = (e: any, selectedEnviornment: any) => {
-        console.log("Loading catalog failed. Error: ", selectedEnviornment.id);
-        fetch(config.DETELE_ENVIRONMENT + selectedEnviornment.id, { method: 'DELETE' })
-            .then(() => this.setState({ status: 'Delete successful' }));
+    // onClickDeleteAccount = (e: any, selectedEnviornment: any) => {
+    //     console.log("Loading catalog failed. Error: ", selectedEnviornment.id);
+    //     fetch(config.DETELE_ENVIRONMENT + selectedEnviornment.id, { method: 'DELETE' })
+    //         .then(() => this.setState({ status: 'Delete successful' }));
 
-    };
+    // };
 
     onClickAddAccount = (e: any, selectedEnviornment: any) => {
         this.AddAccountRef.current.toggle(selectedEnviornment);
@@ -829,7 +829,7 @@ export class Environments extends React.Component<any, any> {
                         </div>
                     </div>
                 </div>
-                <AddAccount refreshEnvironment={this. refreshEnvironment}displaygetEnvironmentData ={state.displaygetEnvironmentData } ref={this.AddAccountRef} />
+                {/* <AddAccount refreshEnvironment={this. refreshEnvironment}displaygetEnvironmentData ={state.displaygetEnvironmentData } ref={this.AddAccountRef} /> */}
               
                 {/* <AddEnviornment refreshEnvironment={this.refreshEnvironment} ref={this.AddfolderRef} /> */}
                 {/* <EditEnviornment refreshEnvironment={this.refreshEnvironment} ref={this.EditEnviornmentRef} /> */}

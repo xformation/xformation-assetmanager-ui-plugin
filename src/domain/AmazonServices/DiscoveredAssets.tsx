@@ -107,7 +107,7 @@ export class DiscoveredAssets extends React.Component<any, any>{
                     <div className="tbody-td first">
                         {/* {!folder.subData && <div className={folder.isOpened ? "caret-down" : "caret-right"} onClick={() => this.onClickOpenSubTreeArr([...indexArr])}></div>} */}
                         {folder.subData && <div className={folder.isOpened ? "caret-down" : "caret-right"} onClick={() => this.onClickOpenSubTreeArr([...indexArr])}></div>}
-                        <Link to={`${config.basePath}/storagedetails?name=${folder.title}`}>{folder.title}</Link>
+                        <Link to={`${config.basePath}/storagedetails?name=${folder.title}&accountId=${folder.accountId}&tenantId=${folder.tenantId}`}>{folder.title}</Link>
                     </div>
                     <div className="tbody-td">{folder.organizationalUnit}</div>
                     <div className="tbody-td">{folder.instance}</div>

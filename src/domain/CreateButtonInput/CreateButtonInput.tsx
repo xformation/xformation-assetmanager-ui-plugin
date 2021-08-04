@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { config } from '../../config';
 import { RestService } from '../_service/RestService';
 // import Rbac from '../../components/Rbac';
-import { InputAccount } from '../Input/InputAccout';
+// import { InputAccount } from '../Input/InputAccout';
 
 export class CreateButtonInput extends React.Component<any, any> {
     InputAccountRef: any;
@@ -53,7 +53,7 @@ export class CreateButtonInput extends React.Component<any, any> {
                         {/* </Rbac> */}
                     </div>      
                 }   
-                <InputAccount ref={this.InputAccountRef} />        
+                {/* <InputAccount ref={this.InputAccountRef} />         */}
             </div>
             
         );

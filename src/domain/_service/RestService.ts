@@ -1,9 +1,13 @@
+import { CommonService } from "../_common/common";
+import { config } from "../../config";
+
 export const RestService = {
   getData,
   add,
   getDashboardList,
   deleteObject,
-  put
+  put,
+  postOptionWithAuthentication
 };
 
 function add(url: any, data: any) {
@@ -14,6 +18,7 @@ function add(url: any, data: any) {
   );
   return fetch(url, requestOptions).then(response => response.json());
 }
+
 function put(url: any, data: any) {
   const requestOptions = getRequestOptions(
     "put",
@@ -52,4 +57,23 @@ function deleteObject(url: any) {
 function getDashboardList(url: any) {
   const requestOptions = getRequestOptions("GET", {}, null);
   return fetch(url, requestOptions).then(response => response.json());
+}
+
+function postOptionWithAuthentication(bodyData: any) {
+  var myHeaders = new Headers();
+  // myHeaders.append("X-Requested-By", "XMLHttpRequest");
+  // myHeaders.append("Referrer-Policy", "no-referrer-when-downgrade");
+
+  myHeaders.append(
+    "Authorization",
+    CommonService.getBasicAuthEncodedString(config.USERID, config.PASSWORD)
+  );
+  myHeaders.append("Content-Type", "application/json");
+  var requestOptions: RequestInit = {
+    method: "POST",
+    headers: myHeaders,
+    body: bodyData,
+    redirect: "follow"
+  };
+  return requestOptions;
 }

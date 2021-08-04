@@ -26,10 +26,14 @@ export class StorageDetails extends React.Component<any, any> {
 
     componentDidMount() {
         const name = this.getParameterByName("name", window.location.href);
+        const accountId = this.getParameterByName("accountId", window.location.href);
+        const tenantId = this.getParameterByName("tenantId", window.location.href);
         if (name) {
             const { storageData } = this.state;
             storageData.push({
-                nodeTitle: name
+                nodeTitle: name,
+                accountId: accountId,
+                tenantId: tenantId
             });
             this.setState({
                 storageData
@@ -70,6 +74,7 @@ export class StorageDetails extends React.Component<any, any> {
 
     render() {
         const { activeTab, storageData } = this.state;
+        console.log("storageData[activeTab] : ",storageData[activeTab]);
         return (
             <div className="asset-container">
                 <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="PERFORMANCE MANAGEMENT" />

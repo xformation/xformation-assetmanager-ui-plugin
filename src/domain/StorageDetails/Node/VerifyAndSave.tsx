@@ -4,7 +4,78 @@ export class VerifyAndSave extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
+            selectedData: [],
+            selectedDashboards:[],
         };
+    }
+
+    componentDidUpdate(previousProps: any, previousState: any){
+        if(this.props.selectedData !== previousProps.selectedData){
+            const selectedData = this.props.selectedData;
+            this.setState({
+                selectedData
+            })
+        }
+    }
+
+    handleChange(e: any, obj: any, index: any) {
+        let isChecked = e.target.checked;
+        const {selectedDashboards} = this.state;
+        if(isChecked){
+            selectedDashboards.push(obj);
+            this.setState({selectedDashboards: selectedDashboards});
+        }else{
+            this.removeObject(obj, selectedDashboards);
+        }
+    }
+    
+    removeObject(obj: any, selData: any){
+        let index = selData.indexOf(obj);
+        selData.splice(index, 1);
+        this.setState({selectedDashboards: selData});
+    }
+
+    getSelection = () => {
+        return this.state.selectedDashboards;
+    };
+    
+
+    displayTable = () => {
+        const retData = [];
+        const { selectedData } = this.state;
+        for (let i = 0; i<selectedData.length; i++) {
+            const obj = selectedData[i];
+            retData.push(
+                <table className="table-tbody first-table" width="100%">
+                    <tr>
+                        <td style={{ paddingLeft: '0', paddingRight: '0' }}>
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        <a href="#">{this.props.inputName}</a>
+                                    </td>
+                                    <td>
+                                        <a href="#">{obj.inputType}</a>
+                                    </td>
+                                    <td style={{ paddingLeft: '0', paddingRight: '0' }}>
+                                        <table className="table-inner" width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox" id={`${i}`} onChange={e =>this.handleChange(e, obj, i)}/></td>
+                                                    <td>{obj.dashboardUuid}</td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            );
+        }
+        return retData;
     }
 
     render() {
@@ -19,88 +90,7 @@ export class VerifyAndSave extends React.Component<any, any>{
                             <th>Dashboards</th>
                         </tr>
                     </table>
-                    <table className="table-tbody first-table" width="100%">
-                        <tr>
-                            <td style={{ paddingLeft: '0', paddingRight: '0' }}>
-                                <table width="100%">
-                                    <tr>
-                                        <td>
-                                            <a href="#">Input 1</a>
-                                        </td>
-                                        <td>
-                                            <a href="#">Native input</a>
-                                        </td>
-                                        <td style={{ paddingLeft: '0', paddingRight: '0' }}>
-                                            <table className="table-inner" width="100%">
-                                                <tbody>
-                                                    <tr>
-                                                        <td><input type="checkbox" /></td>
-                                                        <td>Brief Node Performance</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input type="checkbox" /></td>
-                                                        <td>Node Storage Details</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    <table className="table-tbody first-table" width="100%">
-                        <tr>
-                            <td style={{ paddingLeft: '0', paddingRight: '0' }}>
-                                <table width="100%">
-                                    <tr>
-                                        <td>
-                                            <a href="#">Input 2</a>
-                                        </td>
-                                        <td>
-                                            <a href="#">Performance Manager</a>
-                                        </td>
-                                        <td style={{ paddingLeft: '0', paddingRight: '0' }}>
-                                            <table className="table-inner" width="100%">
-                                                <tbody>
-                                                    <tr>
-                                                        <td><input type="checkbox" /></td>
-                                                        <td>Dashboard Name</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    <table className="table-tbody first-table" width="100%">
-                        <tr>
-                            <td style={{ paddingLeft: '0', paddingRight: '0' }}>
-                                <table width="100%">
-                                    <tr>
-                                        <td>
-                                            <a href="#">Input 3</a>
-                                        </td>
-                                        <td>
-                                            <a href="#">New Input</a>
-                                        </td>
-                                        <td style={{ paddingLeft: '0', paddingRight: '0' }}>
-                                            <table className="table-inner" width="100%">
-                                                <tbody>
-                                                    <tr>
-                                                        <td><input type="checkbox" /></td>
-                                                        <td>Dashboard Name</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
+                    {this.displayTable()}
                 </div>
             </div>
         );

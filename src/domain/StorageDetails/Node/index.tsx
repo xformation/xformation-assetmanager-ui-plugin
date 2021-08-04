@@ -3,6 +3,8 @@ import { images } from '../../../img';
 import { WebServiceWizard } from './WebServiceWizard';
 import { Entity } from './Entity';
 import { Performance } from './Performance';
+import { RestService } from '../../_service/RestService';
+import { config } from '../../../config';
 
 export class Node extends React.Component<any, any>{
     steps: any;
@@ -10,10 +12,12 @@ export class Node extends React.Component<any, any>{
         super(props);
         this.state = {
             currentStep: 0,
+            
             // storageDetail: {},
             storageDetail: {
                 title: 'Amazon Web Services',
-                acNo: 'AWS-(657907747545)',
+                data: {},
+                acNo: `AWS-(1234567890)`,
                 pagelink: [
                     {
                         name: 'VPC 1'
@@ -64,8 +68,36 @@ export class Node extends React.Component<any, any>{
         };
     }
 
-    componentDidMount() {
-    }
+    // getParameterByName = (name: any, url: any) => {
+    //     name = name.replace(/[\[\]]/g, '\\$&');
+    //     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    //         results = regex.exec(url);
+    //     if (!results) return null;
+    //     if (!results[2]) return '';
+    //     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    // }
+
+
+    // componentDidMount() {
+    //     const tenantId = this.getParameterByName("tenantId", window.location.href);
+    //     if (tenantId) {
+    //         try {
+    //             RestService.getData(`${config.GET_APPLICATION_ASSETS}?tenantId=${tenantId}`, null, null).then(
+    //                 (response: any) => {
+    //                     console.log("Application assets: ",response);
+    //                     this.setState({
+    //                         tableData: response,
+    //                     });
+    //                 }, (error: any) => {
+    //                     console.log("Error: ", error);
+    //                 });
+    //         } catch (err) {
+    //             console.log("Error: ", err);
+    //         }
+    //     } else {
+    //         alert("Asset id is not present");
+    //     }
+    // }
 
     displaylist = (list: any) => {
         let retData = [];
@@ -77,9 +109,13 @@ export class Node extends React.Component<any, any>{
         return retData;
     }
 
+    componentWillReceiveProps(nextProps: any){
+        this.setState({ data: nextProps.data })
+    }
+
     render() {
-        const { storageDetail } = this.state;
-        console.log(this.state.storageDetail);
+        const { storageDetail, data } = this.state;
+        console.log("this.state.storageDetail: ", data);
         return (
             <div className="inner">
                 <div className="heading">
@@ -89,7 +125,7 @@ export class Node extends React.Component<any, any>{
                     </h3>
                     <div className="breadcrumbs">
                         <ul>
-                            <li>Account Number - <span>{storageDetail.acNo}</span></li>
+                            <li>Account Number - <span>AWS-({data && data.accountId})</span></li>
                         </ul>
                     </div>
                 </div>
@@ -98,7 +134,7 @@ export class Node extends React.Component<any, any>{
                         <div className="col-lg-7 col-md-7 col-sm-12">
                             <div className="breadcrumbs">
                                 <ul>
-                                    <li>Account Number - <span>{storageDetail.acNo}</span></li>
+                                    <li>Account Number - <span>AWS-({data && data.accountId})</span></li>
                                     {this.displaylist(storageDetail.pagelink)}
                                 </ul>
                             </div>
