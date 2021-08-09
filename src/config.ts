@@ -52,7 +52,9 @@ export const config = {
     InputSourceId: "",
     AccountId: "",
     TenantId: "",
-    IsCloud: true
+    IsCloud: true,
+    CloudName: "",
+    ElementType: ""
   },
   RAW: {
     Dashboard: {},
@@ -77,8 +79,8 @@ export const config = {
   GET_APPLICATION_ASSETS_BY_INPUT_TYPE: `${assetSrvUrl}/getApplicationAssetsGropuByInputType`,
   BULK_ADD_APPLICATION_ASSETS: `${assetSrvUrl}/bulkAddApplicationAssets`,
   UPDATE_APPLICATION_ASSETS: `${assetSrvUrl}/updateApplicationAssets`,
-  ADD_INPUT: `${assetSrvUrl}/addInput`,
-  SEARCH_INPUT: `${assetSrvUrl}/searchInput`,
+  ADD_INPUT_CONFIG: `${assetSrvUrl}/addInputConfig`,
+  SEARCH_INPUT_CONFIG: `${assetSrvUrl}/searchInputConfig`,
 
   ADD_DASHBOARDS_TO_GRAFANA: `${grafanaUrl}/dashboards/importAssets`
 };

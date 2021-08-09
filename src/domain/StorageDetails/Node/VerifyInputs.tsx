@@ -29,12 +29,28 @@ export class VerifyInputs extends React.Component<any, any>{
     }
 
 
-    componentDidMount() {
+    async componentDidMount() {
+        const cloud = this.getParameterByName("cloud", window.location.href);
+        const type = this.getParameterByName("type", window.location.href);
         const tenantId = this.getParameterByName("tenantId", window.location.href);
         const accountId = this.getParameterByName("accountId", window.location.href);
         if (tenantId) {
             try {
-                RestService.getData(`${config.GET_APPLICATION_ASSETS_BY_INPUT_TYPE}?tenantId=${tenantId}&accountId=${accountId}`, null, null).then(
+                await RestService.getData(`${config.SEARCH_INPUT_CONFIG}?inputType=Performance&accountId=${accountId}`, null, null).then(
+                    (response: any) => {
+                        if(response.length > 0){
+                            this.setState({
+                                configureInputs: true,
+                            });
+                        }
+                    }, (error: any) => {
+                        console.log("VerifyInput. Search input config failed. Error: ", error);
+                    });
+            } catch (err) {
+                console.log("VerifyInput. Excepiton in search input config: ", err);
+            }
+            try {
+                await RestService.getData(`${config.GET_APPLICATION_ASSETS_BY_INPUT_TYPE}?inputType=${this.props.inputName}&tenantId=${tenantId}&accountId=${accountId}&cloud=${cloud}&type=${type}`, null, null).then(
                     (response: any) => {
                         // console.log("Application assets: ",response);
                         this.setState({
@@ -47,7 +63,8 @@ export class VerifyInputs extends React.Component<any, any>{
                 console.log("Error: ", err);
             }
         } else {
-            alert("Tenant id is not present");
+            // alert("Tenant id is not present");
+            console.log("Tenant id is not present");
         }
     }
 
@@ -80,6 +97,17 @@ export class VerifyInputs extends React.Component<any, any>{
         for (let i = 0; i<keys.length; i++) {
             retData.push(this.renderTable(tableData[keys[i]], i, keys[i]));
         }
+        if(keys.length === 0){
+            retData.push(
+                <table className="table-inner" width="100%">
+                    <tbody>
+                        <tr>
+                            <td align={'center'} colSpan={3}>No more asset available to enable!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            );
+        }
         return retData;
     }
 
@@ -88,6 +116,7 @@ export class VerifyInputs extends React.Component<any, any>{
         const innerTable = [];
         for (let i = 0; i<res.length; i++) {
             const obj = res[i];
+            // console.log('Dashboard list: ',obj);
             innerTable.push(
                 <table className="table-inner" width="100%">
                     <tbody>

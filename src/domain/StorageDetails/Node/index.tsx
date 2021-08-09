@@ -18,17 +18,18 @@ export class Node extends React.Component<any, any>{
                 title: 'Amazon Web Services',
                 data: {},
                 acNo: `AWS-(1234567890)`,
-                pagelink: [
-                    {
-                        name: 'VPC 1'
-                    },
-                    {
-                        name: 'EC2'
-                    },
-                    {
-                        name: 'VPC 1'
-                    }
-                ],
+                pagelink: [],
+                // pagelink: [
+                //     {
+                //         name: 'VPC 1'
+                //     },
+                //     {
+                //         name: 'EC2'
+                //     },
+                //     {
+                //         name: 'VPC 1'
+                //     }
+                // ],
                 steps: [
                     {
                         name: "Entity",
@@ -110,7 +111,9 @@ export class Node extends React.Component<any, any>{
     }
 
     componentWillReceiveProps(nextProps: any){
-        this.setState({ data: nextProps.data })
+        this.setState({ 
+            data: nextProps.data
+        })
     }
 
     render() {
@@ -134,8 +137,9 @@ export class Node extends React.Component<any, any>{
                         <div className="col-lg-7 col-md-7 col-sm-12">
                             <div className="breadcrumbs">
                                 <ul>
-                                    <li>Account Number - <span>AWS-({data && data.accountId})</span></li>
-                                    {this.displaylist(storageDetail.pagelink)}
+                                    <li>Account Number - <span>AWS-({data && data.accountId})</span> {' > '} </li>
+                                    {/* {this.displaylist(storageDetail.pagelink)} */}
+                                    {data && data.nodeTitle}
                                 </ul>
                             </div>
                         </div>

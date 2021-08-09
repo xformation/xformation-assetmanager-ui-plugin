@@ -25,15 +25,17 @@ export class StorageDetails extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        const name = this.getParameterByName("name", window.location.href);
+        const cloudName = this.getParameterByName("cloud", window.location.href);
+        const type = this.getParameterByName("type", window.location.href);
         const accountId = this.getParameterByName("accountId", window.location.href);
         const tenantId = this.getParameterByName("tenantId", window.location.href);
-        if (name) {
+        if (type) {
             const { storageData } = this.state;
             storageData.push({
-                nodeTitle: name,
+                nodeTitle: type,
                 accountId: accountId,
-                tenantId: tenantId
+                tenantId: tenantId,
+                cloudName: cloudName
             });
             this.setState({
                 storageData

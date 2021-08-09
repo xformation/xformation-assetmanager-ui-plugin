@@ -47,17 +47,18 @@ export class Performance extends React.Component<any, any>{
         try {
             const tenantId = this.getParameterByName("tenantId", window.location.href);
             const accountId = this.getParameterByName("accountId", window.location.href);
-            RestService.getData(`${config.SEARCH_INPUT}?name=Performance&tenantId=${tenantId}&accountId=${accountId}`, null, null).then(
+            RestService.getData(`${config.SEARCH_INPUT_CONFIG}?inputType=${this.state.inputName}&accountId=${accountId}`, null, null).then(
                 (response: any) => {
-                    console.log("Performance Input: ",response);
-                    this.setState({
-                        tableData: response,
-                    });
+                    if(response.length > 0){
+                        this.setState({
+                            enablePerformanceMonitoring: true,
+                        });
+                    }
                 }, (error: any) => {
-                    console.log("1. Performance componentDidMount. Error: ", error);
+                    console.log("Performance. Search input config failed. Error: ", error);
                 });
         } catch (err) {
-            console.log("2. Performance componentDidMount. Error: ", err);
+            console.log("Performance. Excepiton in search input config. Error: ", err);
         }
     }
 
@@ -90,11 +91,10 @@ export class Performance extends React.Component<any, any>{
         let inp = {
             accountId: accountId,
             tenantId: tenantId,
-            name: this.state.inputName,
-            description: 'Performance input',
+            inputType: this.state.inputName,
             status: 'ACTIVE',
         }
-        RestService.add(`${config.ADD_INPUT}`, inp)
+        RestService.add(`${config.ADD_INPUT_CONFIG}`, inp)
         .then((response: any) => {
                 console.log("Enable input response : ", response);
             }
@@ -115,14 +115,17 @@ export class Performance extends React.Component<any, any>{
         const {updatedDashboards} = this.state;
         for( let i=0; i<obj.length; i++){
             const selectionData = obj[i];
+            console.log("SELECTION DATA :::::::: ",selectionData);
             var dashboard = config.DASHBOARD_JSON;
             dashboard.Uid =`${selectionData.dashboardUuid}`;
             dashboard.Uuid = `${selectionData.dashboardUuid}`;
-            dashboard.Slug = `${selectionData.title}`;
-            dashboard.Title =`${selectionData.title}`;
+            dashboard.Slug = `${selectionData.elementSubType}`;
+            dashboard.Title =`${selectionData.elementSubType}`;
             dashboard.SourceJsonRef = `https://s3.amazonaws.com/xformation.synectiks.com/${selectionData.title}`;
             dashboard.AccountId = `${selectionData.accountId}`;
             dashboard.TenantId = `${selectionData.tenantId}`;
+            dashboard.CloudName = selectionData.type;
+            dashboard.ElementType = selectionData.elementType;
              var raw = config.RAW;
             raw.Dashboard = dashboard;
             raw.Message = `${selectionData.dashboardNature}`;
