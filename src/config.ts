@@ -1,4 +1,4 @@
-const IP = "localhost";
+const IP = "100.64.107.25";
 const securitySrvUrl = `http://${IP}:8094`;
 const assetSrvUrl = `http://${IP}:5057/api`;
 const grafanaUrl = `http://${IP}:3000/api`;
