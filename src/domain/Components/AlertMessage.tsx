@@ -36,7 +36,7 @@ export default function AlertMessage(props: any) {
     
     setOpen(false);
     if (props.handleCloseAlert) {
-        console.log("calling handle close");
+        // console.log("calling handle close");
         props.handleCloseAlert();
         return;
     }

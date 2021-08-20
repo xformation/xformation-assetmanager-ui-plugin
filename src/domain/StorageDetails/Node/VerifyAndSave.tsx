@@ -61,7 +61,7 @@ export class VerifyAndSave extends React.Component<any, any>{
                                         <table className="table-inner" width="100%">
                                             <tbody>
                                                 <tr>
-                                                    <td><input type="checkbox" id={`${i}`} onChange={e =>this.handleChange(e, obj, i)}/></td>
+                                                    {/* <td><input type="checkbox" id={`${i}`} onChange={e =>this.handleChange(e, obj, i)}/></td> */}
                                                     <td>{obj.dashboardUuid}</td>
                                                 </tr>
                                                 

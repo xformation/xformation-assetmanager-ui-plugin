@@ -8,8 +8,10 @@ import { RestService } from '../_service/RestService';
 // import { AddAccount } from '../Account/AddAccount';
 // import { AddEnviornment } from './AddEnviornment';
 // import { EditEnviornment } from './EditEnviornment';
-import { CreateButtonInput } from "../CreateButtonInput/CreateButtonInput";
+// import { CreateButtonInput } from "../CreateButtonInput/CreateButtonInput";
+import { Action } from "./Action";
 // import Rbac from '../../components/Rbac';
+
 export class Environments extends React.Component<any, any> {
     breadCrumbs: any;
     AddAccountRef: any;
@@ -27,95 +29,9 @@ export class Environments extends React.Component<any, any> {
             displaygetEnvironmentData: [],
             isApiCalled: false,
             codeEditorValue: "",
-            optionJsonData: [
-                {
-                    name: 'OU',
-                    value: 'ou',
-                    isChecked: false,
-                    subdata: [
-                        { name: 'IT Department', value: 'itdepartment', isChecked: false },
-                        { name: 'Network Department', value: 'networkdepartment', isChecked: false },
-                        { name: 'Development', value: 'development', isChecked: false },
-                        { name: 'Testing', value: 'testing', isChecked: false },
-                    ],
-                },
-                {
-                    name: 'Status',
-                    value: 'status',
-                    isChecked: false,
-                    subdata: [
-                        { name: 'Enable', value: 'enable', isChecked: false },
-                        { name: 'Disable', value: 'disable', isChecked: false },
-                    ],
-                },
-                {
-                    name: 'No of Assets',
-                    value: 'noOFssets',
-                    isChecked: false,
-                    subdata: [],
-                },
-                {
-                    name: 'Platform',
-                    value: 'platform',
-                    isChecked: false,
-                    subdata: [],
-                }, {
-                    name: 'Logs',
-                    value: 'logs',
-                    isChecked: false,
-                    subdata: [],
-                }, {
-                    name: 'Performance & Availability',
-                    value: 'availabiity',
-                    isChecked: false,
-                    subdata: []
-                }
-            ],
-            displayJsonData: [
-                {
-                    name: 'OU',
-                    value: 'ou',
-                    isChecked: false,
-                    subdata: [
-                        { name: 'IT Department', value: 'itdepartment', isChecked: false },
-                        { name: 'Network Department', value: 'networkdepartment', isChecked: false },
-                        { name: 'Development', value: 'development', isChecked: false },
-                        { name: 'Testing', value: 'testing', isChecked: false },
-                    ],
-                },
-                {
-                    name: 'Status',
-                    value: 'status',
-                    isChecked: false,
-                    subdata: [
-                        { name: 'Enable', value: 'enable', isChecked: false },
-                        { name: 'Disable', value: 'disable', isChecked: false },
-                    ],
-                },
-                {
-                    name: 'No of Assets',
-                    value: 'noOFssets',
-                    isChecked: false,
-                    subdata: [],
-                },
-                {
-                    name: 'Platform',
-                    value: 'platform',
-                    isChecked: false,
-                    subdata: [],
-                }, {
-                    name: 'Logs',
-                    value: 'logs',
-                    isChecked: false,
-                    subdata: [],
-                }, {
-                    name: 'Performance & Availability',
-                    value: 'availabiity',
-                    isChecked: false,
-                    subdata: []
-                }
-            ],
-            
+            awsRegionList: [],
+            optionJsonData: [],
+            displayJsonData: [],
             selectedTeg: [],
             showTagFilter: false,
             showRecentFilter: false,
@@ -262,11 +178,24 @@ export class Environments extends React.Component<any, any> {
         })
     }
     async componentDidMount() {
-       this.getAccountList();
-        
-      
+        await this.getAccountList();
+        await this.getAwsRegionsList();
     }
-    
+
+    getAwsRegionsList = async () => {
+        try {
+            await RestService.getData(config.GET_AWS_REGIONS, null, null).then(
+                (response: any) => {
+                    this.setState({
+                        awsRegionList: response
+                    });
+                    // console.log("Loading aws regions : ", response);
+            });
+        } catch (err) {
+            console.log("Loading aws regions failed. Error: ", err);
+        }
+    }
+
     getAccountList = async () => {
         this.setState({
             isApiCalled: true
@@ -275,9 +204,7 @@ export class Environments extends React.Component<any, any> {
             await RestService.getData(config.GET_ALL_ACCOUNT, null, null).then(
                 (response: any) => {
                     this.setState({
-                        // Environment: response,
                         displaygetEnvironmentData: response,
-                        // result : response.length
                     });
                     console.log("Loading Asstes : ", response);
             });
@@ -291,50 +218,25 @@ export class Environments extends React.Component<any, any> {
 
     refreshEnvironment = async () => {
         this.getAccountList();
-        // this.displayAWSAccountList();
-    
     }
-    // getEnvioronment = async () => {
-    //     const { displaygetEnvironmentData } = this.state;
-    //     let retData = [];
-        
-    //     for (let i = 0; i < displaygetEnvironmentData.length; i++) {
-    //         let row = displaygetEnvironmentData[i];
-    //         if(row.type=="AWS"){
-    //             (row: any) => {
-    //                 this.setState({
-    //                     Environment: row,
-    //                     displaygetEnvironmentData: row,
-    //                   result : row.length
-    //                 });
-    //         }
-    //         }
-     
-    //     }
-    // }
+    
 
     onClickEditAccount = (e: any, selectedEnviornment: any) => {
         this.EditEnviornmentRef.current.toggle(selectedEnviornment);
 
     };
-    // onClickDeleteAccount = (e: any, selectedEnviornment: any) => {
-    //     console.log("Loading catalog failed. Error: ", selectedEnviornment.id);
-    //     fetch(config.DETELE_ENVIRONMENT + selectedEnviornment.id, { method: 'DELETE' })
-    //         .then(() => this.setState({ status: 'Delete successful' }));
-
-    // };
-
+    
     onClickAddAccount = (e: any, selectedEnviornment: any) => {
         this.AddAccountRef.current.toggle(selectedEnviornment);
     };
 
     displayAWSAccountList () {
-        const { displaygetEnvironmentData } = this.state;
+        const { displaygetEnvironmentData, awsRegionList } = this.state;
         let retData = [];
         for (let i = 0; i < displaygetEnvironmentData.length; i++) {
             let row = displaygetEnvironmentData[i];
             if(row.cloudType.toLowerCase() === "AWS".toLowerCase()){
-                console.log("AWS data : ", row);
+                // console.log("AWS data : ", row);
                 retData.push(
                     <tr>
                         <td>
@@ -352,7 +254,9 @@ export class Environments extends React.Component<any, any> {
                             <div className="d-block text-center">
                                 <button className="asset-white-button min-width-inherit m-r-0">
                                     {/* <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn"> */}
-                                        <CreateButtonInput detail={row}/>    
+                                        {awsRegionList.length > 0 && (
+                                            <Action detail={row} regionList={awsRegionList}/>    
+                                        )}
                                     {/* </Rbac>                                   */}
                                 </button>
                             </div> 
@@ -391,8 +295,8 @@ export class Environments extends React.Component<any, any> {
                             <div className="d-block text-center">
                                 <button className="asset-white-button min-width-inherit m-r-0">
                                     {/* <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn"> */}
-                                        <CreateButtonInput detail={row}/>    
-                                    {/* </Rbac>                                   */}
+                                        <Action detail={row}/>    
+                                    {/* </Rbac> */}
                                 </button>
                             </div> 
                         </td> 

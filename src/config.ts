@@ -13,7 +13,7 @@ export const config = {
   GET_ALL_ACCOUNT: `${assetSrvUrl}/searchAccounts`,
   GET_ACCOUNT_BY_ID: `${assetSrvUrl}/getAccount`,
   // GET_ENVIRONMENT_BY_ID: `${assetSrvUrl}/getEnvironment`,
-  // INPUT_ACOOUNT: `${assetSrvUrl}/addInput`,
+
   SEVERITY_SUCCESS: "success",
   // ADD_ENVIRONMENT_SUCCESS_MESSAGE: "ADD_ENVIRONMENT_SUCCESS_MESSAGE",
   // Update_ENVIRONMENT_SUCCESS_MESSAGE: "Update ENVIRONMENT Succesfully",
@@ -54,7 +54,8 @@ export const config = {
     TenantId: "",
     IsCloud: true,
     CloudName: "",
-    ElementType: ""
+    ElementType: "",
+    FileName: ""
   },
   RAW: {
     Dashboard: {},
@@ -75,12 +76,20 @@ export const config = {
 
   GET_USER_ORGANIZATION: `${assetSrvUrl}/getAllOrgUnits`,
   GET_DISCOVERED_ASSETS: `${assetSrvUrl}/getDiscoveredAsset`,
-  // GET_APPLICATION_ASSETS: `${assetSrvUrl}/searchApplicationAsset`,
+  SEARCH_APPLICATION_ASSETS: `${assetSrvUrl}/searchApplicationAsset`,
   GET_APPLICATION_ASSETS_BY_INPUT_TYPE: `${assetSrvUrl}/getApplicationAssetsGropuByInputType`,
   BULK_ADD_APPLICATION_ASSETS: `${assetSrvUrl}/bulkAddApplicationAssets`,
-  UPDATE_APPLICATION_ASSETS: `${assetSrvUrl}/updateApplicationAssets`,
+  BULK_UPDATE_APPLICATION_ASSETS: `${assetSrvUrl}/bulkUpdateApplicationAssets`,
   ADD_INPUT_CONFIG: `${assetSrvUrl}/addInputConfig`,
   SEARCH_INPUT_CONFIG: `${assetSrvUrl}/searchInputConfig`,
 
-  ADD_DASHBOARDS_TO_GRAFANA: `${grafanaUrl}/dashboards/importAssets`
+  ADD_DASHBOARDS_TO_GRAFANA: `${grafanaUrl}/dashboards/importAssets`,
+  ADD_DATASOURCE_IN_GRAFANA: `${grafanaUrl}/datasources`,
+  // UPDATE_DATASOURCE_IN_GRAFANA: `${grafanaUrl}/datasources/updateDataSource`,
+
+  ADD_INPUT: `${assetSrvUrl}/addInput`,
+  UPDATE_INPUT: `${assetSrvUrl}/updateInput`,
+  SEARCH_INPUT: `${assetSrvUrl}/searchInput`,
+
+  GET_AWS_REGIONS: `${assetSrvUrl}/getAwsRegions`
 };

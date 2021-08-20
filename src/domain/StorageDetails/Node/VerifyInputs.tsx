@@ -7,16 +7,34 @@ export class VerifyInputs extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
+            inputName: this.props.inputName,
             configureInputs: false,
             tableData: [],
             selectedData: [],
         };
     }
 
-    configureInputs = () => {
+    configureInputs = async () => {
         this.setState({
             configureInputs: !this.state.configureInputs,
         });
+        const tenantId = this.getParameterByName("tenantId", window.location.href);
+        const accountId = this.getParameterByName("accountId", window.location.href);
+        try {
+            await RestService.getData(`${config.SEARCH_INPUT}?tenantId=${tenantId}&accountId=${accountId}`, null, null).then(
+                (response: any) => {
+                    if(response.code !== 417){
+                        this.setState({
+                            tableData: response.object,
+                        });
+                    }
+                }, (error: any) => {
+                    console.log("VerifyInput. Search input failed. Error: ", error);
+                });
+        } catch (err) {
+            console.log("VerifyInput. Excepiton in search input: ", err);
+        }
+        
     };
 
     getParameterByName = (name: any, url: any) => {
@@ -36,9 +54,9 @@ export class VerifyInputs extends React.Component<any, any>{
         const accountId = this.getParameterByName("accountId", window.location.href);
         if (tenantId) {
             try {
-                await RestService.getData(`${config.SEARCH_INPUT_CONFIG}?inputType=Performance&accountId=${accountId}`, null, null).then(
+                await RestService.getData(`${config.SEARCH_INPUT_CONFIG}?inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, null, null).then(
                     (response: any) => {
-                        if(response.length > 0){
+                        if(response.code !== 417 && response.object.length > 0){
                             this.setState({
                                 configureInputs: true,
                             });
@@ -50,20 +68,20 @@ export class VerifyInputs extends React.Component<any, any>{
                 console.log("VerifyInput. Excepiton in search input config: ", err);
             }
             try {
-                await RestService.getData(`${config.GET_APPLICATION_ASSETS_BY_INPUT_TYPE}?inputType=${this.props.inputName}&tenantId=${tenantId}&accountId=${accountId}&cloud=${cloud}&type=${type}`, null, null).then(
+                await RestService.getData(`${config.SEARCH_INPUT}?tenantId=${tenantId}&accountId=${accountId}`, null, null).then(
                     (response: any) => {
-                        // console.log("Application assets: ",response);
-                        this.setState({
-                            tableData: response,
-                        });
+                        if(response.code !== 417){
+                            this.setState({
+                                tableData: response.object,
+                            });
+                        }
                     }, (error: any) => {
-                        console.log("Error: ", error);
+                        console.log("Exception in finding inputs. Error: ", error);
                     });
             } catch (err) {
-                console.log("Error: ", err);
+                console.log("Error in finding inputs. Error: ", err);
             }
         } else {
-            // alert("Tenant id is not present");
             console.log("Tenant id is not present");
         }
     }
@@ -93,21 +111,40 @@ export class VerifyInputs extends React.Component<any, any>{
     displayTable = () => {
         const retData = [];
         const { tableData } = this.state;
-        const keys = Object.keys(tableData);
-        for (let i = 0; i<keys.length; i++) {
-            retData.push(this.renderTable(tableData[keys[i]], i, keys[i]));
-        }
-        if(keys.length === 0){
+        // console.log("Total available Inputs: ", tableData);
+        // const keys = Object.keys(tableData);
+        for (let i = 0; i<tableData.length; i++) {
+            // retData.push(this.renderTable(tableData[i], i, tableData[i]));
             retData.push(
-                <table className="table-inner" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align={'center'} colSpan={3}>No more asset available to enable!</td>
-                        </tr>
-                    </tbody>
+                <table className="table-tbody first-table" width="100%">
+                    <tr>
+                        <td style={{ paddingLeft: '0', paddingRight: '0' }}>
+                            <table width="100%">
+                                <tr>
+                                    <td><a href="#">{tableData[i].name}</a></td>
+                                    <td><a href="#">{tableData[i].inputSource}</a></td>
+                                    <td><input type="checkbox" id={`${i}`} onChange={e =>this.handleChange(e, tableData[i], i)}/></td>
+                                    {/* <td style={{ paddingLeft: '0', paddingRight: '0' }}>
+                                        {innerTable}
+                                    </td> */}
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
                 </table>
             );
         }
+        // if(keys.length === 0){
+        //     retData.push(
+        //         <table className="table-inner" width="100%">
+        //             <tbody>
+        //                 <tr>
+        //                     <td align={'center'} colSpan={3}>No more asset available to enable!</td>
+        //                 </tr>
+        //             </tbody>
+        //         </table>
+        //     );
+        // }
         return retData;
     }
 
@@ -123,7 +160,7 @@ export class VerifyInputs extends React.Component<any, any>{
                         <tr>
                             <td><input type="checkbox" id={`${index}_${i}`} onChange={e =>this.handleChange(e, obj, i)}/></td>
                             <td>{obj.dashboardUuid}</td>
-                            <td><a href="#"><i className="fa fa-eye"></i></a></td>
+                            {/* <td><a href="#"><i className="fa fa-eye"></i></a></td> */}
                         </tr>
                     </tbody>
                 </table>
@@ -169,7 +206,8 @@ export class VerifyInputs extends React.Component<any, any>{
                             <tr>
                                 <th>Input</th>
                                 <th>Input Type</th>
-                                <th>Available Dashboards</th>
+                                <th>{' '}</th>
+                                {/* <th>Available Dashboards</th> */}
                             </tr>
                         </table>
                         {this.displayTable()}

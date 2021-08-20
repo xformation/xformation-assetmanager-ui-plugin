@@ -5,6 +5,7 @@ import { EnableDashboard } from './EnableDashboard';
 import { VerifyAndSave } from './VerifyAndSave';
 import { RestService } from '../../_service/RestService';
 import { config } from '../../../config';
+import AlertMessage from './../../components/AlertMessage';
 
 export class Performance extends React.Component<any, any>{
     steps: any;
@@ -16,8 +17,13 @@ export class Performance extends React.Component<any, any>{
         super(props);
         this.state = {
             enablePerformanceMonitoring: false,
+            inputConfig: null,
             inputName: "Performance",
             updatedDashboards:[],
+            isAlertOpen: false, 
+            severity: null, 
+            message: null,
+            isSuccess: true,
         };
         this.verifyInputsRef = React.createRef();
         this.enableDashboardRef = React.createRef();
@@ -43,15 +49,18 @@ export class Performance extends React.Component<any, any>{
         ]
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         try {
+            const cloud = this.getParameterByName("cloud", window.location.href);
+            const type = this.getParameterByName("type", window.location.href);
             const tenantId = this.getParameterByName("tenantId", window.location.href);
             const accountId = this.getParameterByName("accountId", window.location.href);
-            RestService.getData(`${config.SEARCH_INPUT_CONFIG}?inputType=${this.state.inputName}&accountId=${accountId}`, null, null).then(
+            RestService.getData(`${config.SEARCH_INPUT_CONFIG}?inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, null, null).then(
                 (response: any) => {
-                    if(response.length > 0){
+                    if(response.code !== 417 && response.object.length > 0){
                         this.setState({
                             enablePerformanceMonitoring: true,
+                            inputConfig: response.object[0]
                         });
                     }
                 }, (error: any) => {
@@ -78,14 +87,188 @@ export class Performance extends React.Component<any, any>{
     }
 
     onSubmit = async () => {
-        await this.enableInput();
-        await this.exportDashboardsInGrafana();
+        const {inputConfig} = this.state;
+        this.setState({
+            isSuccess: true
+        })
+        let selectedInput = this.verifyInputsRef.current.getSelection();
+        let selectedDashboards = this.enableDashboardRef.current.getSelection();
+        if( selectedInput.length ===  0){
+            this.wizardRef.current.setActiveStep(0);
+        }
+        if(selectedDashboards.length === 0){
+            this.wizardRef.current.setActiveStep(1);
+        }
+        
+        console.log("1. Adding dashboards in grafana");
+        for(let i=0; i< selectedInput.length; i++){
+            let dsObj = selectedInput[i];
+            await this.exportDashboardsInGrafana(dsObj, `${i}`);
+        }
+        if(!this.state.isSuccess){
+            this.setState({
+                isAlertOpen: true,
+                message: 'Enabling performance dashboards failed',
+                severity: config.SEVERITY_ERROR,
+                isSuccess: true
+            })
+            return;
+        }
+        
+        console.log("2. Updating dashboards status in asset service");
         await this.updateDashboardsStatusInAppAsset();
-        console.log("Assets enabled");
-        alert ('Input enabled');
+        if(!this.state.isSuccess){
+            this.setState({
+                isAlertOpen: true,
+                message: 'Enabling performance dashboards failed',
+                severity: config.SEVERITY_ERROR,
+                isSuccess: true
+            })
+            return;
+        }
+
+        console.log("3. Updating inputs status in asset service");
+        for(let i=0; i< selectedInput.length; i++){
+            let dsObj = selectedInput[i];
+            await this.updateInput(dsObj);
+            if(!this.state.isSuccess){
+                this.setState({
+                    isAlertOpen: true,
+                    message: 'Enabling performance dashboards failed',
+                    severity: config.SEVERITY_ERROR,
+                    isSuccess: true
+                })
+                return;
+            }
+        }
+        console.log('4. Input config : ',inputConfig);
+        if(inputConfig === null) {
+            console.log("5. Adding input config in asset service");
+            await this.addInputConfig();
+        }
+        if(!this.state.isSuccess){
+            this.setState({
+                isAlertOpen: true,
+                message: 'Enabling performance dashboards failed',
+                severity: config.SEVERITY_ERROR,
+                isSuccess: true
+            })
+            return;
+        }
+        this.setState({
+            isAlertOpen: true,
+            message: 'Performance dashboards enabled',
+            severity: config.SEVERITY_SUCCESS,
+            isSuccess: true
+        })
+        
     };
+
     
-    enableInput() {
+    async exportDashboardsInGrafana(dsObj: any, index: any) {
+        // const obj = this.verifyAndSaveRef.current.getSelection();
+        const obj = this.enableDashboardRef.current.getSelection();
+        let dsbAry: any = [];
+        var usr = localStorage.getItem(`userInfo`);
+        for( let i=0; i<obj.length; i++){
+            const selectionData = obj[i];
+            // console.log("Selected dashboard: ",selectionData);
+            var dashboard = config.DASHBOARD_JSON;
+            // dashboard.Uid =`${selectionData.dashboardUuid}`;
+            dashboard.Uuid = `${selectionData.dashboardUuid}`;
+            dashboard.Slug = `${selectionData.fileName}`;
+            // dashboard.Title =`${selectionData.fileName}`;
+            dashboard.Title =`${index}${i}`;
+            dashboard.SourceJsonRef = ``;
+            dashboard.AccountId = `${selectionData.accountId}`;
+            dashboard.TenantId = `${selectionData.tenantId}`;
+            dashboard.CloudName = selectionData.type;
+            dashboard.ElementType = selectionData.elementType;
+            dashboard.InputSourceId = dsObj.name;
+            dashboard.FileName = selectionData.fileName;
+             var raw = config.RAW;
+            raw.Dashboard = dashboard;
+            raw.Message = `${selectionData.dashboardNature}`;
+            // console.log("Final dashboard to be exported: ",raw);
+            var json = JSON.stringify(raw);
+            // console.log("Object to post : ", json);
+            var reqOpt = RestService.postOptionWithAuthentication(json);
+            await fetch(config.ADD_DASHBOARDS_TO_GRAFANA, reqOpt)
+                .then(response => response.json())
+                .then(result => {
+                    // console.log("1. Dashboard import in grafana. Response: ",result);
+                    var userName = '';
+                    if(usr){
+                        var user = JSON.parse(usr);
+                        userName = user.username;
+                    }
+                    if(result.status === 'success'){
+                        var assetStatus = {"user":userName,"id":selectionData.id,"status":"ENABLED","appAsset":raw,"grafanaAsset":result};
+                        dsbAry[i] = assetStatus;
+                    }else{
+                        var assetStatus = {"user":userName,"id":selectionData.id,"status":"FAILED","appAsset":raw,"grafanaAsset":result};
+                        dsbAry[i] = assetStatus;
+                        this.setState({
+                            isSuccess: false
+                        })
+                    }
+                })
+                .catch(error => {
+                    console.log('Dashboard import in grafana failed. Error', error)
+                    this.setState({
+                        isSuccess: false
+                    }) 
+                });
+        }
+        this.setState({
+            updatedDashboards: dsbAry
+        })    
+    }
+
+    updateDashboardsStatusInAppAsset() {
+        const {updatedDashboards} = this.state;
+        RestService.add(`${config.BULK_UPDATE_APPLICATION_ASSETS}`, updatedDashboards)
+            .then((response: any) => {
+                    console.log("Update assets response : ", response);
+                    if(response.code === 417){
+                        this.setState({
+                            isSuccess: false
+                        })    
+                    }
+                })
+                .catch(error => {
+                    console.log('Updating dashboard status failed. Error', error)
+                    this.setState({
+                        isSuccess: false
+                    }) 
+                });
+    }
+
+    updateInput(dsObj: any) {
+        const tenantId = this.getParameterByName("tenantId", window.location.href);
+        const accountId = this.getParameterByName("accountId", window.location.href);
+        let inp = {
+            id: dsObj.id,
+            status: 'ACTIVE',
+        }
+        RestService.add(`${config.UPDATE_INPUT}`, inp)
+            .then((response: any) => {
+                console.log("Update input response : ", response);
+                if(response.code === 417){
+                    this.setState({
+                        isSuccess: false
+                    })    
+                }
+            })
+            .catch(error => {
+                console.log('Updating input status failed. Error', error)
+                this.setState({
+                    isSuccess: false
+                }) 
+            });
+    }
+
+    addInputConfig() {
         const tenantId = this.getParameterByName("tenantId", window.location.href);
         const accountId = this.getParameterByName("accountId", window.location.href);
         let inp = {
@@ -95,69 +278,32 @@ export class Performance extends React.Component<any, any>{
             status: 'ACTIVE',
         }
         RestService.add(`${config.ADD_INPUT_CONFIG}`, inp)
-        .then((response: any) => {
-                console.log("Enable input response : ", response);
-            }
-        );
+            .then((response: any) => {
+                console.log("Add input_config response : ", response);
+                if(response.code === 417){
+                    this.setState({
+                        isSuccess: false
+                    })    
+                }
+            })
+            .catch(error => {
+                console.log('Add input_config failed. Error', error)
+                this.setState({
+                    isSuccess: false
+                }) 
+            });
     }
 
-    updateDashboardsStatusInAppAsset() {
-        const {updatedDashboards} = this.state;
-        RestService.add(`${config.UPDATE_APPLICATION_ASSETS}`, updatedDashboards)
-        .then((response: any) => {
-                console.log("Update assets response : ", response);
-            }
-        );
-    }
-
-    async exportDashboardsInGrafana() {
-        const obj = this.verifyAndSaveRef.current.getSelection();
-        const {updatedDashboards} = this.state;
-        for( let i=0; i<obj.length; i++){
-            const selectionData = obj[i];
-            console.log("SELECTION DATA :::::::: ",selectionData);
-            var dashboard = config.DASHBOARD_JSON;
-            dashboard.Uid =`${selectionData.dashboardUuid}`;
-            dashboard.Uuid = `${selectionData.dashboardUuid}`;
-            dashboard.Slug = `${selectionData.elementSubType}`;
-            dashboard.Title =`${selectionData.elementSubType}`;
-            dashboard.SourceJsonRef = `https://s3.amazonaws.com/xformation.synectiks.com/${selectionData.title}`;
-            dashboard.AccountId = `${selectionData.accountId}`;
-            dashboard.TenantId = `${selectionData.tenantId}`;
-            dashboard.CloudName = selectionData.type;
-            dashboard.ElementType = selectionData.elementType;
-             var raw = config.RAW;
-            raw.Dashboard = dashboard;
-            raw.Message = `${selectionData.dashboardNature}`;
-
-            var json = JSON.stringify(raw);
-            // console.log("Object to post : ", json);
-            var reqOpt = RestService.postOptionWithAuthentication(json);
-            await fetch(config.ADD_DASHBOARDS_TO_GRAFANA, reqOpt)
-                .then(response => response.json())
-                .then(result => {
-                    // console.log("1. Dashboard import in grafana. Response: ",result);
-                    var usr = localStorage.getItem(`userInfo`);
-                    var userName = '';
-                    if(usr){
-                        var user = JSON.parse(usr);
-                        userName = user.username;
-                    }
-                    if(result.status === 'success'){
-                        var assetStatus = {"user":userName,"id":selectionData.id,"status":"active","appAsset":raw,"grafanaAsset":result};
-                        // console.log("2. in if condition", assetStatus);
-                        updatedDashboards[i] = assetStatus;
-                    }
-                })
-                .catch(error => console.log('Dashboard import in grafana failed. Error', error));
-        }
+    handleCloseAlert = (e: any) => {
         this.setState({
-            updatedDashboards: updatedDashboards
-        })    
+            isAlertOpen: false,
+            message: '',
+            severity: ''
+        })
     }
 
     render() {
-        const { enablePerformanceMonitoring } = this.state;
+        const { enablePerformanceMonitoring, isAlertOpen, severity, message } = this.state;
         return (
             <>
                 {!enablePerformanceMonitoring && (
@@ -177,7 +323,10 @@ export class Performance extends React.Component<any, any>{
                     </>
                 )}
                 {enablePerformanceMonitoring && (
+                    <>
+                    <AlertMessage handleCloseAlert={this.handleCloseAlert} open={isAlertOpen} severity={severity} msg={message}></AlertMessage>
                     <Wizard ref={this.wizardRef} steps={this.steps} submitPage={this.onSubmit}/>
+                    </>
                 )}
             </>
         );
