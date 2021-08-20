@@ -186,6 +186,7 @@ export class Performance extends React.Component<any, any>{
             dashboard.ElementType = selectionData.elementType;
             dashboard.InputSourceId = dsObj.name;
             dashboard.FileName = selectionData.fileName;
+            dashboard.InputType = this.state.inputName;
              var raw = config.RAW;
             raw.Dashboard = dashboard;
             raw.Message = `${selectionData.dashboardNature}`;

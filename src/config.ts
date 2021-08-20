@@ -7,32 +7,14 @@ export const config = {
   basePath: "/plugins/xformation-assetmanager-ui-plugin/page",
   octantURL: "http://localhost:7777/#/",
   SEVERITY_ERROR: "error",
-  // ADD_ENVIRONMENT: `${assetSrvUrl}/addEnvironment`,
-  // UPDATE_ENVIRONMENT: `${assetSrvUrl}/updateEnvironment`,
-  // GET_ALL_ENVIRONMENT: `${assetSrvUrl}/getAllEnvironment`,
+
   GET_ALL_ACCOUNT: `${assetSrvUrl}/searchAccounts`,
   GET_ACCOUNT_BY_ID: `${assetSrvUrl}/getAccount`,
-  // GET_ENVIRONMENT_BY_ID: `${assetSrvUrl}/getEnvironment`,
 
   SEVERITY_SUCCESS: "success",
-  // ADD_ENVIRONMENT_SUCCESS_MESSAGE: "ADD_ENVIRONMENT_SUCCESS_MESSAGE",
-  // Update_ENVIRONMENT_SUCCESS_MESSAGE: "Update ENVIRONMENT Succesfully",
   ADD_Organization: `${assetSrvUrl}/addEnvironment`,
-  // INPUT_ACCOUNT_SUCCESS_MESSAGE: "INPUT_ACCOUNT_SUCCESS_MESSAGE",
   SERVER_ERROR_MESSAGE: "SERVER_ERROR_MESSAGE",
-  // DETELE_ENVIRONMENT: `${assetSrvUrl}/deleteEnvironment/`,
 
-  // GET_ALL_NODES_IN_CLUSTER: assetSrvUrl + `/cluster`,
-  // PARENT_NAME: "xformation-assetmanager-ui-plugin",
-  // TCP_INPUT_STREAM: assetSrvUrl + `/system/inputs`,
-  // TCP_INPUT_ADDED_SUCESS: "TCP INPUT SAVED",
-  // TCP_INPUT_ADDED_ERROR: "TCP Input can't added",
-  // INPUT_URL: {
-  //   KPI_INPUT: "http://localhost:7035/system/inputs",
-  //   LOG_INPUT: "http://localhost:7037/system/inputs",
-  //   CAMPLIANCE_INPUT: "http://localhost:7039/system/inputs",
-  //   NATIVEDS_INPUT: "http://localhost:7055/system/inputs"
-  // },
   DASHBOARD_JSON: {
     Uid: "",
     Uuid: "",
@@ -55,7 +37,8 @@ export const config = {
     IsCloud: true,
     CloudName: "",
     ElementType: "",
-    FileName: ""
+    FileName: "",
+    InputType: ""
   },
   RAW: {
     Dashboard: {},
