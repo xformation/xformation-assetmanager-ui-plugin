@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { config } from '../../config';
 import { RestService } from '../_service/RestService';
-import AlertMessage from './../../components/AlertMessage';
+import AlertMessage from '../../components/AlertMessage';
 // import Rbac from '../../components/Rbac';
 // import { InputAccount } from '../Input/InputAccout';
 
