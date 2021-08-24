@@ -5,7 +5,7 @@ import { EnableDashboard } from './EnableDashboard';
 import { VerifyAndSave } from './VerifyAndSave';
 import { RestService } from '../../_service/RestService';
 import { config } from '../../../config';
-import AlertMessage from '../../components/AlertMessage';
+import AlertMessage from '../../Components/AlertMessage';
 
 export class Performance extends React.Component<any, any>{
     steps: any;
