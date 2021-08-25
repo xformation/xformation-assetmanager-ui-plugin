@@ -69,6 +69,7 @@ export const config = {
   ADD_DASHBOARDS_TO_GRAFANA: `${grafanaUrl}/dashboards/importAssets`,
   ADD_DATASOURCE_IN_GRAFANA: `${grafanaUrl}/datasources`,
   // UPDATE_DATASOURCE_IN_GRAFANA: `${grafanaUrl}/datasources/updateDataSource`,
+  GET_VIEW_JSON: `${grafanaUrl}/dashboards/filterdashboards`,
 
   ADD_INPUT: `${assetSrvUrl}/addInput`,
   UPDATE_INPUT: `${assetSrvUrl}/updateInput`,

@@ -17,230 +17,7 @@ export class Performance extends React.Component<any, any>{
         super(props);
         this.state = {
             enablePerformanceMonitoring: false,
-            inputConfig: {
-                "dashboards": [
-                    {
-                        "Id": 132,
-                        "Uid": "3h77DBn7k",
-                        "Slug": "aws_vpc_test_cloud_test_cloudwatch_10",
-                        "OrgId": 1,
-                        "GnetId": 0,
-                        "Version": 1,
-                        "PluginId": "",
-                        "Created": "2021-08-20T15:44:56+05:30",
-                        "Updated": "2021-08-20T15:44:56+05:30",
-                        "UpdatedBy": 1,
-                        "CreatedBy": 1,
-                        "FolderId": 0,
-                        "IsFolder": false,
-                        "HasAcl": false,
-                        "Title": "AWS_VPC_Test_Cloud_Test_CloudWatch_10",
-                        "Data": {
-                            "AccountId": "1234",
-                            "CloudName": "AWS",
-                            "CreatedBy": "1",
-                            "Data": "",
-                            "ElementType": "VPC",
-                            "FileName": "test_ds.json",
-                            "FolderId": 0,
-                            "GnetId ": 0,
-                            "HasAcl": false,
-                            "InputSourceId": "Test_CloudWatch",
-                            "InputType": "Performance",
-                            "IsCloud": true,
-                            "IsFolder": false,
-                            "OrgId": 1,
-                            "PluginId": "",
-                            "Slug": "test_ds.json",
-                            "SourceJsonRef": "",
-                            "TenantId": "78",
-                            "Title": "10",
-                            "Uid": "",
-                            "UpdatedBy": "1",
-                            "Uuid": "uuid-1",
-                            "Version": "1",
-                            "title": "AWS_VPC_Test_Cloud_Test_CloudWatch_10",
-                            "uid": "3h77DBn7k",
-                            "version": 1
-                        },
-                        "Uuid": "uuid-1",
-                        "SourceJsonRef": "",
-                        "InputSourceId": "Test_CloudWatch",
-                        "AccountId": "1234",
-                        "TenantId": "78",
-                        "IsCloud": true,
-                        "CloudName": "AWS",
-                        "ElementType": "VPC",
-                        "FileName": "test_ds.json",
-                        "InputType": "Performance"
-                    },
-                    {
-                        "Id": 130,
-                        "Uid": "QfGnDB7nk",
-                        "Slug": "aws_vpc_test_cloud_test3_cloudwatch_00",
-                        "OrgId": 1,
-                        "GnetId": 0,
-                        "Version": 1,
-                        "PluginId": "",
-                        "Created": "2021-08-20T15:44:55+05:30",
-                        "Updated": "2021-08-20T15:44:55+05:30",
-                        "UpdatedBy": 1,
-                        "CreatedBy": 1,
-                        "FolderId": 0,
-                        "IsFolder": false,
-                        "HasAcl": false,
-                        "Title": "AWS_VPC_Test_Cloud_Test3_CloudWatch_00",
-                        "Data": {
-                            "AccountId": "1234",
-                            "CloudName": "AWS",
-                            "CreatedBy": "1",
-                            "Data": "",
-                            "ElementType": "VPC",
-                            "FileName": "test_ds.json",
-                            "FolderId": 0,
-                            "GnetId ": 0,
-                            "HasAcl": false,
-                            "InputSourceId": "Test3_CloudWatch",
-                            "InputType": "Performance",
-                            "IsCloud": true,
-                            "IsFolder": false,
-                            "OrgId": 1,
-                            "PluginId": "",
-                            "Slug": "test_ds.json",
-                            "SourceJsonRef": "",
-                            "TenantId": "78",
-                            "Title": "00",
-                            "Uid": "",
-                            "UpdatedBy": "1",
-                            "Uuid": "uuid-1",
-                            "Version": "1",
-                            "title": "AWS_VPC_Test_Cloud_Test3_CloudWatch_00",
-                            "uid": "QfGnDB7nk",
-                            "version": 1
-                        },
-                        "Uuid": "uuid-1",
-                        "SourceJsonRef": "",
-                        "InputSourceId": "Test3_CloudWatch",
-                        "AccountId": "1234",
-                        "TenantId": "78",
-                        "IsCloud": true,
-                        "CloudName": "AWS",
-                        "ElementType": "VPC",
-                        "FileName": "test_ds.json",
-                        "InputType": "Performance"
-                    },
-                    {
-                        "Id": 131,
-                        "Uid": "Vzn7DB7nk",
-                        "Slug": "aws_vpc_test_cloud_test3_cloudwatch_01",
-                        "OrgId": 1,
-                        "GnetId": 0,
-                        "Version": 1,
-                        "PluginId": "",
-                        "Created": "2021-08-20T15:44:55+05:30",
-                        "Updated": "2021-08-20T15:44:55+05:30",
-                        "UpdatedBy": 1,
-                        "CreatedBy": 1,
-                        "FolderId": 0,
-                        "IsFolder": false,
-                        "HasAcl": false,
-                        "Title": "AWS_VPC_Test_Cloud_Test3_CloudWatch_01",
-                        "Data": {
-                            "AccountId": "1234",
-                            "CloudName": "AWS",
-                            "CreatedBy": "1",
-                            "Data": "",
-                            "ElementType": "VPC",
-                            "FileName": "test_ds.json",
-                            "FolderId": 0,
-                            "GnetId ": 0,
-                            "HasAcl": false,
-                            "InputSourceId": "Test3_CloudWatch",
-                            "InputType": "Performance",
-                            "IsCloud": true,
-                            "IsFolder": false,
-                            "OrgId": 1,
-                            "PluginId": "",
-                            "Slug": "test_ds.json",
-                            "SourceJsonRef": "",
-                            "TenantId": "78",
-                            "Title": "01",
-                            "Uid": "",
-                            "UpdatedBy": "1",
-                            "Uuid": "uuid-2",
-                            "Version": "1",
-                            "title": "AWS_VPC_Test_Cloud_Test3_CloudWatch_01",
-                            "uid": "Vzn7DB7nk",
-                            "version": 1
-                        },
-                        "Uuid": "uuid-2",
-                        "SourceJsonRef": "",
-                        "InputSourceId": "Test3_CloudWatch",
-                        "AccountId": "1234",
-                        "TenantId": "78",
-                        "IsCloud": true,
-                        "CloudName": "AWS",
-                        "ElementType": "VPC",
-                        "FileName": "test_ds.json",
-                        "InputType": "Performance"
-                    },
-                    {
-                        "Id": 133,
-                        "Uid": "eu7nDf7nk",
-                        "Slug": "aws_vpc_test_cloud_test_cloudwatch_11",
-                        "OrgId": 1,
-                        "GnetId": 0,
-                        "Version": 1,
-                        "PluginId": "",
-                        "Created": "2021-08-20T15:44:56+05:30",
-                        "Updated": "2021-08-20T15:44:56+05:30",
-                        "UpdatedBy": 1,
-                        "CreatedBy": 1,
-                        "FolderId": 0,
-                        "IsFolder": false,
-                        "HasAcl": false,
-                        "Title": "AWS_VPC_Test_Cloud_Test_CloudWatch_11",
-                        "Data": {
-                            "AccountId": "1234",
-                            "CloudName": "AWS",
-                            "CreatedBy": "1",
-                            "Data": "",
-                            "ElementType": "VPC",
-                            "FileName": "test_ds.json",
-                            "FolderId": 0,
-                            "GnetId ": 0,
-                            "HasAcl": false,
-                            "InputSourceId": "Test_CloudWatch",
-                            "InputType": "Performance",
-                            "IsCloud": true,
-                            "IsFolder": false,
-                            "OrgId": 1,
-                            "PluginId": "",
-                            "Slug": "test_ds.json",
-                            "SourceJsonRef": "",
-                            "TenantId": "78",
-                            "Title": "11",
-                            "Uid": "",
-                            "UpdatedBy": "1",
-                            "Uuid": "uuid-2",
-                            "Version": "1",
-                            "title": "AWS_VPC_Test_Cloud_Test_CloudWatch_11",
-                            "uid": "eu7nDf7nk",
-                            "version": 1
-                        },
-                        "Uuid": "uuid-2",
-                        "SourceJsonRef": "",
-                        "InputSourceId": "Test_CloudWatch",
-                        "AccountId": "1234",
-                        "TenantId": "78",
-                        "IsCloud": true,
-                        "CloudName": "AWS",
-                        "ElementType": "VPC",
-                        "FileName": "test_ds.json",
-                        "InputType": "Performance"
-                    }
-                ]
-            },
+            inputConfig: null,
             inputName: "Performance",
             updatedDashboards: [],
             isAlertOpen: false,
@@ -250,6 +27,7 @@ export class Performance extends React.Component<any, any>{
             activeDashboard: -1,
             showConfigWizard: false,
             iFrameLoaded: false,
+            viewJson: [],
         };
         this.verifyInputsRef = React.createRef();
         this.enableDashboardRef = React.createRef();
@@ -276,35 +54,72 @@ export class Performance extends React.Component<any, any>{
     }
 
     async componentDidMount() {
-        // try {
-        //     const cloud = this.getParameterByName("cloud", window.location.href);
-        //     const type = this.getParameterByName("type", window.location.href);
-        //     const tenantId = this.getParameterByName("tenantId", window.location.href);
-        //     const accountId = this.getParameterByName("accountId", window.location.href);
-        //     RestService.getData(`${config.SEARCH_INPUT_CONFIG}?inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, null, null).then(
-        //         (response: any) => {
-        //             if(response.code !== 417 && response.object.length > 0){
-        //                 this.setState({
-        //                     enablePerformanceMonitoring: true,
-        //                     inputConfig: response.object[0]
-        //                 });
-        //             }
-        //         }, (error: any) => {
-        //             console.log("Performance. Search input config failed. Error: ", error);
-        //         });
-        // } catch (err) {
-        //     console.log("Performance. Excepiton in search input config. Error: ", err);
-        // }
+        await this.getInputConfig();
         const { inputConfig } = this.state;
-        if (inputConfig && inputConfig.dashboards) {
-            this.setState({
-                showConfigWizard: false,
-                activeDashboard: 0
-            });
-        } else {
-            this.setState({
-                showConfigWizard: true,
-            });
+        if(inputConfig){
+            this.getViewJson();
+        }
+        
+
+        // const { inputConfig } = this.state;
+        // if (inputConfig && inputConfig.dashboards) {
+        //     this.setState({
+        //         showConfigWizard: false,
+        //         activeDashboard: 0
+        //     });
+        // } else {
+        //     this.setState({
+        //         showConfigWizard: true,
+        //     });
+        // }
+    }
+    
+    getViewJson = async () => {
+        try {
+            const cloud = this.getParameterByName("cloud", window.location.href);
+            const type = this.getParameterByName("type", window.location.href);
+            const tenantId = this.getParameterByName("tenantId", window.location.href);
+            const accountId = this.getParameterByName("accountId", window.location.href);
+            await RestService.getData(`${config.GET_VIEW_JSON}?cloudType=${cloud}&elementType=${type}&inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, null, null).then(
+                (response: any) => {
+                    if(response){
+                        this.setState({
+                            viewJson: response
+                        });
+                    }
+                }, (error: any) => {
+                    console.log("Performance. getViewJson failed. Error: ", error);
+                });
+        } catch (err) {
+            console.log("Performance. Excepiton in getViewJson. Error: ", err);
+        }
+    }
+
+    getInputConfig = async () => {
+        try {
+            // const cloud = this.getParameterByName("cloud", window.location.href);
+            // const type = this.getParameterByName("type", window.location.href);
+            const tenantId = this.getParameterByName("tenantId", window.location.href);
+            const accountId = this.getParameterByName("accountId", window.location.href);
+            await RestService.getData(`${config.SEARCH_INPUT_CONFIG}?inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, null, null).then(
+                (response: any) => {
+                    if(response.code !== 417 && response.object.length > 0){
+                        this.setState({
+                            enablePerformanceMonitoring: true,
+                            inputConfig: response.object[0],
+                            showConfigWizard: false,
+                            activeDashboard: 0
+                        });
+                    }else{
+                        this.setState({
+                            showConfigWizard: true,
+                        });
+                    }
+                }, (error: any) => {
+                    console.log("Performance. Search input config failed. Error: ", error);
+                });
+        } catch (err) {
+            console.log("Performance. Excepiton in search input config. Error: ", err);
         }
     }
 
@@ -540,11 +355,22 @@ export class Performance extends React.Component<any, any>{
     }
 
     renderDashboardList = () => {
-        const { inputConfig, activeDashboard } = this.state;
-        if (inputConfig && inputConfig.dashboards) {
+        // const { inputConfig, activeDashboard } = this.state;
+        // if (inputConfig && inputConfig.dashboards) {
+        //     const retData = [];
+        //     for (let i = 0; i < inputConfig.dashboards.length; i++) {
+        //         const dashboard = inputConfig.dashboards[i];
+        //         retData.push(<div title={dashboard.Title} key={dashboard.Uuid} className={`dashboard-side-tab ${activeDashboard === i ? 'active' : ''}`} onClick={() => this.setState({ activeDashboard: i, iFrameLoaded: false })}>
+        //             <div className="tab-name">{dashboard.Title}</div>
+        //         </div>);
+        //     }
+        //     return retData;
+        // }
+        const { viewJson, activeDashboard } = this.state;
+        if (viewJson && viewJson.dashboards) {
             const retData = [];
-            for (let i = 0; i < inputConfig.dashboards.length; i++) {
-                const dashboard = inputConfig.dashboards[i];
+            for (let i = 0; i < viewJson.dashboards.length; i++) {
+                const dashboard = viewJson.dashboards[i];
                 retData.push(<div title={dashboard.Title} key={dashboard.Uuid} className={`dashboard-side-tab ${activeDashboard === i ? 'active' : ''}`} onClick={() => this.setState({ activeDashboard: i, iFrameLoaded: false })}>
                     <div className="tab-name">{dashboard.Title}</div>
                 </div>);
@@ -555,10 +381,13 @@ export class Performance extends React.Component<any, any>{
     };
 
     render() {
-        const { enablePerformanceMonitoring, isAlertOpen, severity, message, inputConfig, activeDashboard, showConfigWizard, iFrameLoaded } = this.state;
+        const { enablePerformanceMonitoring, isAlertOpen, severity, message, inputConfig, activeDashboard, showConfigWizard, iFrameLoaded, viewJson } = this.state;
         let activeDB = null;
-        if (inputConfig && inputConfig.dashboards && inputConfig.dashboards[activeDashboard]) {
-            activeDB = inputConfig.dashboards[activeDashboard];
+        // if (inputConfig && inputConfig.dashboards && inputConfig.dashboards[activeDashboard]) {
+        //     activeDB = inputConfig.dashboards[activeDashboard];
+        // }
+        if (viewJson && viewJson.dashboards && viewJson.dashboards[activeDashboard]) {
+            activeDB = viewJson.dashboards[activeDashboard];
         }
         return (
             <>
@@ -593,7 +422,7 @@ export class Performance extends React.Component<any, any>{
                                         {
                                             activeDB &&
                                             <>
-                                                <iframe style={{ display: `${iFrameLoaded ? '' : 'none'}` }} src={`/justdashboard?uid=${activeDB.Uuid}&slud=${activeDB.Slug}`} onLoad={() => { this.setState({ iFrameLoaded: true }) }}></iframe>
+                                                <iframe style={{ display: `${iFrameLoaded ? '' : 'none'}` }} src={`/justdashboard?uid=${activeDB.Uid}&slud=${activeDB.Slug}`} onLoad={() => { this.setState({ iFrameLoaded: true }) }}></iframe>
                                                 <div style={{ textAlign: "center", display: iFrameLoaded ? 'none' : '', marginTop: "20px" }}>
                                                     Dashboard is loading...
                                                 </div>
