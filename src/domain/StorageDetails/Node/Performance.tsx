@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Wizard } from './Wizard';
 import { VerifyInputs } from './VerifyInputs';
 import { EnableDashboard } from './EnableDashboard';
+import { Preview } from './Preview';
 import { VerifyAndSave } from './VerifyAndSave';
 import { RestService } from '../../_service/RestService';
 import { config } from '../../../config';
@@ -12,6 +13,7 @@ export class Performance extends React.Component<any, any>{
     verifyInputsRef: any;
     enableDashboardRef: any;
     verifyAndSaveRef: any;
+    previewRef: any;
     wizardRef: any;
     constructor(props: any) {
         super(props);
@@ -33,6 +35,7 @@ export class Performance extends React.Component<any, any>{
         this.enableDashboardRef = React.createRef();
         this.wizardRef = React.createRef();
         this.verifyAndSaveRef = React.createRef();
+        this.previewRef = React.createRef();
         this.steps = [
             {
                 name: "Verify Inputs",
@@ -44,7 +47,7 @@ export class Performance extends React.Component<any, any>{
             },
             {
                 name: "Preview",
-                component: () => <div>Preview</div>
+                component: () => <Preview ref={this.previewRef} inputName={this.state.inputName} selectedInput={this.verifyInputsRef.current !== null ? this.verifyInputsRef.current.getSelection() : null} selectedDashboards={this.enableDashboardRef.current !== null ? this.enableDashboardRef.current.getSelection() : null}/>
             },
             {
                 name: "Verify and save",
@@ -244,7 +247,8 @@ export class Performance extends React.Component<any, any>{
             // console.log("Final dashboard to be exported: ",raw);
             var json = JSON.stringify(raw);
             // console.log("Object to post : ", json);
-            var reqOpt = RestService.postOptionWithAuthentication(json);
+            // var reqOpt = RestService.postOptionWithAuthentication(json);
+            var reqOpt = RestService.optionWithAuthentication(json, 'POST');
             await fetch(config.ADD_DASHBOARDS_TO_GRAFANA, reqOpt)
                 .then(response => response.json())
                 .then(result => {
@@ -371,7 +375,7 @@ export class Performance extends React.Component<any, any>{
             const retData = [];
             for (let i = 0; i < viewJson.dashboards.length; i++) {
                 const dashboard = viewJson.dashboards[i];
-                retData.push(<div title={dashboard.Title} key={dashboard.Uuid} className={`dashboard-side-tab ${activeDashboard === i ? 'active' : ''}`} onClick={() => this.setState({ activeDashboard: i, iFrameLoaded: false })}>
+                retData.push(<div title={dashboard.Title} key={dashboard.Uid} className={`dashboard-side-tab ${activeDashboard === i ? 'active' : ''}`} onClick={() => this.setState({ activeDashboard: i, iFrameLoaded: false })}>
                     <div className="tab-name">{dashboard.Title}</div>
                 </div>);
             }

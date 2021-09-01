@@ -75,5 +75,6 @@ export const config = {
   UPDATE_INPUT: `${assetSrvUrl}/updateInput`,
   SEARCH_INPUT: `${assetSrvUrl}/searchInput`,
 
-  GET_AWS_REGIONS: `${assetSrvUrl}/getAwsRegions`
+  GET_AWS_REGIONS: `${assetSrvUrl}/getAwsRegions`,
+  PREVIEW_DASHBOARDS_URL: `${grafanaUrl}/dashboards/previewDashboard`
 };

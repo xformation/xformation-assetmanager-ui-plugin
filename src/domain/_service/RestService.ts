@@ -7,7 +7,8 @@ export const RestService = {
   getDashboardList,
   deleteObject,
   put,
-  postOptionWithAuthentication
+  postOptionWithAuthentication,
+  optionWithAuthentication
 };
 
 function add(url: any, data: any) {
@@ -71,6 +72,22 @@ function postOptionWithAuthentication(bodyData: any) {
   myHeaders.append("Content-Type", "application/json");
   var requestOptions: RequestInit = {
     method: "POST",
+    headers: myHeaders,
+    body: bodyData,
+    redirect: "follow"
+  };
+  return requestOptions;
+}
+
+function optionWithAuthentication(bodyData: any, methodType: any) {
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    CommonService.getBasicAuthEncodedString(config.USERID, config.PASSWORD)
+  );
+  myHeaders.append("Content-Type", "application/json");
+  var requestOptions: RequestInit = {
+    method: methodType,
     headers: myHeaders,
     body: bodyData,
     redirect: "follow"
