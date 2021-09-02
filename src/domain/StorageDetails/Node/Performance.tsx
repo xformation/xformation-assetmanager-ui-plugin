@@ -62,7 +62,6 @@ export class Performance extends React.Component<any, any>{
         if(inputConfig){
             this.getViewJson();
         }
-        
 
         // const { inputConfig } = this.state;
         // if (inputConfig && inputConfig.dashboards) {
@@ -83,7 +82,8 @@ export class Performance extends React.Component<any, any>{
             const type = this.getParameterByName("type", window.location.href);
             const tenantId = this.getParameterByName("tenantId", window.location.href);
             const accountId = this.getParameterByName("accountId", window.location.href);
-            await RestService.getData(`${config.GET_VIEW_JSON}?cloudType=${cloud}&elementType=${type}&inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, null, null).then(
+            const reqOptions = RestService.optionWithAuthentication(null, "GET");
+            await fetch(`${config.GET_VIEW_JSON}?cloudType=${cloud}&elementType=${type}&inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, reqOptions).then(
                 (response: any) => {
                     if(response){
                         this.setState({
