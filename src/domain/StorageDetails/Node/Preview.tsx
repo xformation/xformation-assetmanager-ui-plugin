@@ -14,7 +14,7 @@ export class Preview extends React.Component<any, any>{
             inputName: this.props.inputName,
             selectedInput: [],
             selectedDashboards: [],
-            activeDashboard: [-1, -1],
+            activeDashboard: [0, 0],
             isLoading: false,
         };
     }
@@ -71,7 +71,7 @@ export class Preview extends React.Component<any, any>{
         const input = selectedInput[activeDashboard[0]]
         const dashboard = selectedDashboards[activeDashboard[1]];
         if (input && dashboard) {
-            return <iframe src={`/jsondashboard?cloudType=${dashboard.type}&elementType=${dashboard.elementType}&accountId=${dashboard.accountId}&tenantId=${dashboard.tenantId}&inputType=${dashboard.inputType}&fileName=${dashboard.fileName}&dataSource=${input.name}`} onLoad={() => { this.setState({ iFrameLoaded: true }) }}></iframe>;
+            return <iframe key={`${activeDashboard[0]}-${activeDashboard[1]}`} src={`/jsondashboard?cloudType=${dashboard.type}&elementType=${dashboard.elementType}&accountId=${dashboard.accountId}&tenantId=${dashboard.tenantId}&inputType=${dashboard.inputType}&fileName=${dashboard.fileName}&dataSource=${input.name}`} onLoad={() => { this.setState({ iFrameLoaded: true }) }}></iframe>;
         }
         return <div>No Dashboard Selected</div>
     };
