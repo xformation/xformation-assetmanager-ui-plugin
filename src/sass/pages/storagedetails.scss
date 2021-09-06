@@ -515,37 +515,34 @@
         display: flex;
         min-height: 450px;
         padding-top: 10px;
+        position: relative;
 
-        aside {
-            width: 20%;
-            -webkit-transition: width 0.5s;
-            -o-transition: width 0.5s;
-            transition: width 0.5s;
-            padding: 0px !important;
+        .dashboard-view-buttons {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
             text-align: center;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -webkit-flex-direction: column;
-            background: #e9edf2;
 
-            .dashboard-side-tab {
+            .button {
                 opacity: 1;
                 -webkit-transition: opacity 0.5s;
                 -o-transition: opacity 0.5s;
                 transition: opacity 0.5s;
-                padding: 15px;
+                padding: 0;
                 cursor: pointer;
-
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                border: 1px solid #ababab;
+                font-size: 0px;
+                text-indent: -9999px;
+                vertical-align: top;
+                border-radius: 50%;
+                margin: 0 3px;
                 &.active {
                     background-color: #3697ef;
                     color: white;
-                }
-
-                .tab-name {
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                    border-color: #3697ef;
                 }
             }
         }
@@ -556,12 +553,12 @@
             -ms-flex-positive: 1;
             flex-grow: 1;
             min-width: 0;
-            max-width: 1100px;
+            max-width: 100%;
             display: flex;
             -webkit-box-orient: vertical;
             -webkit-box-direction: normal;
             -webkit-flex-direction: column;
-            border: 2px solid #ababab;
+            border: 1px solid #ababab;
 
             iframe {
                 width: 100%;

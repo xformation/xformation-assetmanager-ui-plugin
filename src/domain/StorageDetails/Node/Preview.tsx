@@ -56,9 +56,9 @@ export class Preview extends React.Component<any, any>{
                 for (let j = 0; j < selectedDashboards.length; j++) {
                     const selectionData = selectedDashboards[j];
                     const title = cloud + "_" + type + "_" + obj.name + "_" + selectionData.dashboardUuid;
-                    retData.push(<div title={title} key={selectionData.dashboardUuid} className={`dashboard-side-tab ${activeDashboard[0] === i && activeDashboard[1] === j ? 'active' : ''}`} onClick={() => this.setState({ activeDashboard: [i, j], iFrameLoaded: false })}>
-                        <div className="tab-name">{title}</div>
-                    </div>);
+                    retData.push(<li title={title} key={selectionData.dashboardUuid} className={`button ${activeDashboard[0] === i && activeDashboard[1] === j ? 'active' : ''}`} onClick={() => this.setState({ activeDashboard: [i, j], iFrameLoaded: false })}>
+                        {title}
+                    </li>);
                 }
             }
             return retData;
@@ -80,10 +80,12 @@ export class Preview extends React.Component<any, any>{
         return (
             <>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <button style={{ marginTop: "10px", float: "right", marginRight: "10px" }} onClick={() => this.setState({ showConfigWizard: true })} className="blue-button m-b-0">Configure</button>
+                    <button style={{ marginTop: "0px", float: "right", marginRight: "0px" }} onClick={() => this.setState({ showConfigWizard: true })} className="blue-button m-b-0">Configure</button>
                 </div>
                 <div className="dashboard-view-container">
-                    <aside>{this.renderDashboardList()}</aside>
+                    <ul className="dashboard-view-buttons">
+                        {this.renderDashboardList()}
+                    </ul>
                     <div className="dashboard-view">
                         {
                             <>
