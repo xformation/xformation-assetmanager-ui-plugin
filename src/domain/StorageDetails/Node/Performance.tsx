@@ -59,9 +59,9 @@ export class Performance extends React.Component<any, any>{
     async componentDidMount() {
         await this.getInputConfig();
         const { inputConfig } = this.state;
-        if(inputConfig){
-            this.getViewJson();
-        }
+        // if(inputConfig){
+        //     this.getViewJson();
+        // }
 
         // const { inputConfig } = this.state;
         // if (inputConfig && inputConfig.dashboards) {
@@ -76,27 +76,27 @@ export class Performance extends React.Component<any, any>{
         // }
     }
     
-    getViewJson = async () => {
-        try {
-            const cloud = this.getParameterByName("cloud", window.location.href);
-            const type = this.getParameterByName("type", window.location.href);
-            const tenantId = this.getParameterByName("tenantId", window.location.href);
-            const accountId = this.getParameterByName("accountId", window.location.href);
-            const reqOptions = RestService.optionWithAuthentication(null, "GET");
-            await fetch(`${config.GET_VIEW_JSON}?cloudType=${cloud}&elementType=${type}&inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, reqOptions).then(
-                (response: any) => {
-                    if(response){
-                        this.setState({
-                            viewJson: response
-                        });
-                    }
-                }, (error: any) => {
-                    console.log("Performance. getViewJson failed. Error: ", error);
-                });
-        } catch (err) {
-            console.log("Performance. Excepiton in getViewJson. Error: ", err);
-        }
-    }
+    // getViewJson = async () => {
+    //     try {
+    //         const cloud = this.getParameterByName("cloud", window.location.href);
+    //         const type = this.getParameterByName("type", window.location.href);
+    //         const tenantId = this.getParameterByName("tenantId", window.location.href);
+    //         const accountId = this.getParameterByName("accountId", window.location.href);
+    //         const reqOptions = RestService.optionWithAuthentication(null, "GET");
+    //         await fetch(`${config.GET_VIEW_JSON}?cloudType=${cloud}&elementType=${type}&inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, reqOptions).then(
+    //             (response: any) => {
+    //                 if(response){
+    //                     this.setState({
+    //                         viewJson: response
+    //                     });
+    //                 }
+    //             }, (error: any) => {
+    //                 console.log("Performance. getViewJson failed. Error: ", error);
+    //             });
+    //     } catch (err) {
+    //         console.log("Performance. Excepiton in getViewJson. Error: ", err);
+    //     }
+    // }
 
     getInputConfig = async () => {
         try {
@@ -107,11 +107,13 @@ export class Performance extends React.Component<any, any>{
             await RestService.getData(`${config.SEARCH_INPUT_CONFIG}?inputType=${this.state.inputName}&accountId=${accountId}&tenantId=${tenantId}`, null, null).then(
                 (response: any) => {
                     if(response.code !== 417 && response.object.length > 0){
+                        console.log("Enabled dashboards : ",response.object[0].enabledDashboardList);
                         this.setState({
                             enablePerformanceMonitoring: true,
                             inputConfig: response.object[0],
                             showConfigWizard: false,
-                            activeDashboard: 0
+                            activeDashboard: 0,
+                            viewJson: response.object[0].enabledDashboardList,
                         });
                     }else{
                         this.setState({
@@ -171,7 +173,7 @@ export class Performance extends React.Component<any, any>{
         }
 
         console.log("2. Updating dashboards status in asset service");
-        await this.updateDashboardsStatusInAppAsset();
+        await this.updateDashboardsStatusInAssetService();
         if (!this.state.isSuccess) {
             this.setState({
                 isAlertOpen: true,
@@ -182,34 +184,35 @@ export class Performance extends React.Component<any, any>{
             return;
         }
 
-        console.log("3. Updating inputs status in asset service");
-        for (let i = 0; i < selectedInput.length; i++) {
-            let dsObj = selectedInput[i];
-            await this.updateInput(dsObj);
-            if (!this.state.isSuccess) {
-                this.setState({
-                    isAlertOpen: true,
-                    message: 'Enabling performance dashboards failed',
-                    severity: config.SEVERITY_ERROR,
-                    isSuccess: true
-                })
-                return;
-            }
-        }
-        console.log('4. Input config : ', inputConfig);
-        if (inputConfig === null) {
-            console.log("5. Adding input config in asset service");
-            await this.addInputConfig();
-        }
-        if (!this.state.isSuccess) {
-            this.setState({
-                isAlertOpen: true,
-                message: 'Enabling performance dashboards failed',
-                severity: config.SEVERITY_ERROR,
-                isSuccess: true
-            })
-            return;
-        }
+        // console.log("3. Updating inputs status in asset service");
+        // for (let i = 0; i < selectedInput.length; i++) {
+        //     let dsObj = selectedInput[i];
+        //     await this.updateInput(dsObj);
+        //     if (!this.state.isSuccess) {
+        //         this.setState({
+        //             isAlertOpen: true,
+        //             message: 'Enabling performance dashboards failed',
+        //             severity: config.SEVERITY_ERROR,
+        //             isSuccess: true
+        //         })
+        //         return;
+        //     }
+        // }
+        
+        // console.log('4. Input config : ', inputConfig);
+        // if (inputConfig === null) {
+        //     console.log("5. Adding input config in asset service");
+        //     await this.addInputConfig();
+        // }
+        // if (!this.state.isSuccess) {
+        //     this.setState({
+        //         isAlertOpen: true,
+        //         message: 'Enabling performance dashboards failed',
+        //         severity: config.SEVERITY_ERROR,
+        //         isSuccess: true
+        //     })
+        //     return;
+        // }
         this.setState({
             isAlertOpen: true,
             message: 'Performance dashboards enabled',
@@ -281,9 +284,21 @@ export class Performance extends React.Component<any, any>{
         })
     }
 
-    updateDashboardsStatusInAppAsset() {
+    updateDashboardsStatusInAssetService() {
         const { updatedDashboards } = this.state;
-        RestService.add(`${config.BULK_UPDATE_APPLICATION_ASSETS}`, updatedDashboards)
+        const tenantId = this.getParameterByName("tenantId", window.location.href);
+        const accountId = this.getParameterByName("accountId", window.location.href);
+    
+        let inputObj = {
+            accountId: accountId,
+            tenantId: tenantId,
+            inputType: this.state.inputName,
+            status: 'ACTIVE',
+            dashboardList: updatedDashboards,
+            enableInput: true
+        }
+
+        RestService.add(`${config.BULK_UPDATE_APPLICATION_ASSETS}`, inputObj)
             .then((response: any) => {
                 console.log("Update assets response : ", response);
                 if (response.code === 417) {
@@ -300,55 +315,55 @@ export class Performance extends React.Component<any, any>{
             });
     }
 
-    updateInput(dsObj: any) {
-        const tenantId = this.getParameterByName("tenantId", window.location.href);
-        const accountId = this.getParameterByName("accountId", window.location.href);
-        let inp = {
-            id: dsObj.id,
-            status: 'ACTIVE',
-        }
-        RestService.add(`${config.UPDATE_INPUT}`, inp)
-            .then((response: any) => {
-                console.log("Update input response : ", response);
-                if (response.code === 417) {
-                    this.setState({
-                        isSuccess: false
-                    })
-                }
-            })
-            .catch(error => {
-                console.log('Updating input status failed. Error', error)
-                this.setState({
-                    isSuccess: false
-                })
-            });
-    }
+    // updateInput(dsObj: any) {
+    //     const tenantId = this.getParameterByName("tenantId", window.location.href);
+    //     const accountId = this.getParameterByName("accountId", window.location.href);
+    //     let inp = {
+    //         id: dsObj.id,
+    //         status: 'ACTIVE',
+    //     }
+    //     RestService.add(`${config.UPDATE_INPUT}`, inp)
+    //         .then((response: any) => {
+    //             console.log("Update input response : ", response);
+    //             if (response.code === 417) {
+    //                 this.setState({
+    //                     isSuccess: false
+    //                 })
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log('Updating input status failed. Error', error)
+    //             this.setState({
+    //                 isSuccess: false
+    //             })
+    //         });
+    // }
 
-    addInputConfig() {
-        const tenantId = this.getParameterByName("tenantId", window.location.href);
-        const accountId = this.getParameterByName("accountId", window.location.href);
-        let inp = {
-            accountId: accountId,
-            tenantId: tenantId,
-            inputType: this.state.inputName,
-            status: 'ACTIVE',
-        }
-        RestService.add(`${config.ADD_INPUT_CONFIG}`, inp)
-            .then((response: any) => {
-                console.log("Add input_config response : ", response);
-                if (response.code === 417) {
-                    this.setState({
-                        isSuccess: false
-                    })
-                }
-            })
-            .catch(error => {
-                console.log('Add input_config failed. Error', error)
-                this.setState({
-                    isSuccess: false
-                })
-            });
-    }
+    // addInputConfig() {
+    //     const tenantId = this.getParameterByName("tenantId", window.location.href);
+    //     const accountId = this.getParameterByName("accountId", window.location.href);
+    //     let inp = {
+    //         accountId: accountId,
+    //         tenantId: tenantId,
+    //         inputType: this.state.inputName,
+    //         status: 'ACTIVE',
+    //     }
+    //     RestService.add(`${config.ADD_INPUT_CONFIG}`, inp)
+    //         .then((response: any) => {
+    //             console.log("Add input_config response : ", response);
+    //             if (response.code === 417) {
+    //                 this.setState({
+    //                     isSuccess: false
+    //                 })
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log('Add input_config failed. Error', error)
+    //             this.setState({
+    //                 isSuccess: false
+    //             })
+    //         });
+    // }
 
     handleCloseAlert = (e: any) => {
         this.setState({
@@ -371,12 +386,15 @@ export class Performance extends React.Component<any, any>{
         //     return retData;
         // }
         const { viewJson, activeDashboard } = this.state;
-        if (viewJson && viewJson.dashboards) {
+        // if (viewJson && viewJson.dashboards) {
+        if (viewJson ) {
             const retData = [];
-            for (let i = 0; i < viewJson.dashboards.length; i++) {
-                const dashboard = viewJson.dashboards[i];
-                retData.push(<div title={dashboard.Title} key={dashboard.Uid} className={`dashboard-side-tab ${activeDashboard === i ? 'active' : ''}`} onClick={() => this.setState({ activeDashboard: i, iFrameLoaded: false })}>
-                    <div className="tab-name">{dashboard.Title}</div>
+            // for (let i = 0; i < viewJson.dashboards.length; i++) {
+            for (let i = 0; i < viewJson.length; i++) {
+                // const dashboard = viewJson.dashboards[i];
+                const dashboard = viewJson[i];
+                retData.push(<div title={dashboard.title} key={dashboard.uid} className={`dashboard-side-tab ${activeDashboard === i ? 'active' : ''}`} onClick={() => this.setState({ activeDashboard: i, iFrameLoaded: false })}>
+                    <div className="tab-name">{dashboard.title}</div>
                 </div>);
             }
             return retData;
@@ -390,8 +408,12 @@ export class Performance extends React.Component<any, any>{
         // if (inputConfig && inputConfig.dashboards && inputConfig.dashboards[activeDashboard]) {
         //     activeDB = inputConfig.dashboards[activeDashboard];
         // }
-        if (viewJson && viewJson.dashboards && viewJson.dashboards[activeDashboard]) {
-            activeDB = viewJson.dashboards[activeDashboard];
+        
+        // if (viewJson && viewJson.dashboards && viewJson.dashboards[activeDashboard]) {
+        //     activeDB = viewJson.dashboards[activeDashboard];
+        // }
+        if (viewJson && viewJson[activeDashboard]) {
+            activeDB = viewJson[activeDashboard];
         }
         return (
             <>
@@ -426,7 +448,7 @@ export class Performance extends React.Component<any, any>{
                                         {
                                             activeDB &&
                                             <>
-                                                <iframe style={{ display: `${iFrameLoaded ? '' : 'none'}` }} src={`/justdashboard?uid=${activeDB.Uid}&slud=${activeDB.Slug}`} onLoad={() => { this.setState({ iFrameLoaded: true }) }}></iframe>
+                                                <iframe style={{ display: `${iFrameLoaded ? '' : 'none'}` }} src={`/justdashboard?uid=${activeDB.uid}&slud=${activeDB.slug}`} onLoad={() => { this.setState({ iFrameLoaded: true }) }}></iframe>
                                                 <div style={{ textAlign: "center", display: iFrameLoaded ? 'none' : '', marginTop: "20px" }}>
                                                     Dashboard is loading...
                                                 </div>
