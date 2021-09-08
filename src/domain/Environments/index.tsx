@@ -401,7 +401,7 @@ export class Environments extends React.Component<any, any> {
     render() {
         const state = this.state;
         const { displaygetEnvironmentData, showTagFilter, showRecentFilter, showAddNewFilter, aws_table_data } = this.state;
-        console.log("gdgdsd",displaygetEnvironmentData);
+        // console.log("gdgdsd",displaygetEnvironmentData);
         return (
 
             <div className="asset-container">

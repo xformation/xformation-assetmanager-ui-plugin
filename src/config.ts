@@ -57,7 +57,7 @@ export const config = {
   ADD_ORGANIZATION_UNIT: `${assetSrvUrl}/addOrganizationUnit`,
   ADD_ACCOUNT: `${assetSrvUrl}/addAccount`,
 
-  GET_USER_ORGANIZATION: `${assetSrvUrl}/getAllOrgUnits`,
+  GET_USER_ORGANIZATION: `${assetSrvUrl}/getAllOrgUnitsByUserName`,
   GET_DISCOVERED_ASSETS: `${assetSrvUrl}/getDiscoveredAsset`,
   SEARCH_APPLICATION_ASSETS: `${assetSrvUrl}/searchApplicationAsset`,
   GET_APPLICATION_ASSETS_BY_INPUT_TYPE: `${assetSrvUrl}/getApplicationAssetsGropuByInputType`,
