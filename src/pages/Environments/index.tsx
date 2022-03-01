@@ -439,7 +439,6 @@ export class Environments extends React.Component<any, any> {
       showRecentFilter,
       showAddNewFilter,
     } = this.state;
-    console.log("gdgdsd", displaygetEnvironmentData);
     return (
       <div className="asset-container">
         <Breadcrumbs
