@@ -12,6 +12,7 @@ import { ThreatAndSecurityEvents } from "./ThreatAndSecurityEvents";
 import { CompliancePolicies } from "./CompliancePolicies";
 import { Alerts } from "./Alerts";
 import { Inputs } from "./Inputs";
+import { PLUGIN_BASE_URL } from '../../constants';
 
 export class AmazonServices extends React.Component<any, any> {
   breadCrumbs: any;
@@ -262,7 +263,7 @@ export class AmazonServices extends React.Component<any, any> {
               <div className="col-lg-3 col-md-3 col-sm-12">
                 <div className="float-right common-right-btn">
                   <Link
-                    to={`${config.basePath}/environments`}
+                    to={`${PLUGIN_BASE_URL}/environments`}
                     className="asset-white-button min-width-inherit m-r-0"
                   >
                     <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back

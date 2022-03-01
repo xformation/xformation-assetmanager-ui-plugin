@@ -4,7 +4,7 @@ const assetSrvUrl = `http://${IP}:5057/api`;
 const grafanaUrl = `http://${IP}:3000/api`;
 
 export const config = {
-  basePath: "/plugins/xformation-assetmanager-ui-plugin/page",
+  basePath: "/a/xformation-assetmanager-ui-plugin",
   octantURL: "http://localhost:7777/#/",
   SEVERITY_ERROR: "error",
 
@@ -57,7 +57,7 @@ export const config = {
   ADD_ORGANIZATION_UNIT: `${assetSrvUrl}/addOrganizationUnit`,
   ADD_ACCOUNT: `${assetSrvUrl}/addAccount`,
 
-  GET_USER_ORGANIZATION: `${assetSrvUrl}/getAllOrgUnitsByUserName`,
+  GET_USER_ORGANIZATION: `${assetSrvUrl}/getAllOrgUnits`,
   GET_DISCOVERED_ASSETS: `${assetSrvUrl}/getDiscoveredAsset`,
   SEARCH_APPLICATION_ASSETS: `${assetSrvUrl}/searchApplicationAsset`,
   GET_APPLICATION_ASSETS_BY_INPUT_TYPE: `${assetSrvUrl}/getApplicationAssetsGropuByInputType`,

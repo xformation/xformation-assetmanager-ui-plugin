@@ -4,6 +4,7 @@ import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { config } from '../../config';
 import { RestService } from '../_service/RestService';
 import AlertMessage from '../../components/AlertMessage';
+import { PLUGIN_BASE_URL } from '../../constants';
 
 export class Action extends React.Component<any, any> {
   InputAccountRef: any;
@@ -433,7 +434,7 @@ export class Action extends React.Component<any, any> {
             {/* </Rbac> */}
             {/* <Rbac parentName={config.PARENT_NAME} childName="commancomponent-createbuttoncomponent-agentbtn"> */}
             <Link
-              to={`${config.basePath}/amazonservices?assetId=${
+              to={`${PLUGIN_BASE_URL}/amazon-services?assetId=${
                 detailObj.id
               }&orgId=${
                 detailObj.organization ? detailObj.organization.id : null

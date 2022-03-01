@@ -3,6 +3,7 @@ import { images } from '../../img';
 import { Collapse } from 'reactstrap';
 import { RestService } from '../_service/RestService';
 import { config } from '../../config';
+import { PLUGIN_BASE_URL } from '../../constants';
 import { Link } from 'react-router-dom';
 
 export class DiscoveredAssets extends React.Component<any, any>{
@@ -107,7 +108,7 @@ export class DiscoveredAssets extends React.Component<any, any>{
                     <div className="tbody-td first">
                         {/* {!folder.subData && <div className={folder.isOpened ? "caret-down" : "caret-right"} onClick={() => this.onClickOpenSubTreeArr([...indexArr])}></div>} */}
                         {folder.subData && <div className={folder.isOpened ? "caret-down" : "caret-right"} onClick={() => this.onClickOpenSubTreeArr([...indexArr])}></div>}
-                        <Link to={`${config.basePath}/storagedetails?cloud=${folder.type}&type=${folder.title}&accountId=${folder.accountId}&tenantId=${folder.tenantId}`}>{folder.title}</Link>
+                        <Link to={`${PLUGIN_BASE_URL}/storagedetails?cloud=${folder.type}&type=${folder.title}&accountId=${folder.accountId}&tenantId=${folder.tenantId}`}>{folder.title}</Link>
                     </div>
                     <div className="tbody-td">{folder.organizationalUnit}</div>
                     <div className="tbody-td">{folder.instance}</div>
