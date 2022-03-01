@@ -1,20 +1,20 @@
 {
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
   "type": "app",
   "name": "Asset manager",
   "id": "xformation-assetmanager-ui-plugin",
   "info": {
-    "description": "Asset Manager",
+    "description": "Asset manager",
     "author": {
-      "name": "Synectiks",
-      "url": "https://xformation.com"
+      "name": "Synectiks"
     },
-    "keywords": ["cms", "panel"],
-    "version": "1.0",
-    "updated": "2018-10-12",
     "logos": {
       "small": "img/asset_logo.svg",
       "large": "img/asset_logo.svg"
-    }
+    },
+    "screenshots": [],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
   },
   "includes": [
     {
@@ -22,39 +22,44 @@
       "name": "Environments",
       "addToNav": false,
       "defaultNav": false,
-      "component": "Environments"
+      "role": "Admin",
+      "path": "/a/%PLUGIN_ID%"
     },
     {
       "type": "page",
       "name": "AmazonServices",
       "addToNav": false,
       "defaultNav": false,
-      "component": "AmazonServices"
+      "role": "Admin",
+      "path": "/a/%PLUGIN_ID%?path=amazon-services"
     },
     {
       "type": "page",
       "name": "Kubernetes",
       "addToNav": false,
       "defaultNav": false,
-      "component": "Kubernetes"
+      "role": "Admin",
+      "path": "/a/%PLUGIN_ID%?path=kubernetes"
     },
     {
       "type": "page",
       "name": "StorageDetails",
       "addToNav": false,
       "defaultNav": false,
-      "component": "StorageDetails"
+      "role": "Admin",
+      "path": "/a/%PLUGIN_ID%?path=storage-details"
     },
     {
       "type": "page",
       "name": "AccountSetup",
       "addToNav": false,
       "defaultNav": false,
-      "component": "AccountSetup"
+      "role": "Admin",
+      "path": "/a/%PLUGIN_ID%?path=account-setup"
     }
   ],
   "dependencies": {
-    "grafanaVersion": "3.x 4.x 5.x",
+    "grafanaDependency": ">=8.0.0",
     "plugins": []
   }
 }

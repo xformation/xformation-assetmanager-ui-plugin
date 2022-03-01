@@ -1,17 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["es2015", "es2016", "dom"],
-    "module": "commonjs",
+    "alwaysStrict": true,
     "declaration": false,
-    "noImplicitAny": true,
-    "removeComments": false,
-    "experimentalDecorators": true,
-    "allowJs": true,
-    "strictNullChecks": true,
-    "strict": true,
-    "noLib": false,
-    "jsx": "react"
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "typeRoots": ["./node_modules/@types"],
+    "resolveJsonModule": true
   },
-  "include": ["./declarations.d.ts", "./src/**/*"]
+  "include": ["src", "types"],
+  "extends": "@grafana/tsconfig"
 }

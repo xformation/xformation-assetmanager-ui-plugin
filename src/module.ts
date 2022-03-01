@@ -1,34 +1,23 @@
-import {
-  Environments,
-  AmazonServices,
-  Kubernetes,
-  StorageDetails,
-  AccountSetup
-} from "./ui";
-import { ConfigCtrl } from "./ConfigCtrl";
+import { AppPlugin } from "@grafana/data";
+import { App } from "./components/App";
+import { AppConfig } from "./components/AppConfig";
 
-// import { loadPluginCss } from '@grafana/runtime';
-// Patch since @grafana/runtime is giving error on build
-declare const window: any;
 export function loadPluginCss() {
-  if (window.grafanaBootData.user.lightTheme) {
+  const w: any = window;
+  if (w.grafanaBootData.user.lightTheme) {
     require("./css/assetmanager.light.css");
-    require("./css/servicedesk.light.css");
-    // require("./css/logmanager.light.css");
   } else {
     require("./css/assetmanager.dark.css");
-    require("./css/servicedesk.dark.css");
-    // require("./css/logmanager.dark.css");
   }
 }
 
 loadPluginCss();
 
-export {
-  ConfigCtrl,
-  Environments,
-  AmazonServices,
-  Kubernetes,
-  StorageDetails,
-  AccountSetup
-};
+export const plugin = new AppPlugin<{}>().setRootPage(App).addConfigPage({
+  title: "Configuration",
+  icon: "fa fa-cog",
+  // @ts-ignore - Would expect a Class component, however works absolutely fine with a functional one
+  // Implementation: https://github.com/grafana/grafana/blob/fd44c01675e54973370969dfb9e78f173aff7910/public/app/features/plugins/PluginPage.tsx#L157
+  body: AppConfig,
+  id: "configuration",
+});

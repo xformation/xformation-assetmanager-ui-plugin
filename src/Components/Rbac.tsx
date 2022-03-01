@@ -39,7 +39,7 @@ export default class Rbac extends React.Component<any, any>{
     return mapPermissions.hasOwnProperty(str);
   }
   render() {
-    const { childName, permissions, mapPermissions, parentName, isExternalSecurityEnabled } = this.state
+    const { childName, mapPermissions, parentName, isExternalSecurityEnabled } = this.state
     if (!isExternalSecurityEnabled) {
       // console.log("1. External security disabled. Running with default authentication");
       return this.props.children;

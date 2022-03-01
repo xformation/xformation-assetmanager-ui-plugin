@@ -1,4 +1,5 @@
 import * as React from "react";
+// import Button from '@material-ui/core/Button';
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
@@ -27,7 +28,7 @@ export default function AlertMessage(props: any) {
     }
 
     if (props.handleCloseAlert) {
-      console.log("calling handle close");
+      // console.log("calling handle close");
       props.handleCloseAlert();
       return;
     }
