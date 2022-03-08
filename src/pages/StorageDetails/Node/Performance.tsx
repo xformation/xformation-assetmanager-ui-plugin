@@ -6,8 +6,7 @@ import { Preview } from './Preview';
 import { VerifyAndSave } from './VerifyAndSave';
 import { RestService } from '../../_service/RestService';
 import { config } from '../../../config';
-import AlertMessage from '../../components/AlertMessage';
-
+import AlertMessage from '../../Components/AlertMessage';
 export class Performance extends React.Component<any, any>{
     steps: any;
     verifyInputsRef: any;
@@ -58,7 +57,6 @@ export class Performance extends React.Component<any, any>{
 
     async componentDidMount() {
         await this.getInputConfig();
-        const { inputConfig } = this.state;
         // if(inputConfig){
         //     this.getViewJson();
         // }
@@ -144,7 +142,6 @@ export class Performance extends React.Component<any, any>{
     }
 
     onSubmit = async () => {
-        const { inputConfig } = this.state;
         this.setState({
             isSuccess: true
         })
@@ -403,7 +400,7 @@ export class Performance extends React.Component<any, any>{
     };
 
     render() {
-        const { enablePerformanceMonitoring, isAlertOpen, severity, message, inputConfig, activeDashboard, showConfigWizard, iFrameLoaded, viewJson } = this.state;
+        const { enablePerformanceMonitoring, isAlertOpen, severity, message, activeDashboard, showConfigWizard, iFrameLoaded, viewJson } = this.state;
         let activeDB = null;
         // if (inputConfig && inputConfig.dashboards && inputConfig.dashboards[activeDashboard]) {
         //     activeDB = inputConfig.dashboards[activeDashboard];

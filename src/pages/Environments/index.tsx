@@ -24,7 +24,7 @@ export class Environments extends React.Component<any, any> {
       Environment: [],
       displaygetEnvironmentData: [],
       isApiCalled: false,
-      codeEditorValue: "",
+      codeEditorValue: '',
       awsRegionList: [],
       optionJsonData: [],
       displayJsonData: [],
@@ -35,11 +35,11 @@ export class Environments extends React.Component<any, any> {
     };
     this.breadCrumbs = [
       {
-        label: "Home",
+        label: 'Home',
         route: `/`,
       },
       {
-        label: "Assets | Environments",
+        label: 'Assets | Environments',
         isCurrentPage: true,
       },
     ];
@@ -56,33 +56,20 @@ export class Environments extends React.Component<any, any> {
       for (let i = 0; i < optionJsonData.length; i++) {
         if (optionJsonData[i].isChecked) {
           retData.push(
-            <div
-              className="fliter-selected"
-              onClick={() => this.setChildData(optionJsonData[i])}
-            >
-              {optionJsonData[i].name}{" "}
-              <i
-                className="fa fa-times"
-                onClick={() => this.removeSelectedTag(optionJsonData[i].value)}
-              ></i>
+            <div className="fliter-selected" onClick={() => this.setChildData(optionJsonData[i])}>
+              {optionJsonData[i].name}{' '}
+              <i className="fa fa-times" onClick={() => this.removeSelectedTag(optionJsonData[i].value)}></i>
             </div>
           );
           if (optionJsonData[i].subdata) {
             for (let j = 0; j < optionJsonData[i].subdata.length; j++) {
               if (optionJsonData[i].subdata[j].isChecked) {
                 retData.push(
-                  <div
-                    className="fliter-selected"
-                    onClick={() => this.setState({ showTagFilter: false })}
-                  >
-                    {optionJsonData[i].subdata[j].name}{" "}
+                  <div className="fliter-selected" onClick={() => this.setState({ showTagFilter: false })}>
+                    {optionJsonData[i].subdata[j].name}{' '}
                     <i
                       className="fa fa-times"
-                      onClick={() =>
-                        this.removeSelectedTag(
-                          optionJsonData[i].subdata[j].value
-                        )
-                      }
+                      onClick={() => this.removeSelectedTag(optionJsonData[i].subdata[j].value)}
                     ></i>
                   </div>
                 );
@@ -118,8 +105,7 @@ export class Environments extends React.Component<any, any> {
         if (optionJsonData[i].subdata) {
           for (let j = 0; j < optionJsonData[i].subdata.length; j++) {
             if (optionJsonData[i].subdata[j].value == value) {
-              optionJsonData[i].subdata[j].isChecked = !optionJsonData[i]
-                .subdata[j].isChecked;
+              optionJsonData[i].subdata[j].isChecked = !optionJsonData[i].subdata[j].isChecked;
             }
           }
         }
@@ -136,18 +122,9 @@ export class Environments extends React.Component<any, any> {
     let retData = [];
     for (let i = 0; i < displayJsonData.length; i++) {
       retData.push(
-        <div
-          className="form-check"
-          onClick={() => this.changeHandleState(i, displayJsonData[i].value)}
-        >
-          <input
-            type="checkbox"
-            checked={displayJsonData[i].isChecked}
-            className="checkbox"
-          />
-          <label htmlFor={displayJsonData[i].value}>
-            {displayJsonData[i].name}
-          </label>
+        <div className="form-check" onClick={() => this.changeHandleState(i, displayJsonData[i].value)}>
+          <input type="checkbox" checked={displayJsonData[i].isChecked} className="checkbox" />
+          <label htmlFor={displayJsonData[i].value}>{displayJsonData[i].name}</label>
         </div>
       );
     }
@@ -186,15 +163,13 @@ export class Environments extends React.Component<any, any> {
             if (optionJsonData[i].subdata[j].value === value) {
               if (!selectedTeg.includes(value)) {
                 selectedTeg.push(value);
-                optionJsonData[i].subdata[j].isChecked = !optionJsonData[i]
-                  .subdata[j].isChecked;
+                optionJsonData[i].subdata[j].isChecked = !optionJsonData[i].subdata[j].isChecked;
                 this.setState({
                   displayJsonData: optionJsonData,
                 });
               } else {
                 selectedTeg.splice(selectedTeg.indexOf(value), 1);
-                optionJsonData[i].subdata[j].isChecked = !optionJsonData[i]
-                  .subdata[j].isChecked;
+                optionJsonData[i].subdata[j].isChecked = !optionJsonData[i].subdata[j].isChecked;
                 displayJsonData = optionJsonData;
               }
             }
@@ -213,16 +188,14 @@ export class Environments extends React.Component<any, any> {
 
   getAwsRegionsList = async () => {
     try {
-      await RestService.getData(config.GET_AWS_REGIONS, null, null).then(
-        (response: any) => {
-          this.setState({
-            awsRegionList: response,
-          });
-          // console.log("Loading aws regions : ", response);
-        }
-      );
+      await RestService.getData(config.GET_AWS_REGIONS, null, null).then((response: any) => {
+        this.setState({
+          awsRegionList: response,
+        });
+        // console.log("Loading aws regions : ", response);
+      });
     } catch (err) {
-      console.log("Loading aws regions failed. Error: ", err);
+      console.log('Loading aws regions failed. Error: ', err);
     }
   };
 
@@ -231,16 +204,14 @@ export class Environments extends React.Component<any, any> {
       isApiCalled: true,
     });
     try {
-      await RestService.getData(config.GET_ALL_ACCOUNT, null, null).then(
-        (response: any) => {
-          this.setState({
-            displaygetEnvironmentData: response,
-          });
-          console.log("Loading Asstes : ", response);
-        }
-      );
+      await RestService.getData(config.GET_ALL_ACCOUNT, null, null).then((response: any) => {
+        this.setState({
+          displaygetEnvironmentData: response,
+        });
+        console.log('Loading Asstes : ', response);
+      });
     } catch (err) {
-      console.log("Loading Asstes failed. Error: ", err);
+      console.log('Loading Asstes failed. Error: ', err);
     }
     this.setState({
       isApiCalled: false,
@@ -264,15 +235,15 @@ export class Environments extends React.Component<any, any> {
     let retData = [];
     for (let i = 0; i < displaygetEnvironmentData.length; i++) {
       let row = displaygetEnvironmentData[i];
-      if (row.cloudType.toLowerCase() === "AWS".toLowerCase()) {
+      if (row.cloudType.toLowerCase() === 'AWS'.toLowerCase()) {
         // console.log("AWS data : ", row);
         retData.push(
           <tr>
             <td>
               <Link
-                to={`${PLUGIN_BASE_URL}/amazon-services?assetId=${
-                  row.id
-                }&orgId=${row.organization ? row.organization.id : null}`}
+                to={`${PLUGIN_BASE_URL}/amazon-services?assetId=${row.id}&orgId=${
+                  row.organization ? row.organization.id : null
+                }`}
               >
                 AWS ({row.accountId})
               </Link>
@@ -281,19 +252,13 @@ export class Environments extends React.Component<any, any> {
             <td>{row.organizationalUnit && row.organizationalUnit.name}</td>
             <td>N/A</td>
             <td>
-              <div
-                className={
-                  row.status === "ACTIVE" ? "status enable" : "status disable"
-                }
-              ></div>
+              <div className={row.status === 'ACTIVE' ? 'status enable' : 'status disable'}></div>
             </td>
             <td>
               <div className="d-block text-center">
                 <button className="asset-white-button min-width-inherit m-r-0">
                   {/* <Rbac parentName={config.PARENT_NAME} childName="library-index-addfolderbtn"> */}
-                  {awsRegionList.length > 0 && (
-                    <Action detail={row} regionList={awsRegionList} />
-                  )}
+                  {awsRegionList.length > 0 && <Action detail={row} regionList={awsRegionList} />}
                   {/* </Rbac>                                   */}
                 </button>
               </div>
@@ -311,9 +276,9 @@ export class Environments extends React.Component<any, any> {
     let retData = [];
     for (let i = 0; i < displaygetEnvironmentData.length; i++) {
       let row = displaygetEnvironmentData[i];
-      if (row.cloudType.toLowerCase() === "AZURE".toLowerCase()) {
+      if (row.cloudType.toLowerCase() === 'AZURE'.toLowerCase()) {
         retData.push(
-          console.log("Loading azure data : ", row),
+          console.log('Loading azure data : ', row),
           <tr>
             <td>
               {/* <Link to={`${config.basePath}/amazonservices?assetId=${row.id}&orgId=${row.organization ? row.organization.id : null}`}> */}
@@ -323,9 +288,7 @@ export class Environments extends React.Component<any, any> {
             <td>{row.organizationalUnit && row.organizationalUnit.name}</td>
             <td>N/A</td>
             <td>
-              <div
-                className={row.status ? "status enable" : "status disable"}
-              ></div>
+              <div className={row.status ? 'status enable' : 'status disable'}></div>
             </td>
             <td>
               <div className="d-block text-center">
@@ -350,101 +313,92 @@ export class Environments extends React.Component<any, any> {
   };
 
   _displayEnvironmentBox() {
-    const EnvironmentBox = this.state.displaygetEnvironmentData.map(
-      (val: any, key: any) => {
-        return (
-          <>
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-              <div className="services-box">
-                <div className="heading">
-                  {(() => {
-                    if (val.type == "AWS") {
+    const EnvironmentBox = this.state.displaygetEnvironmentData.map((val: any, key: any) => {
+      return (
+        <>
+          <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div className="services-box">
+              <div className="heading">
+                {(() => {
+                  if (val.type == 'AWS') {
+                    return (
+                      <span>
+                        <img src={images.awsLogo} alt="" />
+                      </span>
+                    );
+                  } else {
+                    if (val.type == 'AZURE') {
                       return (
                         <span>
-                          <img src={images.awsLogo} alt="" />
+                          <img src={images.microsoftAzureLogo} alt="" />
                         </span>
                       );
                     } else {
-                      if (val.type == "AZURE") {
+                      if (val.type == 'Synectiks') {
                         return (
                           <span>
-                            <img src={images.microsoftAzureLogo} alt="" />
+                            <img src={images.KubernetesLogo} alt="" />
                           </span>
                         );
                       } else {
-                        if (val.type == "Synectiks") {
+                        if (val.type == 'GCP') {
                           return (
                             <span>
-                              <img src={images.KubernetesLogo} alt="" />
+                              <img src={images.gcpLogo} alt="" />
                             </span>
                           );
                         } else {
-                          if (val.type == "GCP") {
-                            return (
-                              <span>
-                                <img src={images.gcpLogo} alt="" />
-                              </span>
-                            );
-                          } else {
-                              return null;
-                          }
+                          return null;
                         }
                       }
                     }
-                  })()}
-                </div>
-                <div className="table-box">
-                  <table className="table">
-                    <a
-                      style={{
-                        float: "left",
-                        marginRight: "-54px",
-                        fontSize: "14px",
-                      }}
-                      onClick={(e) => this.onClickAddAccount(e, val)}
-                    >
-                      <i>Add Account</i>
-                    </a>
+                  }
+                })()}
+              </div>
+              <div className="table-box">
+                <table className="table">
+                  <a
+                    style={{
+                      float: 'left',
+                      marginRight: '-54px',
+                      fontSize: '14px',
+                    }}
+                    onClick={(e) => this.onClickAddAccount(e, val)}
+                  >
+                    <i>Add Account</i>
+                  </a>
 
-                    <tr>
-                      <td>Accounts</td>
-                      <td>20</td>
-                    </tr>
-                    <tr>
-                      <td>Assets</td>
-                      <td>150</td>
-                    </tr>
-                    <tr>
-                      <td>Log Monitored</td>
-                      <td>100 </td>
-                    </tr>
-                    <tr>
-                      <td>KPI Monitored</td>
-                      <td>18</td>
-                    </tr>
-                  </table>
-                </div>
+                  <tr>
+                    <td>Accounts</td>
+                    <td>20</td>
+                  </tr>
+                  <tr>
+                    <td>Assets</td>
+                    <td>150</td>
+                  </tr>
+                  <tr>
+                    <td>Log Monitored</td>
+                    <td>100 </td>
+                  </tr>
+                  <tr>
+                    <td>KPI Monitored</td>
+                    <td>18</td>
+                  </tr>
+                </table>
               </div>
             </div>
-          </>
-        );
-      }
-    );
+          </div>
+        </>
+      );
+    });
     return EnvironmentBox;
   }
 
   render() {
-    const {
-      displaygetEnvironmentData,
-      showRecentFilter,
-      showAddNewFilter,
-    } = this.state;
+    const { showRecentFilter, showAddNewFilter } = this.state;
     return (
       <div className="asset-container">
-        <Breadcrumbs
-          breadcrumbs={this.breadCrumbs}
-          pageTitle="PERFORMANCE MANAGEMENT"
-        />
+        <Breadcrumbs breadcrumbs={this.breadCrumbs} pageTitle="PERFORMANCE MANAGEMENT" />
         <div className="environments-page-container">
           <div className="common-container">
             <div className="row">
@@ -453,10 +407,7 @@ export class Environments extends React.Component<any, any> {
               </div>
               <div className="col-lg-3 col-md-3 col-sm-12">
                 <div className="float-right common-right-btn ">
-                  <Link
-                    to={`${PLUGIN_BASE_URL}/environments`}
-                    className="asset-white-button min-width-inherit"
-                  >
+                  <Link to={`${PLUGIN_BASE_URL}/environments`} className="asset-white-button min-width-inherit">
                     <i className="fa fa-arrow-circle-left"></i>&nbsp;&nbsp; Back
                   </Link>
                 </div>
@@ -606,13 +557,7 @@ export class Environments extends React.Component<any, any> {
                           <i className="fa fa-clock-o"></i>
                           <span>Recent</span>
                         </div>
-                        <div
-                          className={
-                            showRecentFilter === true
-                              ? "fliter-collapse active"
-                              : "fliter-collapse"
-                          }
-                        >
+                        <div className={showRecentFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
                           <ul>
                             <li>
                               <a href="#">
@@ -647,27 +592,21 @@ export class Environments extends React.Component<any, any> {
                           <i className="fa fa-plus"></i>
                           <span>Add New Environment</span>
                         </div>
-                        <div
-                          className={
-                            showAddNewFilter === true
-                              ? "fliter-collapse active"
-                              : "fliter-collapse"
-                          }
-                        >
+                        <div className={showAddNewFilter === true ? 'fliter-collapse active' : 'fliter-collapse'}>
                           <ul>
                             <li>
                               <a
                                 style={{
-                                  float: "left",
-                                  marginRight: "-54px",
-                                  fontSize: "14px",
+                                  float: 'left',
+                                  marginRight: '-54px',
+                                  fontSize: '14px',
                                 }}
                               >
                                 <i>
                                   <Link to={`${PLUGIN_BASE_URL}/account-setup`}>
                                     <span>
                                       <img src={images.awsLogo} alt="" />
-                                    </span>{" "}
+                                    </span>{' '}
                                     AWS Environment
                                   </Link>
                                 </i>
@@ -677,18 +616,15 @@ export class Environments extends React.Component<any, any> {
                             <li>
                               <a
                                 style={{
-                                  float: "left",
-                                  marginRight: "-54px",
-                                  fontSize: "14px",
+                                  float: 'left',
+                                  marginRight: '-54px',
+                                  fontSize: '14px',
                                 }}
                               >
                                 <i>
                                   <span>
-                                    <img
-                                      src={images.microsoftAzureLogo}
-                                      alt=""
-                                    />
-                                  </span>{" "}
+                                    <img src={images.microsoftAzureLogo} alt="" />
+                                  </span>{' '}
                                   Azure Environment
                                 </i>
                               </a>
@@ -696,26 +632,26 @@ export class Environments extends React.Component<any, any> {
                             <li>
                               <a
                                 style={{
-                                  float: "left",
-                                  marginRight: "-54px",
-                                  fontSize: "14px",
+                                  float: 'left',
+                                  marginRight: '-54px',
+                                  fontSize: '14px',
                                 }}
                               >
                                 <i>
                                   <span>
                                     <img src={images.gcpLogo} alt="" />
-                                  </span>{" "}
+                                  </span>{' '}
                                   GCP Environment
                                 </i>
                               </a>
                             </li>
                             <li>
-                              <a style={{ float: "left", fontSize: "14px" }}>
+                              <a style={{ float: 'left', fontSize: '14px' }}>
                                 <i>
                                   <span>
                                     <img src={images.KubernetesLogo} alt="" />
-                                  </span>{" "}
-                                  Kubernetes{" "}
+                                  </span>{' '}
+                                  Kubernetes{' '}
                                 </i>
                               </a>
                             </li>
@@ -738,11 +674,7 @@ export class Environments extends React.Component<any, any> {
                     <button className="btn btn-search">
                       <i className="fa fa-search"></i>
                     </button>
-                    <input
-                      type="text"
-                      className="input-group-text"
-                      placeholder="Search"
-                    />
+                    <input type="text" className="input-group-text" placeholder="Search" />
                   </div>
                 </div>
               </div>
@@ -754,7 +686,7 @@ export class Environments extends React.Component<any, any> {
                     <th>
                       <span>
                         <img src={images.awsLogo} alt="" />
-                      </span>{" "}
+                      </span>{' '}
                       AWS
                     </th>
                     <th>Organisation</th>
@@ -772,7 +704,7 @@ export class Environments extends React.Component<any, any> {
                     <th colSpan={5}>
                       <span>
                         <img src={images.microsoftAzureLogo} alt="" />
-                      </span>{" "}
+                      </span>{' '}
                       Azure Cloud
                     </th>
                   </tr>

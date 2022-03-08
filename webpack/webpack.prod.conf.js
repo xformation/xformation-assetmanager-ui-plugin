@@ -180,7 +180,8 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              outputPath: '/',
+              publicPath: `public/plugins/${getPluginId()}/img`,
+              outputPath: 'img',
               name: '[path][name].[ext]',
             },
           },
